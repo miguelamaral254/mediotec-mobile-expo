@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -9,6 +9,7 @@ import { User } from '../interfaces/userInterface';
 import { getUserData, login } from '../services/authService';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootDrawerParamList } from '../types/navigationTypes';
+import { CommonActions } from '@react-navigation/native';
 
 interface LoginProps {
   onLoginSuccess: () => void;
@@ -17,6 +18,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [formData, setFormData] = useState({ cpf: '', password: '' });
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false); 
   const navigation = useNavigation<StackNavigationProp<RootDrawerParamList>>();
 
   useEffect(() => {
@@ -60,9 +62,10 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   }
 
   const handleLogin = async (cpf: string, password: string) => {
+    setLoading(true); 
     setError(null);
     try {
-      const cleanedCPF = cpf.replace(/\D/g, ''); // Remove máscara do CPF
+      const cleanedCPF = cpf.replace(/\D/g, ''); 
       const userData: User = await getUserData(cleanedCPF);
   
       if (!userData) {
@@ -75,20 +78,22 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         return;
       }
   
-      await login(cleanedCPF, password); // Chamada para autenticação com CPF limpo
-      
-      // Persistir dados no AsyncStorage
+      await login(cleanedCPF, password); 
       await AsyncStorage.setItem('cpf', cleanedCPF);
       await AsyncStorage.setItem('password', password);
 
       onLoginSuccess(); 
       
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'drawerRoutes' }] // Verifique se o nome está correto
-      });
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'home' }], 
+        })
+      );
     } catch (err) {
       setError('CPF ou senha incorretos.');
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -134,6 +139,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       </View>
 
       {error && <Text style={{ color: 'red', marginBottom: 16 }}>{error}</Text>}
+      {loading && <ActivityIndicator size="small" color="#0000ff" style={{ marginBottom: 16 }} />}
 
       <TouchableOpacity onPress={handleSubmit} style={{ width: '100%', backgroundColor: '#4666AF', padding: 16, borderRadius: 5 }}>
         <Text style={{ color: 'white', textAlign: 'center', fontWeight: '600' }}>Entrar</Text>
