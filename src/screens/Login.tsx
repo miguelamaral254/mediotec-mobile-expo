@@ -12,7 +12,7 @@ import { RootDrawerParamList } from '../types/navigationTypes';
 import { CommonActions } from '@react-navigation/native';
 
 interface LoginProps {
-  onLoginSuccess: () => void;
+  onLoginSuccess: (userData: User) => void; 
 }
 
 const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
@@ -62,38 +62,39 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   }
 
   const handleLogin = async (cpf: string, password: string) => {
-    setLoading(true); 
+    setLoading(true);
     setError(null);
+    
     try {
-      const cleanedCPF = cpf.replace(/\D/g, ''); 
+      const cleanedCPF = cpf.replace(/\D/g, '');
       const userData: User = await getUserData(cleanedCPF);
-  
+
       if (!userData) {
         Alert.alert('Usuário não encontrado.');
         return;
       }
-  
+
       if (!userData.active) {
         Alert.alert('Usuário inativo, entre em contato com a instituição.');
         return;
       }
-  
+
       await login(cleanedCPF, password); 
       await AsyncStorage.setItem('cpf', cleanedCPF);
       await AsyncStorage.setItem('password', password);
+      onLoginSuccess(userData);
 
-      onLoginSuccess(); 
-      
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: 'home' }], 
+          routes: [{ name: 'home' }],
         })
       );
     } catch (err) {
+      console.error(err);
       setError('CPF ou senha incorretos.');
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
@@ -139,10 +140,13 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       </View>
 
       {error && <Text style={{ color: 'red', marginBottom: 16 }}>{error}</Text>}
-      {loading && <ActivityIndicator size="small" color="#0000ff" style={{ marginBottom: 16 }} />}
+      {loading && <ActivityIndicator size="large" color="#0000ff" />}
 
-      <TouchableOpacity onPress={handleSubmit} style={{ width: '100%', backgroundColor: '#4666AF', padding: 16, borderRadius: 5 }}>
-        <Text style={{ color: 'white', textAlign: 'center', fontWeight: '600' }}>Entrar</Text>
+      <TouchableOpacity
+        onPress={handleSubmit}
+        style={{ backgroundColor: '#007bff', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
+      >
+        <Text style={{ color: '#fff', fontSize: 16 }}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );

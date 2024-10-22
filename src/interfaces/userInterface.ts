@@ -1,4 +1,3 @@
-import { Key } from "react";
 
 export interface User {
   parentCPF: string;

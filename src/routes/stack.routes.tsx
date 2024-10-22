@@ -1,19 +1,23 @@
-import React from 'react'
+import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Profile from '../screens/Profile';
+import { User } from '../interfaces/userInterface';
 
 const Stack = createStackNavigator();
 
-
-const StackRoutes = () => {
-  return (
-   <Stack.Navigator screenOptions={{headerShown:false}}>
-    <Stack.Screen name="home"
-    component={Profile}
-    
-    />
-   </Stack.Navigator>
-  )
+interface StackRoutesProps {
+  userData: User | null; 
 }
 
-export default StackRoutes
+const StackRoutes: React.FC<StackRoutesProps> = ({ userData }) => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen 
+        name="home" 
+        children={() => <Profile userData={userData} />} 
+      />
+    </Stack.Navigator>
+  );
+}
+
+export default StackRoutes;

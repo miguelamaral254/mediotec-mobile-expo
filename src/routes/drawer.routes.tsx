@@ -6,6 +6,7 @@ import TabRoutes from './tab.routes';
 import StackRoutes from './stack.routes';
 import LogoutButton from '../components/Logout';
 import Settings from '../screens/Settings';
+import { User } from '../interfaces/userInterface';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,7 +25,12 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ onLogout, ...
   );
 };
 
-const DrawerRoutes: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+interface DrawerRoutesProps {
+  onLogout: () => void;
+  userData: User | null;
+}
+
+const DrawerRoutes: React.FC<DrawerRoutesProps> = ({ onLogout, userData }) => {
   return (
     <Drawer.Navigator 
       drawerContent={(props) => <CustomDrawerContent {...props} onLogout={onLogout} />}
@@ -38,13 +44,14 @@ const DrawerRoutes: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
         }}
       />
       <Drawer.Screen
-        name="profile"
-        component={StackRoutes}
-        options={{
-          drawerIcon: ({ color, size }) => <Feather name="user" color={color} size={size} />,
-          drawerLabel: 'Meu perfil'
-        }}
-      />
+  name="profile"
+  children={() => <StackRoutes userData={userData} />} // Pass userData to StackRoutes
+  options={{
+    drawerIcon: ({ color, size }) => <Feather name="user" color={color} size={size} />,
+    drawerLabel: 'Meu perfil'
+  }}
+/>
+
       <Drawer.Screen
         name="settings"
         component={Settings}
