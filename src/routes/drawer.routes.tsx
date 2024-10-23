@@ -1,54 +1,14 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { Feather } from "@expo/vector-icons";
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerContentComponentProps, DrawerItem } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
 import TabRoutes from './tab.routes';
 import StackRoutes from './stack.routes';
-import LogoutButton from '../components/Logout';
+import CustomDrawerContent from '../components/CustomDrawerContent';
 import Settings from '../screens/Settings';
 import { User } from '../interfaces/userInterface';
+import { Feather } from "@expo/vector-icons";
+import { Text, View } from 'react-native';
 
 const Drawer = createDrawerNavigator();
-
-interface CustomDrawerContentProps extends DrawerContentComponentProps {
-  onLogout: () => void;
-  userData: User | null;
-}
-
-const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ onLogout, userData, ...props }) => {
-  return (
-    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, backgroundColor: '#1E1E1E' }}>
-      <View style={{ padding: 16, backgroundColor: '#2A2A2A', borderBottomWidth: 1, borderBottomColor: '#ccc', alignItems: 'center' }}>
-        <Image
-          source={require('../assets/avatar.png')}
-          style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 8 }}
-        />
-        {userData ? (
-          <>
-            <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold' }}>Bem vindo, {userData.name}</Text>
-          </>
-        ) : (
-          <Text style={{ color: '#FFFFFF', fontSize: 14 }}>Carregando...</Text>
-        )}
-      </View>
-      <View style={{ flex: 1 }}>
-        <DrawerItemList {...props} />
-      </View>
-      <View style={{ borderTopWidth: 1, borderTopColor: '#ccc', padding: 16 }}>
-        <DrawerItem
-          label={() => (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="settings" color="#FFFFFF" size={20} />
-              <Text style={{ color: '#FFFFFF', marginLeft: 8 }}>Configurações</Text>
-            </View>
-          )}
-          onPress={() => props.navigation.navigate('settings')}
-        />
-        <LogoutButton onLogout={onLogout} />
-      </View>
-    </DrawerContentScrollView>
-  );
-};
 
 interface DrawerRoutesProps {
   onLogout: () => void;
@@ -65,7 +25,9 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({ onLogout, userData }) => {
         drawerActiveBackgroundColor: '#0000FF',
         drawerLabelStyle: { color: '#FFFFFF' },
       }}
-      drawerContent={(props) => <CustomDrawerContent {...props} onLogout={onLogout} userData={userData} />}
+      drawerContent={(props: DrawerContentComponentProps) => (
+        <CustomDrawerContent {...props} onLogout={onLogout} userData={userData} />
+      )}
     >
       <Drawer.Screen
         name="home"
@@ -95,7 +57,7 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({ onLogout, userData }) => {
         name="settings"
         component={Settings}
         options={{
-          drawerItemStyle: { display: 'none' },
+          drawerItemStyle: { display: 'none' }, // Para ocultar a entrada no menu
         }}
       />
     </Drawer.Navigator>
