@@ -32,15 +32,13 @@ const New: React.FC<NewProps> = ({ userData }) => {
   }, [userData]);
 
   const handleReadNotification = async (notification: Notification) => {
-    // Atualiza o status da notificação no backend
     const updateRequest: NotificationUpdateRequest = {
       id: notification.id,
-      read: true // Atualizando o status para lido
+      read: true 
     };
 
     try {
       await updateNotificationReadStatus(updateRequest);
-      // Atualiza o estado local para refletir que a notificação foi lida
       setNotifications(prevNotifications =>
         prevNotifications.map(item =>
           item.id === notification.id ? { ...item, read: true } : item

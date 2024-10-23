@@ -7,10 +7,16 @@ import { Notification } from '../interfaces/notificationInterface';
 
 interface NotificationItemProps {
   notification: Notification;
-  onRead: (notification: Notification) => void; // Aceita o objeto Notification
+  onRead: (notification: Notification) => void;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ notification, onRead }) => {
+  const notificationTime = new Date(notification.timestamp);
+  const currentTime = new Date();
+  const timeDifference = currentTime.getTime() - notificationTime.getTime();
+  const hoursDifference = timeDifference / (1000 * 60 * 60);
+  const formattedDate = notificationTime.toLocaleDateString();
+
   return (
     <TouchableOpacity
       style={{
@@ -22,7 +28,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notification, onRea
         borderBottomColor: '#ccc',
         backgroundColor: notification.read ? '#f0f0f0' : '#fff',
       }}
-      onPress={() => onRead(notification)} // Passa o objeto Notification
+      onPress={() => onRead(notification)}
     >
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Feather
@@ -40,7 +46,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notification, onRea
         </View>
       </View>
       <Text style={{ color: '#4666AF' }}>
-        {new Date(notification.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+        {hoursDifference > 24 
+          ? formattedDate 
+          : notificationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
       </Text>
     </TouchableOpacity>
   );
@@ -48,13 +56,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notification, onRea
 
 interface NotificationListProps {
   notifications: Notification[];
-  onRead: (notification: Notification) => void; // Aceita o objeto Notification
+  onRead: (notification: Notification) => void;
 }
 
 const NotificationList: React.FC<NotificationListProps> = ({ notifications, onRead }) => {
+  const sortedNotifications = [...notifications].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+
   return (
     <FlatList
-      data={notifications}
+      data={sortedNotifications}
       keyExtractor={item => item.id.toString()}
       renderItem={({ item }) => (
         <NotificationItem notification={item} onRead={onRead} />
