@@ -31,7 +31,7 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({ onLogout, userData }) => {
     >
       <Drawer.Screen
         name="home"
-        component={TabRoutes}
+        children={()=> <TabRoutes userData={userData}/>}
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
