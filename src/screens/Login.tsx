@@ -23,41 +23,12 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
   useEffect(() => {
     verifyAvailableAuthentication();
-    checkPersistedLogin();
   }, []);
 
   async function verifyAvailableAuthentication() {
     const compatible = await LocalAuthentication.hasHardwareAsync();
     if (!compatible) {
       Alert.alert('Dispositivo não compatível com biometria.');
-    }
-  }
-
-  async function checkPersistedLogin() {
-    const savedCpf = await AsyncStorage.getItem('cpf');
-    const savedPassword = await AsyncStorage.getItem('password');
-
-    if (savedCpf && savedPassword) {
-      handleBiometricLogin(savedCpf, savedPassword);
-    }
-  }
-
-  async function handleBiometricLogin(cpf: string, password: string) {
-    const isBiometricEnrolled = await LocalAuthentication.isEnrolledAsync();
-    if (!isBiometricEnrolled) {
-      Alert.alert('Nenhuma biometria cadastrada.');
-      return;
-    }
-
-    const auth = await LocalAuthentication.authenticateAsync({
-      promptMessage: 'Login com Biometria',
-      fallbackLabel: 'Biometria não reconhecida',
-    });
-
-    if (auth.success) {
-      handleLogin(cpf, password);
-    } else {
-      Alert.alert('Autenticação falhou.');
     }
   }
 
