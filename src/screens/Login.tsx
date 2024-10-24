@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, Image, TouchableOpacity, Alert, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
 import * as LocalAuthentication from 'expo-local-authentication';
@@ -83,43 +83,45 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <Image source={logo} style={{ width: 300, height: 200, resizeMode: 'contain' }} />
-      <Text style={{ fontSize: 24, fontWeight: '600', marginBottom: 32 }}>Login</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+        <Image source={logo} style={{ width: 300, height: 200, resizeMode: 'contain' }} />
+        <Text style={{ fontSize: 24, fontWeight: '600', marginBottom: 32 }}>Login</Text>
 
-      <View style={{ width: '100%', marginBottom: 16 }}>
-        <Text style={{ fontWeight: '500', marginBottom: 8 }}>CPF</Text>
-        <TextInputMask
-          type={'cpf'}
-          value={formData.cpf}
-          onChangeText={(masked) => handleInputChange('cpf', masked)}
-          style={{ borderColor: '#ccc', borderWidth: 1, padding: 10, borderRadius: 5 }}
-          placeholder="Digite seu CPF"
-          keyboardType="numeric"
-        />
+        <View style={{ width: '100%', marginBottom: 16 }}>
+          <Text style={{ fontWeight: '500', marginBottom: 8 }}>CPF</Text>
+          <TextInputMask
+            type={'cpf'}
+            value={formData.cpf}
+            onChangeText={(masked) => handleInputChange('cpf', masked)}
+            style={{ borderColor: '#ccc', borderWidth: 1, padding: 10, borderRadius: 5 }}
+            placeholder="Digite seu CPF"
+            keyboardType="numeric"
+          />
+        </View>
+
+        <View style={{ width: '100%', marginBottom: 16 }}>
+          <Text style={{ fontWeight: '500', marginBottom: 8 }}>Senha</Text>
+          <TextInput
+            secureTextEntry
+            value={formData.password}
+            onChangeText={(value) => handleInputChange('password', value)}
+            style={{ borderColor: '#ccc', borderWidth: 1, padding: 10, borderRadius: 5, width: '100%' }}
+            placeholder="Digite sua senha"
+          />
+        </View>
+
+        {error && <Text style={{ color: 'red', marginBottom: 16 }}>{error}</Text>}
+        {loading && <ActivityIndicator size="large" color="#0000ff" />}
+
+        <TouchableOpacity
+          onPress={handleSubmit}
+          style={{ backgroundColor: '#007bff', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
+        >
+          <Text style={{ color: '#fff', fontSize: 16 }}>Entrar</Text>
+        </TouchableOpacity>
       </View>
-
-      <View style={{ width: '100%', marginBottom: 16 }}>
-        <Text style={{ fontWeight: '500', marginBottom: 8 }}>Senha</Text>
-        <TextInput
-          secureTextEntry
-          value={formData.password}
-          onChangeText={(value) => handleInputChange('password', value)}
-          style={{ borderColor: '#ccc', borderWidth: 1, padding: 10, borderRadius: 5, width: '100%' }}
-          placeholder="Digite sua senha"
-        />
-      </View>
-
-      {error && <Text style={{ color: 'red', marginBottom: 16 }}>{error}</Text>}
-      {loading && <ActivityIndicator size="large" color="#0000ff" />}
-
-      <TouchableOpacity
-        onPress={handleSubmit}
-        style={{ backgroundColor: '#007bff', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
-      >
-        <Text style={{ color: '#fff', fontSize: 16 }}>Entrar</Text>
-      </TouchableOpacity>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

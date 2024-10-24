@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Alert } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
-import DrawerRoutes from "./src/routes/drawer.routes"; 
+import DrawerRoutes from "./src/routes/NavBar"; 
 import Login from "./src/screens/Login";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as LocalAuthentication from 'expo-local-authentication';

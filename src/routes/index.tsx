@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DrawerRoutes from "./drawer.routes";
+import DrawerRoutes from "./NavBar";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from '../screens/Login';
 import { View } from 'react-native';

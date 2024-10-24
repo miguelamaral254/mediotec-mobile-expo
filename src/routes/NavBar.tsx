@@ -10,12 +10,12 @@ import { Text, View } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
-interface DrawerRoutesProps {
+interface NavBarProps {
   onLogout: () => void;
   userData: User | null;
 }
 
-const DrawerRoutes: React.FC<DrawerRoutesProps> = ({ onLogout, userData }) => {
+const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -64,4 +64,4 @@ const DrawerRoutes: React.FC<DrawerRoutesProps> = ({ onLogout, userData }) => {
   );
 };
 
-export default DrawerRoutes;
+export default NavBar;
