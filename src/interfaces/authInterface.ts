@@ -5,6 +5,7 @@ export interface LoginRequest {
   }
   
   export interface LoginResponse {
+    error: boolean;
     message: string;
     token: string;
     role: string; 

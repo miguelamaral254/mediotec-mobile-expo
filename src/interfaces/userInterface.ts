@@ -1,10 +1,16 @@
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  PROFESSOR = 'PROFESSOR',
+  PARENT = 'PARENT',
+  STUDENT = 'STUDENT',
+}
 
 export interface User {
   parentCPF: string;
   cpf: string;
   name: string;
   email: string;
-  role?: 'ADMIN' | 'PROFESSOR' | 'PARENT' | 'STUDENT';
+  role?: UserRole; 
   active: boolean;
   birthDate?: string;
   phone?: string;

@@ -16,7 +16,7 @@ const TabRoutes: React.FC<TabRoutesProps> = ({ userData }) => {
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen 
         name="Feed" 
-        component={Feed} 
+        children={() => <Feed role={userData?.role || 'STUDENT'} />} // Pass role to Feed
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="home" color={color} size={size} />,
           tabBarLabel: ''    

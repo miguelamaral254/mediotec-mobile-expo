@@ -31,43 +31,55 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       Alert.alert('Dispositivo não compatível com biometria.');
     }
   }
-
   const handleLogin = async (cpf: string, password: string) => {
     setLoading(true);
     setError(null);
-    
+  
     try {
       const cleanedCPF = cpf.replace(/\D/g, '');
       const userData: User = await getUserData(cleanedCPF);
-
+  
       if (!userData) {
         Alert.alert('Usuário não encontrado.');
-        return;
+        return; // Impede o redirecionamento
       }
-
+  
       if (!userData.active) {
         Alert.alert('Usuário inativo, entre em contato com a instituição.');
-        return;
+        return; // Impede o redirecionamento
       }
-
-      await login(cleanedCPF, password); 
-      await AsyncStorage.setItem('cpf', cleanedCPF);
-      await AsyncStorage.setItem('password', password);
-      onLoginSuccess(userData);
-
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'home' }],
-        })
-      );
-    } catch (err) {
+  
+      const loginResponse = await login(cleanedCPF, password);
+      
+      // Verifique se o login foi bem-sucedido antes de redirecionar
+      if (loginResponse) {
+        await AsyncStorage.setItem('cpf', cleanedCPF);
+        await AsyncStorage.setItem('password', password);
+        onLoginSuccess(userData);
+  
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'home' }],
+          })
+        );
+      } else {
+        setError('Erro de autenticação. Tente novamente.'); // Caso o login não retorne um valor esperado
+      }
+    } catch (err: any) {
       console.error(err);
-      setError('CPF ou senha incorretos.');
+      
+      // Verifica se a falha foi por falta de resposta da API
+      if (err?.response) {
+        setError('Erro ao conectar com o servidor. Tente novamente.');
+      } else {
+        setError('CPF ou senha incorretos.');
+      }
     } finally {
       setLoading(false);
     }
   };
+  
 
   const handleSubmit = () => {
     if (!formData.cpf || !formData.password) {

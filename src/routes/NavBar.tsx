@@ -31,7 +31,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
     >
       <Drawer.Screen
         name="home"
-        children={()=> <TabRoutes userData={userData}/>}
+        children={() => <TabRoutes userData={userData} />} // Passing userData to TabRoutes
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -57,7 +57,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         name="settings"
         component={Settings}
         options={{
-          drawerItemStyle: { display: 'none' }, // Para ocultar a entrada no menu
+          drawerItemStyle: { display: 'none' },
         }}
       />
     </Drawer.Navigator>
