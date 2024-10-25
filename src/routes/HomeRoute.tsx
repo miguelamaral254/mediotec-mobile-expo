@@ -11,12 +11,12 @@ interface TabRoutesProps {
   userData: User | null;
 }
 
-const TabRoutes: React.FC<TabRoutesProps> = ({ userData }) => {
+const HomeRoute: React.FC<TabRoutesProps> = ({ userData }) => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen 
         name="Feed" 
-        children={() => <Feed role={userData?.role || 'STUDENT'} />} // Pass role to Feed
+        children={() => <Feed role={userData?.role || 'STUDENT'} />} 
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="home" color={color} size={size} />,
           tabBarLabel: ''    
@@ -26,7 +26,7 @@ const TabRoutes: React.FC<TabRoutesProps> = ({ userData }) => {
         name="New" 
         children={() => <New userData={userData} />} 
         options={{
-          tabBarIcon: ({ color, size }) => <Feather name="message-square" color={color} size={size} />, // Ícone de mensagem
+          tabBarIcon: ({ color, size }) => <Feather name="message-square" color={color} size={size} />,
           tabBarLabel: ''    
         }}
       />
@@ -34,4 +34,4 @@ const TabRoutes: React.FC<TabRoutesProps> = ({ userData }) => {
   );
 }
 
-export default TabRoutes;
+export default HomeRoute;

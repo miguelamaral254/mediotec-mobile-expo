@@ -9,7 +9,7 @@ interface StackRoutesProps {
   userData: User | null; 
 }
 
-const StackRoutes: React.FC<StackRoutesProps> = ({ userData }) => {
+const ProfileRoute: React.FC<StackRoutesProps> = ({ userData }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen 
@@ -20,4 +20,4 @@ const StackRoutes: React.FC<StackRoutesProps> = ({ userData }) => {
   );
 }
 
-export default StackRoutes;
+export default ProfileRoute;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
-import TabRoutes from './tab.routes';
-import StackRoutes from './stack.routes';
+import TabRoutes from './HomeRoute';
+import ProfileRoute from './ProfileRoute';
 import CustomDrawerContent from '../components/CustomDrawerContent';
 import Settings from '../screens/Settings';
 import { User } from '../interfaces/userInterface';
@@ -43,7 +43,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
       />
       <Drawer.Screen
         name="profile"
-        children={() => <StackRoutes userData={userData} />}
+        children={() => <ProfileRoute userData={userData} />}
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
