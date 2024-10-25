@@ -10,7 +10,7 @@ import NotificationList from '../components/NotificationList';
 import { NotificationUpdateRequest } from '../interfaces/notificationUpdateRequestInterface';
 
 interface NewProps {
-  userData: User | null; // Definindo userData diretamente aqui
+  userData: User | null; 
 }
 
 const New: React.FC<NewProps> = ({ userData }) => {

@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as LocalAuthentication from 'expo-local-authentication';
 import { User } from './src/interfaces/userInterface';
 import { getUserData } from './src/services/authService';
-
+import "./global.css"
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState<User | null>(null);

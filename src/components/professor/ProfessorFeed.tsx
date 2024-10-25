@@ -6,153 +6,105 @@ const ProfessorFeed = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#f3f4f6", padding: 16 }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold", color: "#333", marginBottom: 16 }}>
+    <ScrollView className="flex-1 bg-gray-100 p-4">
+      <Text className="text-2xl font-bold text-gray-800 mb-4">
         Painel do Professor
       </Text>
-      <Text style={{ fontSize: 16, color: "#666", marginBottom: 16 }}>
+      <Text className="text-base text-gray-600 mb-4">
         Bem-vindo à área do professor! Fique por dentro das novidades.
       </Text>
 
       {/* Banner de Avisos */}
-      <View style={{ backgroundColor: "#BFDBFE", padding: 16, borderRadius: 8, marginBottom: 16 }}>
-        <Text style={{ fontSize: 18, fontWeight: "bold", color: "#B45309" }}>🚨 Avisos Importantes</Text>
-        <Text style={{ marginTop: 8, color: "#333" }}>Fique atento aos comunicados da escola:</Text>
-        <View style={{ marginTop: 8, paddingLeft: 8 }}>
-          <Text style={{ color: "#333" }}>📅 Reunião de professores dia 12/10 às 17h.</Text>
-          <Text style={{ color: "#333" }}>📝 Entrega de notas até o dia 25/10.</Text>
-          <Text style={{ color: "#333" }}>📊 Formação continuada no dia 30/10.</Text>
+      <View className="bg-blue-200 p-4 rounded-lg mb-4">
+        <Text className="text-lg font-bold text-orange-800">🚨 Avisos Importantes</Text>
+        <Text className="mt-2 text-gray-800">Fique atento aos comunicados da escola:</Text>
+        <View className="mt-2 pl-2">
+          <Text className="text-gray-800">📅 Reunião de professores dia 12/10 às 17h.</Text>
+          <Text className="text-gray-800">📝 Entrega de notas até o dia 25/10.</Text>
+          <Text className="text-gray-800">📊 Formação continuada no dia 30/10.</Text>
         </View>
       </View>
 
       {/* Grid de funcionalidades */}
-      <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "space-between" }}>
+      <View className="flex flex-row flex-wrap justify-between">
         {/* Minhas Aulas */}
         <TouchableOpacity
-          style={{
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 16,
-            width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 8,
-          }}
-       //   onPress={() => navigation.navigate("Schedules")}
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between" // Ajustado para flex-col
+          // onPress={() => navigation.navigate("Schedules")}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#333", marginBottom: 8 }}>🕒 Minhas Aulas</Text>
-          <Text style={{ fontSize: 14, color: "#666", marginBottom: 16 }}>Confira sua grade de aula.</Text>
-          <Text style={{ color: "#4666AF", fontWeight: "600", textAlign: "center" }}>Ver turmas</Text>
+          <View>
+            <Text className="text-lg font-bold text-gray-800 mb-2">🕒 Minhas Aulas</Text>
+            <Text className="text-sm text-gray-600 mb-4">Confira sua grade de aula.</Text>
+          </View>
+          <Text className="text-blue-600 font-semibold text-center">Ver turmas</Text>
         </TouchableOpacity>
 
         {/* Conceitos dos Alunos */}
         <TouchableOpacity
-          style={{
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 16,
-            width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 8,
-          }}
-         // onPress={() => navigation.navigate("Grades")}
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between" // Ajustado para flex-col
+          // onPress={() => navigation.navigate("Grades")}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#333", marginBottom: 8 }}>📚 Conceitos dos Alunos</Text>
-          <Text style={{ fontSize: 14, color: "#666", marginBottom: 16 }}>Acompanhe o desempenho dos alunos em suas disciplinas.</Text>
-          <Text style={{ color: "#4666AF", fontWeight: "600", textAlign: "center" }}>Ver conceitos</Text>
+          <View>
+            <Text className="text-lg font-bold text-gray-800 mb-2">📚 Conceitos dos Alunos</Text>
+            <Text className="text-sm text-gray-600 mb-4">Acompanhe o desempenho dos alunos em suas disciplinas.</Text>
+          </View>
+          <Text className="text-blue-600 font-semibold text-center">Ver conceitos</Text>
         </TouchableOpacity>
 
         {/* Plano de Aula */}
         <TouchableOpacity
-          style={{
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 16,
-            width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 8,
-          }}
-       //   onPress={() => navigation.navigate("LessonPlans")}
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between" // Ajustado para flex-col
+          // onPress={() => navigation.navigate("LessonPlans")}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#333", marginBottom: 8 }}>
-            📖 Plano de Aula <Text style={{ color: "#D9534F", fontWeight: "500" }}>WORK IN PROGRESS</Text>
-          </Text>
-          <Text style={{ fontSize: 14, color: "#666", marginBottom: 16 }}>Organize e visualize seus planos de aula.</Text>
-          <Text style={{ color: "#4666AF", fontWeight: "600", textAlign: "center" }}>Ver planos</Text>
+          <View>
+            <Text className="text-lg font-bold text-gray-800 mb-2">
+              📖 Plano de Aula <Text className="text-red-500 font-medium">WORK IN PROGRESS</Text>
+            </Text>
+            <Text className="text-sm text-gray-600 mb-4">Organize e visualize seus planos de aula.</Text>
+          </View>
+          <Text className="text-blue-600 font-semibold text-center">Ver planos</Text>
         </TouchableOpacity>
 
         {/* Acesso ao Canvas */}
         <TouchableOpacity
-          style={{
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 16,
-            width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 8,
-          }}
-         // onPress={() => navigation.navigate("Canvas")}
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between" // Ajustado para flex-col
+          // onPress={() => navigation.navigate("Canvas")}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#333", marginBottom: 8 }}>
-            🖥️ Acesso ao Canvas <Text style={{ color: "#D9534F", fontWeight: "500" }}>WORK IN PROGRESS</Text>
-          </Text>
-          <Text style={{ fontSize: 14, color: "#666", marginBottom: 16 }}>Mantenha-se atualizado sobre suas atividades e tarefas.</Text>
-          <Text style={{ color: "#4666AF", fontWeight: "600", textAlign: "center" }}>Ver atividades</Text>
+          <View>
+            <Text className="text-lg font-bold text-gray-800 mb-2">
+              🖥️ Acesso ao Canvas <Text className="text-red-500 font-medium">WORK IN PROGRESS</Text>
+            </Text>
+            <Text className="text-sm text-gray-600 mb-4">Mantenha-se atualizado sobre suas atividades e tarefas.</Text>
+          </View>
+          <Text className="text-blue-600 font-semibold text-center">Ver atividades</Text>
         </TouchableOpacity>
 
         {/* Calendário Escolar */}
         <TouchableOpacity
-          style={{
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 16,
-            width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 8,
-          }}
-         // onPress={() => navigation.navigate("Calendar")}
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between" // Ajustado para flex-col
+          // onPress={() => navigation.navigate("Calendar")}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#333", marginBottom: 8 }}>
-            📅 Calendário Escolar <Text style={{ color: "#D9534F", fontWeight: "500" }}>WORK IN PROGRESS</Text>
-          </Text>
-          <Text style={{ fontSize: 14, color: "#666", marginBottom: 16 }}>Veja o calendário escolar e não perca nenhuma data importante.</Text>
-          <Text style={{ color: "#4666AF", fontWeight: "600", textAlign: "center" }}>Ver calendário</Text>
+          <View>
+            <Text className="text-lg font-bold text-gray-800 mb-2">
+              📅 Calendário Escolar <Text className="text-red-500 font-medium">WORK IN PROGRESS</Text>
+            </Text>
+            <Text className="text-sm text-gray-600 mb-4">Veja o calendário escolar e não perca nenhuma data importante.</Text>
+          </View>
+          <Text className="text-blue-600 font-semibold text-center">Ver calendário</Text>
         </TouchableOpacity>
 
         {/* Contato */}
         <TouchableOpacity
-          style={{
-            backgroundColor: "#fff",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 16,
-            width: "48%",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 8,
-          }}
-          //onPress={() => navigation.navigate("Contact")}
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between" // Ajustado para flex-col
+          // onPress={() => navigation.navigate("Contact")}
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "#333", marginBottom: 8 }}>
-            📞 Contato <Text style={{ color: "#D9534F", fontWeight: "500" }}>WORK IN PROGRESS</Text>
-          </Text>
-          <Text style={{ fontSize: 14, color: "#666", marginBottom: 16 }}>Entre em contato com a administração ou outros professores.</Text>
-          <Text style={{ color: "#4666AF", fontWeight: "600", textAlign: "center" }}>Ver contato</Text>
+          <View>
+            <Text className="text-lg font-bold text-gray-800 mb-2">
+              📞 Contato <Text className="text-red-500 font-medium">WORK IN PROGRESS</Text>
+            </Text>
+            <Text className="text-sm text-gray-600 mb-4">Entre em contato com a administração ou outros professores.</Text>
+          </View>
+          <Text className="text-blue-600 font-semibold text-center">Ver contato</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
