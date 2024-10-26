@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { Feather } from "@expo/vector-icons";
-import { DrawerContentScrollView, DrawerItemList, DrawerContentComponentProps, DrawerItem } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerItemList, DrawerContentComponentProps } from '@react-navigation/drawer';
 import { User } from '../interfaces/userInterface';
 
 interface CustomDrawerContentProps extends DrawerContentComponentProps {
@@ -12,33 +12,33 @@ interface CustomDrawerContentProps extends DrawerContentComponentProps {
 const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ onLogout, userData, ...props }) => {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, backgroundColor: '#1E1E1E' }}>
-      <View style={{ padding: 16, backgroundColor: '#2A2A2A', borderBottomWidth: 1, borderBottomColor: '#ccc', alignItems: 'center' }}>
+      <View className="p-4 bg-secondary-color border-b border-gray-300 items-center">
         <Image
           source={require('../assets/avatar.png')}
-          style={{ width: 80, height: 80, borderRadius: 40, marginBottom: 8 }}
+          className="w-20 h-20 rounded-full mb-2"
         />
         {userData ? (
-          <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: 'bold' }}>Bem vindo, {userData.name}</Text>
+          <Text className="text-white text-lg font-bold">Bem vindo, {userData.name}</Text>
         ) : (
-          <Text style={{ color: '#FFFFFF', fontSize: 14 }}>Carregando...</Text>
+          <Text className="text-white text-sm">Carregando...</Text>
         )}
       </View>
-      <View style={{ flex: 1 }}>
+      <View className="flex-1">
         <DrawerItemList {...props} />
       </View>
-      <View style={{ borderTopWidth: 1, borderTopColor: '#ccc', padding: 16 }}>
+      <View className="border-t border-gray-300 p-4">
         {/* Configurações */}
         <TouchableOpacity 
           onPress={() => props.navigation.navigate('settings')} 
-          style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 16 }}
+          className="flex-row items-center py-4"
         >
-          <Feather name="settings" color="#FFFFFF" size={20} />
-          <Text style={{ marginLeft: 8, color: '#FFFFFF' }}>Configurações</Text>
+          <Feather name="settings" className="text-white" size={20} />
+          <Text className="ml-2 text-white">Configurações</Text>
         </TouchableOpacity>
         {/* Logout */}
-        <TouchableOpacity onPress={onLogout} style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 16 }}>
+        <TouchableOpacity onPress={onLogout} className="flex-row items-center py-4">
           <Feather name="log-out" size={20} color="#FFFFFF" />
-          <Text style={{ marginLeft: 8, color: '#FFFFFF' }}>Logout</Text>
+          <Text className="ml-2 text-white">Logout</Text>
         </TouchableOpacity>
       </View>
     </DrawerContentScrollView>

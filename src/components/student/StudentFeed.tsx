@@ -7,10 +7,10 @@ const StudentFeed = () => {
 
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-gray-800 mb-4">
+      <Text className="text-2xl font-bold text-primary-color mb-4">
         Painel do Estudante
       </Text>
-      <Text className="text-base text-gray-600 mb-4">
+      <Text className="text-base text-secondary-color mb-4">
         Bem-vindo à área do estudante! Fique por dentro das novidades.
       </Text>
 
@@ -33,10 +33,9 @@ const StudentFeed = () => {
           // onPress={() => navigation.navigate("Schedules")}
         >
           <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">🕒 Grade de Horários</Text>
-            <Text className="text-sm text-gray-600 mb-4">Confira sua grade de horários e não perca nenhuma aula!</Text>
+            <Text className="text-lg font-bold text-primary-color mb-2">🕒 Grade de Horários</Text>
+            <Text className="text-sm text-secondary-color mb-4">Confira sua grade de horários e não perca nenhuma aula!</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver grade de horários</Text>
         </TouchableOpacity>
 
         {/* Conceitos */}
@@ -45,10 +44,9 @@ const StudentFeed = () => {
           // onPress={() => navigation.navigate("Grades")}
         >
           <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">📚 Conceitos</Text>
-            <Text className="text-sm text-gray-600 mb-4">Acompanhe suas notas e desempenho nas disciplinas.</Text>
+            <Text className="text-lg font-bold text-primary-color mb-2">📚 Conceitos</Text>
+            <Text className="text-sm text-secondary-color mb-4">Acompanhe suas notas e desempenho nas disciplinas.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver meus conceitos</Text>
         </TouchableOpacity>
 
         {/* Disciplinas */}
@@ -56,12 +54,11 @@ const StudentFeed = () => {
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
         >
           <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">
+            <Text className="text-lg font-bold text-primary-color mb-2">
               📘 Disciplinas <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
             </Text>
-            <Text className="text-sm text-gray-600 mb-4">Confira as disciplinas em que você está matriculado.</Text>
+            <Text className="text-sm text-secondary-color mb-4">Confira as disciplinas em que você está matriculado.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver disciplinas</Text>
         </TouchableOpacity>
 
         {/* Acesso ao Canvas */}
@@ -69,12 +66,11 @@ const StudentFeed = () => {
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
         >
           <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">
+            <Text className="text-lg font-bold text-primary-color mb-2">
               🖥️ Acesso ao Canvas <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
             </Text>
-            <Text className="text-sm text-gray-600 mb-4">Fique em dia com suas atividades e tarefas.</Text>
+            <Text className="text-sm text-secondary-color mb-4">Fique em dia com suas atividades e tarefas.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver atividades</Text>
         </TouchableOpacity>
 
         {/* Calendário Escolar */}
@@ -82,12 +78,11 @@ const StudentFeed = () => {
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
         >
           <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">
+            <Text className="text-lg font-bold text-primary-color mb-2">
               📅 Calendário Escolar <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
             </Text>
-            <Text className="text-sm text-gray-600 mb-4">Veja o calendário escolar e não perca nenhuma data importante.</Text>
+            <Text className="text-sm text-secondary-color mb-4">Veja o calendário escolar e não perca nenhuma data importante.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver calendário</Text>
         </TouchableOpacity>
 
         {/* Contato */}
@@ -95,12 +90,11 @@ const StudentFeed = () => {
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
         >
           <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">
+            <Text className="text-lg font-bold text-primary-color mb-2">
               📞 Contato <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
             </Text>
-            <Text className="text-sm text-gray-600 mb-4">Entre em contato com seus professores ou a administração.</Text>
+            <Text className="text-sm text-secondary-color mb-4">Entre em contato com seus professores ou a administração.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver informações de contato</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

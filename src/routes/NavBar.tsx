@@ -23,7 +23,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         headerTitle: '',
         drawerActiveTintColor: '#FFFFFF',
         drawerInactiveTintColor: '#FFFFFF',
-        drawerActiveBackgroundColor: '#0000FF',
+        drawerActiveBackgroundColor: 'bg-primary-color',
         drawerLabelStyle: { color: '#FFFFFF' },
       }}
       drawerContent={(props: DrawerContentComponentProps) => (
@@ -35,9 +35,9 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         children={() => <TabRoutes userData={userData} />} // Passing userData to TabRoutes
         options={{
           drawerLabel: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="home" color="#FFFFFF" size={20} />
-              <Text style={{ color: '#FFFFFF', marginLeft: 8 }}>Início</Text>
+            <View className="flex-row items-center">
+              <Feather name="home" className="text-secondary-color" size={20} />
+              <Text className="text-secondary-color ml-2">Início</Text>
             </View>
           ),
         }}
@@ -47,9 +47,9 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         children={() => <ProfileRoute userData={userData} />}
         options={{
           drawerLabel: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="user" color="#FFFFFF" size={20} />
-              <Text style={{ color: '#FFFFFF', marginLeft: 8 }}>Meu perfil</Text>
+            <View className="flex-row items-center">
+              <Feather name="user" className="text-secondary-color" size={20} />
+              <Text className="text-secondary-color ml-2">Meu perfil</Text>
             </View>
           ),
         }}
@@ -60,9 +60,9 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           children={() => <StudentGradesRoute userData={userData} />}
           options={{
             drawerLabel: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="user" color="#FFFFFF" size={20} />
-                <Text style={{ color: '#FFFFFF', marginLeft: 8 }}>Meus conceitos</Text>
+              <View className="flex-row items-center">
+                <Feather name="user" className="text-secondary-color" size={20} />
+                <Text className="text-secondary-color ml-2">Meus conceitos</Text>
               </View>
             ),
           }}
