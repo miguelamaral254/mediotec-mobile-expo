@@ -15,22 +15,23 @@ const Profile: React.FC<ProfileProps> = ({ userData }) => {
       </Text>
       {userData ? (
         <View className="bg-gray-100 p-5 rounded-lg shadow-lg">
-          {userData.name && (
-            <View className="mb-4">
-              <Text className="text-lg font-semibold">Nome:</Text>
-              <Text className="text-lg">{userData.name}</Text>
+          {/* Avatar e Nome */}
+          <View className="mb-6 items-center">
+            <View className="w-36 h-36 rounded-full bg-white items-center justify-center shadow-lg mb-4">
+              <Text className="text-6xl font-bold">RN</Text>
             </View>
-          )}
+            <Text className="text-2xl font-semibold">{userData.name}</Text>
+          </View>
+
+          {/* Informações do usuário */}
+          <View className="mb-4">
+            <Text className="text-lg font-semibold">Email:</Text>
+            <Text className="text-lg">{userData.email}</Text>
+          </View>
           {userData.cpf && (
             <View className="mb-4">
               <Text className="text-lg font-semibold">CPF:</Text>
               <Text className="text-lg">{formatCPF(userData.cpf)}</Text>
-            </View>
-          )}
-          {userData.email && (
-            <View className="mb-4">
-              <Text className="text-lg font-semibold">Email:</Text>
-              <Text className="text-lg">{userData.email}</Text>
             </View>
           )}
           {userData.phone && (

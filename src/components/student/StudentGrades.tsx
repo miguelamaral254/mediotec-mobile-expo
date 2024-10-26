@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { ResponseGradeInterface } from '../../interfaces/responseGradeInterface';
 import { getAssessmentsByStudentCpf } from '../../services/gradesService';
-
+import { calculateFinalAverageAndSituation, Concept, fromScore } from '../../utils/gradesConceptUtils';
 
 interface StudentGradesProps {
   studentCpf: string;
@@ -41,15 +41,58 @@ const StudentGrades: React.FC<StudentGradesProps> = ({ studentCpf, disciplineId 
     return <Text className="text-center text-gray-500 text-lg">Nenhuma nota disponível.</Text>;
   }
 
+  // Cálculo das médias e situação
+  const { average, finalAverage, situation } = calculateFinalAverageAndSituation(grades);
+
+  // Notas específicas
+  const av1 = grades.find((grade) => grade.evaluationType === 'AV1')?.evaluation;
+  const av2 = grades.find((grade) => grade.evaluationType === 'AV2')?.evaluation;
+  const av3 = grades.find((grade) => grade.evaluationType === 'AV3')?.evaluation;
+  const av4 = grades.find((grade) => grade.evaluationType === 'AV4')?.evaluation;
+  const recovery = grades.find((grade) => grade.evaluationType === 'RECOVERY')?.evaluation;
+
   return (
     <View className="mt-4 p-4 bg-gray-100 rounded-lg">
-      {grades.map((grade) => (
-        <View key={grade.id} className="mb-3 p-3 bg-white rounded-lg">
-          <Text className="font-bold text-lg">{grade.evaluationType}</Text>
-          <Text>Nota: {grade.evaluation}</Text>
-          <Text>Data: {new Date(grade.evaluationDate).toLocaleDateString()}</Text>
+      <View className="border border-gray-300 rounded-lg overflow-hidden">
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1 font-bold">Tipo de Avaliação</Text>
+          <Text className="flex-1 font-bold text-center">Conceito</Text>
         </View>
-      ))}
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">AV1</Text>
+          <Text className="flex-1 text-center">{av1 !== undefined ? fromScore(Number(av1)) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">AV2</Text>
+          <Text className="flex-1 text-center">{av2 !== undefined ? fromScore(Number(av2)) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">AV3</Text>
+          <Text className="flex-1 text-center">{av3 !== undefined ? fromScore(Number(av3)) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">AV4</Text>
+          <Text className="flex-1 text-center">{av4 !== undefined ? fromScore(Number(av4)) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">Média</Text>
+          <Text className="flex-1 text-center">{average !== null ? fromScore(average) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">Recuperação</Text>
+          <Text className="flex-1 text-center">{recovery !== undefined ? fromScore(Number(recovery)) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+          <Text className="flex-1">Média Final</Text>
+          <Text className="flex-1 text-center">{finalAverage !== null ? fromScore(finalAverage) : ''}</Text>
+        </View>
+        <View className="flex flex-row justify-between py-2 px-3">
+          <Text className="flex-1">Situação</Text>
+          <Text className={`flex-1 text-center ${situation === 'Aprovado' ? 'text-green-500' : 'text-red-500'}`}>
+            {situation !== null ? (situation === 'Aprovado' ? 'Aprovado' : 'Reprovado') : ''}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };

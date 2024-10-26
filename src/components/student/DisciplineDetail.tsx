@@ -21,7 +21,7 @@ const DisciplineDetail: React.FC<DisciplineDetailProps> = ({ route }) => {
       <Text className="text-gray-600 text-lg mb-1">{discipline.description}</Text>
       <Text className="text-gray-600 text-lg mb-4">Carga Horária: {discipline.workload} horas</Text>
 
-      <Text className="text-xl font-bold mt-4 mb-2">Notas:</Text>
+      <Text className="text-xl font-bold mt-4 mb-2">Conceitos:</Text>
       <StudentGrades studentCpf={studentCpf} disciplineId={discipline.id!} />
     </View>
   );
