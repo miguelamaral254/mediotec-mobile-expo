@@ -7,6 +7,7 @@ import Settings from '../screens/Settings';
 import { User } from '../interfaces/userInterface';
 import { Feather } from "@expo/vector-icons";
 import { Text, View } from 'react-native';
+import StudentGradesRoute from './StudentGradesRoute';
 
 const Drawer = createDrawerNavigator();
 
@@ -53,6 +54,20 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           ),
         }}
       />
+      {userData?.role === 'STUDENT' && ( 
+        <Drawer.Screen
+          name="grades"
+          children={() => <StudentGradesRoute userData={userData} />}
+          options={{
+            drawerLabel: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Feather name="user" color="#FFFFFF" size={20} />
+                <Text style={{ color: '#FFFFFF', marginLeft: 8 }}>Meus conceitos</Text>
+              </View>
+            ),
+          }}
+        />
+      )}
       <Drawer.Screen
         name="settings"
         component={Settings}
