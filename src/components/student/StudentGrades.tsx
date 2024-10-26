@@ -58,34 +58,20 @@ const StudentGrades: React.FC<StudentGradesProps> = ({ studentCpf, disciplineId 
           <Text className="flex-1 font-bold">Tipo de Avaliação</Text>
           <Text className="flex-1 font-bold text-center">Conceito</Text>
         </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">AV1</Text>
-          <Text className="flex-1 text-center">{av1 !== undefined ? fromScore(Number(av1)) : ''}</Text>
-        </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">AV2</Text>
-          <Text className="flex-1 text-center">{av2 !== undefined ? fromScore(Number(av2)) : ''}</Text>
-        </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">AV3</Text>
-          <Text className="flex-1 text-center">{av3 !== undefined ? fromScore(Number(av3)) : ''}</Text>
-        </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">AV4</Text>
-          <Text className="flex-1 text-center">{av4 !== undefined ? fromScore(Number(av4)) : ''}</Text>
-        </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">Média</Text>
-          <Text className="flex-1 text-center">{average !== null ? fromScore(average) : ''}</Text>
-        </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">Recuperação</Text>
-          <Text className="flex-1 text-center">{recovery !== undefined ? fromScore(Number(recovery)) : ''}</Text>
-        </View>
-        <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
-          <Text className="flex-1">Média Final</Text>
-          <Text className="flex-1 text-center">{finalAverage !== null ? fromScore(finalAverage) : ''}</Text>
-        </View>
+        {[
+          { label: 'AV1', value: av1 },
+          { label: 'AV2', value: av2 },
+          { label: 'AV3', value: av3 },
+          { label: 'AV4', value: av4 },
+          { label: 'Média', value: average },
+          { label: 'Recuperação', value: recovery },
+          { label: 'Média Final', value: finalAverage },
+        ].map(({ label, value }) => (
+          <View key={label} className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
+            <Text className="flex-1">{label}</Text>
+            <Text className="flex-1 text-center">{value !== undefined ? fromScore(Number(value)) : ''}</Text>
+          </View>
+        ))}
         <View className="flex flex-row justify-between py-2 px-3">
           <Text className="flex-1">Situação</Text>
           <Text className={`flex-1 text-center ${situation === 'Aprovado' ? 'text-green-500' : 'text-red-500'}`}>

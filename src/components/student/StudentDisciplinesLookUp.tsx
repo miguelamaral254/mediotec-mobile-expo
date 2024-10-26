@@ -44,11 +44,11 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000FF" />;
+    return <ActivityIndicator size="large" color="#06B6D4" />;
   }
 
   if (error) {
-    return <Text className="text-red-500 text-center">{error}</Text>;
+    return <Text className="text-fifth-color text-center">{error}</Text>;
   }
 
   return (
@@ -57,11 +57,9 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
         <TouchableOpacity
           key={item.id}
           onPress={() => handleDisciplinePress(item)}
-          className="mb-4 p-4 bg-white rounded-lg shadow-md"
+          className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300"
         >
-          <Text className="text-lg font-bold text-gray-800">{item.name}</Text>
-          <Text className="text-gray-600">{item.description}</Text>
-          <Text className="text-gray-600">Carga Horária: {item.workload} horas</Text>
+          <Text className="text-2xl font-bold text-primary-color text-center">{item.name}</Text>
         </TouchableOpacity>
       ))}
     </ScrollView>
