@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { DisciplineInterface } from '../../interfaces/disciplineInterface';
-import { getAllDiscipline } from '../../services/disciplineService';
+import { getDisciplinesByStudentCpf } from '../../services/disciplineService';
 import { User } from '../../interfaces/userInterface';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: DisciplineInterface };
+  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
 };
 
-const StudentDisciplinesLookUp = ({ userData }: { userData: User | null }) => {
+interface StudentDisciplinesLookUpProps {
+  userData: User | null;
+}
+
+const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ userData }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [disciplines, setDisciplines] = useState<DisciplineInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,7 +23,7 @@ const StudentDisciplinesLookUp = ({ userData }: { userData: User | null }) => {
     const fetchDisciplines = async () => {
       if (userData?.cpf) {
         try {
-          const response = await getAllDiscipline();
+          const response = await getDisciplinesByStudentCpf(userData.cpf);
           setDisciplines(response);
         } catch (err) {
           setError('Erro ao carregar as disciplinas');
@@ -36,7 +40,7 @@ const StudentDisciplinesLookUp = ({ userData }: { userData: User | null }) => {
   }, [userData]);
 
   const handleDisciplinePress = (discipline: DisciplineInterface) => {
-    navigation.navigate('DisciplineDetail', { discipline });
+    navigation.navigate('DisciplineDetail', { discipline, studentCpf: userData!.cpf });
   };
 
   if (loading) {
@@ -53,7 +57,7 @@ const StudentDisciplinesLookUp = ({ userData }: { userData: User | null }) => {
         <TouchableOpacity
           key={item.id}
           onPress={() => handleDisciplinePress(item)}
-          className="mb-4 p-4 bg-white rounded-lg shadow"
+          className="mb-4 p-4 bg-white rounded-lg shadow-md"
         >
           <Text className="text-lg font-bold text-gray-800">{item.name}</Text>
           <Text className="text-gray-600">{item.description}</Text>

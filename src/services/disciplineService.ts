@@ -21,3 +21,7 @@ export const updateDiscipline = async (id: string, disciplineData: Omit<Discipli
   const response = await api.put<DisciplineInterface>(`/disciplines/${id}`, disciplineData);
   return response.data;
 };
+export const getDisciplinesByStudentCpf = async (cpf: string): Promise<DisciplineInterface[]> => {
+  const response = await api.get<DisciplineInterface[]>(`/disciplines/student/${cpf}`);
+  return response.data;
+};
