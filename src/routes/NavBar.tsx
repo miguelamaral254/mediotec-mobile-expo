@@ -1,13 +1,14 @@
 import React from 'react';
 import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
+import { Text, View } from 'react-native';
+import { Feather } from "@expo/vector-icons";
+import CustomDrawerContent from '../components/CustomDrawerContent';
 import TabRoutes from './HomeRoute';
 import ProfileRoute from './ProfileRoute';
-import CustomDrawerContent from '../components/CustomDrawerContent';
 import Settings from '../screens/Settings';
-import { User } from '../interfaces/userInterface';
-import { Feather } from "@expo/vector-icons";
-import { Text, View } from 'react-native';
 import StudentGradesRoute from './StudentGradesRoute';
+import { User } from '../interfaces/userInterface';
+import Schedule from '../screens/Schedule';
 
 const Drawer = createDrawerNavigator();
 
@@ -32,7 +33,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
     >
       <Drawer.Screen
         name="home"
-        children={() => <TabRoutes userData={userData} />} // Passing userData to TabRoutes
+        children={() => <TabRoutes userData={userData} />}
         options={{
           drawerLabel: () => (
             <View className="flex-row items-center">
@@ -54,7 +55,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           ),
         }}
       />
-      {userData?.role === 'STUDENT' && ( 
+      {userData?.role === 'STUDENT' && (
         <Drawer.Screen
           name="grades"
           children={() => <StudentGradesRoute userData={userData} />}
@@ -63,6 +64,20 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
               <View className="flex-row items-center">
                 <Feather name="user" className="text-secondary-color" size={20} />
                 <Text className="text-secondary-color ml-2">Meus conceitos</Text>
+              </View>
+            ),
+          }}
+        />
+      )}
+      {userData && (
+        <Drawer.Screen
+          name="schedule"
+          children={() => <Schedule userData={userData} />} // Usando ScheduleRoute aqui
+          options={{
+            drawerLabel: () => (
+              <View className="flex-row items-center">
+                <Feather name="calendar" className="text-secondary-color" size={20} />
+                <Text className="text-secondary-color ml-2">Meu Horário</Text>
               </View>
             ),
           }}
