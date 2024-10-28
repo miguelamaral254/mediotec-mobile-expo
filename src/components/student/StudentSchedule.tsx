@@ -1,8 +1,10 @@
+// src/components/StudentSchedule.tsx
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { getLessonsByCpf } from '../../services/lessonsService';
-import { Lesson } from '../../interfaces/LessonInterface';
-import { WeekDay, TimeSlot } from '../../interfaces/LessonInterface'; 
+import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface'; 
+import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/mappingUtils';
 
 const daysOfWeek = Object.values(WeekDay);
 const timeSlots = Object.values(TimeSlot);
@@ -58,12 +60,12 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
         <View className="flex flex-row bg-gray-200">
           <Text className="flex-1 p-2 font-bold text-center"></Text>
           {daysOfWeek.map((day) => (
-            <Text key={day} className="flex-1 p-2 font-bold text-center">{day}</Text>
+            <Text key={day} className="flex-1 p-2 font-bold text-center">{mapWeekDayToPortuguese(day)}</Text>
           ))}
         </View>
         {schedule.map((row, rowIndex) => (
           <View key={rowIndex} className="flex flex-row">
-            <Text className="w-24 p-2 bg-gray-100 border-b border-gray-300 text-center">{timeSlots[rowIndex]}</Text>
+            <Text className="w-24 p-2 bg-gray-100 border-b border-gray-300 text-center">{mapTimeSlotToPortuguese(timeSlots[rowIndex])}</Text>
             {row.map((lesson, colIndex) => (
               <View
                 key={colIndex}
@@ -74,7 +76,7 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
                 {lesson ? (
                   <Text className="text-center">{lesson.name || 'No name provided'}</Text>
                 ) : (
-                  <Text className="text-center">Livre</Text>
+                  <Text className="text-center"></Text>
                 )}
               </View>
             ))}

@@ -1,7 +1,9 @@
+// src/interfaces/LessonInterface.ts
+
 import { DisciplineInterface } from "./disciplineInterface";
 import { SchoolClass } from "./schoolClassInterface";
 
-// Enums para representar os dias da semana e horários
+// Enums para representar os dias da semana
 export enum WeekDay {
   MONDAY = "MONDAY",
   TUESDAY = "TUESDAY",
@@ -9,9 +11,10 @@ export enum WeekDay {
   THURSDAY = "THURSDAY",
   FRIDAY = "FRIDAY",
   SATURDAY = "SATURDAY",
-  SUNDAY = "SUNDAY"
+  SUNDAY = "SUNDAY",
 }
 
+// Enums para representar os horários
 export enum TimeSlot {
   SEVEN_THIRTY = "SEVEN_THIRTY",
   EIGHT_TWENTY = "EIGHT_TWENTY",
@@ -25,7 +28,7 @@ export enum TimeSlot {
   THREE_TEN = "THREE_TEN",
   THREE_THIRTY = "THREE_THIRTY",
   FOUR_TEN = "FOUR_TEN",
-  FIVE_O_CLOCK = "FIVE_O_CLOCK"
+  FIVE_O_CLOCK = "FIVE_O_CLOCK",
 }
 
 export interface Student {
@@ -37,6 +40,7 @@ export interface Professor {
   name: string;
   cpf: string;
 }
+
 export interface Lesson {
   id: number;
   name: string;
