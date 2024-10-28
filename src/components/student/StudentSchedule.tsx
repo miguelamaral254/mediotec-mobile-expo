@@ -9,6 +9,9 @@ import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/map
 const daysOfWeek = Object.values(WeekDay);
 const timeSlots = Object.values(TimeSlot);
 
+const SCHEDULE_BOX_SIZE = 100; // Aumentando a largura das células para coincidir com o cabeçalho
+const HEADER_BOX_SIZE = 100;
+
 const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -17,7 +20,6 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
     const fetchLessons = async () => {
       try {
         const response = await getLessonsByCpf(cpf);
-        console.log("Fetched lessons:", response);
         if (Array.isArray(response)) {
           setLessons(response);
         } else {
@@ -45,36 +47,51 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
 
   lessons.forEach((lesson) => {
     const dayIndex = daysOfWeek.indexOf(lesson.weekDay);
-    const timeIndex = timeSlots.indexOf(lesson.startTime);
-
-    if (dayIndex === -1 || timeIndex === -1) {
-      console.warn(`Invalid day or time mapping: weekDay=${lesson.weekDay}, startTime=${lesson.startTime}`);
+    const startIndex = timeSlots.indexOf(lesson.startTime);
+    
+    if (dayIndex !== -1 && startIndex !== -1) {
+      schedule[startIndex][dayIndex] = lesson;
     } else {
-      schedule[timeIndex][dayIndex] = lesson;
+      console.warn(`Invalid day or time mapping: weekDay=${lesson.weekDay}, startTime=${lesson.startTime}`);
     }
   });
 
+  const timeIntervals = timeSlots.map((time, index) => {
+    const nextIndex = index + 1;
+    return nextIndex < timeSlots.length ? `${mapTimeSlotToPortuguese(time)} - ${mapTimeSlotToPortuguese(timeSlots[nextIndex])}` : null;
+  });
+
   return (
-    <ScrollView className="flex-1 p-5 bg-gray-100">
+    <ScrollView className="flex-1 p-5 bg-gray-100" horizontal showsHorizontalScrollIndicator={true}>
       <View className="border border-gray-300 rounded-lg overflow-hidden">
         <View className="flex flex-row bg-gray-200">
-          <Text className="flex-1 p-2 font-bold text-center"></Text>
+          <Text className="w-24 p-4 font-bold text-center"></Text>
           {daysOfWeek.map((day) => (
-            <Text key={day} className="flex-1 p-2 font-bold text-center">{mapWeekDayToPortuguese(day)}</Text>
+            <Text 
+              key={day} 
+              className={`w-${HEADER_BOX_SIZE} p-4 font-bold text-center`}
+              style={{ width: HEADER_BOX_SIZE }}
+            >
+              {mapWeekDayToPortuguese(day)}
+            </Text>
           ))}
         </View>
         {schedule.map((row, rowIndex) => (
           <View key={rowIndex} className="flex flex-row">
-            <Text className="w-24 p-2 bg-gray-100 border-b border-gray-300 text-center">{mapTimeSlotToPortuguese(timeSlots[rowIndex])}</Text>
+            <Text className="w-24 p-4 bg-gray-100 border-b border-gray-300 text-center">
+              {timeIntervals[rowIndex]}
+            </Text>
             {row.map((lesson, colIndex) => (
               <View
                 key={colIndex}
-                className={`flex-1 p-2 border-b border-l border-gray-300 justify-center items-center ${
-                  lesson ? 'bg-green-200' : 'bg-white'
-                }`}
+                className={`flex justify-center items-center border-b border-l border-gray-300`}
+                style={{ width: SCHEDULE_BOX_SIZE, height: SCHEDULE_BOX_SIZE }}
               >
                 {lesson ? (
-                  <Text className="text-center">{lesson.name || 'No name provided'}</Text>
+                  <View className="p-2">
+                    <Text className="text-center text-sm">{lesson.discipline?.name || 'No discipline'}</Text>
+                    <Text className="text-center text-sm">Sala:{lesson.room || 'No room'}</Text>
+                  </View>
                 ) : (
                   <Text className="text-center"></Text>
                 )}
