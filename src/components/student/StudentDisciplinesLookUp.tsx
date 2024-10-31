@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { DisciplineInterface } from '../../interfaces/disciplineInterface';
 import { getDisciplinesByStudentCpf } from '../../services/disciplineService';
 import { User } from '../../interfaces/userInterface';

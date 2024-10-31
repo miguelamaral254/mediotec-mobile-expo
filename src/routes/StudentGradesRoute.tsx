@@ -7,7 +7,7 @@ import { DisciplineInterface } from '../interfaces/disciplineInterface';
 
 type RootStackParamList = {
   Disciplines: undefined;
-  DisciplineDetail: { discipline: DisciplineInterface };
+  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

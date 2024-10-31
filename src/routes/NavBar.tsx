@@ -9,6 +9,7 @@ import Settings from '../screens/Settings';
 import StudentGradesRoute from './StudentGradesRoute';
 import { User } from '../interfaces/userInterface';
 import Schedule from '../screens/Schedule';
+import RelatedStudentsRoute from './RelatedStudentsRoute';
 
 const Drawer = createDrawerNavigator();
 
@@ -36,9 +37,9 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         children={() => <TabRoutes userData={userData} />}
         options={{
           drawerLabel: () => (
-            <View className="flex-row items-center">
-              <Feather name="home" className="text-secondary-color" size={20} />
-              <Text className="text-secondary-color ml-2">Início</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Feather name="home" color="#FFFFFF" size={20} />
+              <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Início</Text>
             </View>
           ),
         }}
@@ -48,9 +49,9 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         children={() => <ProfileRoute userData={userData} />}
         options={{
           drawerLabel: () => (
-            <View className="flex-row items-center">
-              <Feather name="user" className="text-secondary-color" size={20} />
-              <Text className="text-secondary-color ml-2">Meu perfil</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Feather name="user" color="#FFFFFF" size={20} />
+              <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meu perfil</Text>
             </View>
           ),
         }}
@@ -61,23 +62,37 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           children={() => <StudentGradesRoute userData={userData} />}
           options={{
             drawerLabel: () => (
-              <View className="flex-row items-center">
-                <Feather name="user" className="text-secondary-color" size={20} />
-                <Text className="text-secondary-color ml-2">Meus conceitos</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Feather name="book" color="#FFFFFF" size={20} />
+                <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meus conceitos</Text>
               </View>
             ),
           }}
         />
       )}
-      {userData && (
+      {userData && (userData.role === 'STUDENT' || userData.role === 'PROFESSOR') && (
         <Drawer.Screen
           name="schedule"
-          children={() => <Schedule userData={userData} />} // Usando ScheduleRoute aqui
+          children={() => <Schedule userData={userData} />}
           options={{
             drawerLabel: () => (
-              <View className="flex-row items-center">
-                <Feather name="calendar" className="text-secondary-color" size={20} />
-                <Text className="text-secondary-color ml-2">Meu Horário</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Feather name="calendar" color="#FFFFFF" size={20} />
+                <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meu Horário</Text>
+              </View>
+            ),
+          }}
+        />
+      )}
+      {userData?.role === 'PARENT' && (
+        <Drawer.Screen
+          name="relatedStudents"
+          children={() => <RelatedStudentsRoute userData={userData} />}
+          options={{
+            drawerLabel: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Feather name="users" color="#FFFFFF" size={20} />
+                <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Estudantes Relacionados</Text>
               </View>
             ),
           }}

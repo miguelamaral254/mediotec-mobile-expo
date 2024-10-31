@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import StudentFeed from '../components/student/StudentFeed';
-import ProfessorFeed from '../components/professor/ProfessorFeed';
+import ParentFeed from '../components/parent/ParentFeed';
 
 interface FeedProps {
   role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT'; // Ensure these match your User interface
@@ -13,14 +13,14 @@ const Feed: React.FC<FeedProps> = ({ role }) => {
       case 'STUDENT':
         return <StudentFeed />;
       case 'PROFESSOR':
-        return <ProfessorFeed />
+        return <ParentFeed/>
       case 'ADMIN':
         return (
           <WelcomeMessage title="Professor Feed" subtitle="Bem-vindo, Professor!" />
         );
       case 'PARENT':
         return (
-          <WelcomeMessage title="Parent Feed" subtitle="Bem-vindo, Responsável!" />
+          <ParentFeed />
         );
       default:
         return null; 
