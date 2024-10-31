@@ -6,10 +6,14 @@ import { User } from '../interfaces/userInterface';
 import { Student } from '../interfaces/studentInterface';
 import { getStudentByCpf } from '../services/userService';
 import StudentDetails from '../components/parent/StudentDetail';
+import StudentGradesRoute from './StudentGradesRoute';
+import Schedule from '../screens/Schedule';
 
 type RelatedStudentsParamList = {
   RelatedStudents: undefined;
   StudentDetails: { student: Student };
+  Grades: { student: Student };
+  Schedule: { student: Student };
 };
 
 const Stack = createStackNavigator<RelatedStudentsParamList>();
@@ -72,10 +76,25 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         name="StudentDetails"
         children={({ route }) => (
           <StudentDetails 
-            route={route} // Passando o route diretamente
+            route={route} 
+            navigation={undefined} 
           />
         )}
         options={{ title: 'Detalhes do Estudante' }}
+      />
+      <Stack.Screen
+        name="Grades"
+        children={({ route }) => (
+          <StudentGradesRoute userData={userData} />
+        )}
+        options={{ title: 'Conceitos do Estudante' }}
+      />
+      <Stack.Screen
+        name="Schedule"
+        children={({ route }) => (
+          <Schedule userData={route.params?.student} />
+        )}
+        options={{ title: 'Horários do Estudante' }}
       />
     </Stack.Navigator>
   );

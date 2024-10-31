@@ -1,13 +1,16 @@
+// StudentGradesRoute.tsx
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { User } from '../interfaces/userInterface';
 import StudentDisciplinesLookUp from '../components/student/StudentDisciplinesLookUp';
 import DisciplineDetail from '../components/student/DisciplineDetail';
+import Schedule from '../screens/Schedule';
 import { DisciplineInterface } from '../interfaces/disciplineInterface';
 
 type RootStackParamList = {
   Disciplines: undefined;
   DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
+  Schedule: { userData: User | null };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -26,6 +29,12 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData }) => {
       <Stack.Screen 
         name="DisciplineDetail" 
         children={({ route }) => <DisciplineDetail route={route} />} 
+      />
+      <Stack.Screen 
+        name="Schedule" 
+        children={({ route }) => (
+          <Schedule route={{ params: { userData } }} />
+        )}
       />
     </Stack.Navigator>
   );

@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { User } from '../../interfaces/userInterface';
 
-const ParentFeed = () => {
+interface ParentFeedProps {
+  userData: User | null; 
+}
+
+const ParentFeed: React.FC<ParentFeedProps> = ({ userData }) => {
   const navigation = useNavigation();
 
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-gray-800 mb-4">
-        Painel dos Pais
-      </Text>
+      <Text className="text-2xl font-bold text-gray-800 mb-4">Painel dos Pais</Text>
       <Text className="text-base text-gray-600 mb-4">
         Bem-vindo à área dos pais! Acompanhe o desempenho dos seus filhos.
       </Text>
@@ -17,11 +20,16 @@ const ParentFeed = () => {
       {/* Lista de Filhos */}
       <View className="bg-blue-200 p-4 rounded-lg mb-4">
         <Text className="text-lg font-bold text-orange-800">👨‍👩‍👧‍👦 Seus Filhos</Text>
-        <Text className="mt-2 text-gray-800">Selecione o aluno para acompanhar as informações:</Text>
         <View className="mt-2 pl-2">
-          {/* Exemplo de lista de alunos. Substituir pelos dados reais */}
-          <Text className="text-gray-800">👦 João Silva - 2º Ano</Text>
-          <Text className="text-gray-800">👧 Maria Souza - 1º Ano</Text>
+          {userData && userData.students && userData.students.length > 0 ? (
+            userData.students.map((student, index) => (
+              <Text key={index} className="text-gray-800">
+                👦 {student.name} - {student.registration} 
+              </Text>
+            ))
+          ) : (
+            <Text className="text-gray-800">Nenhum filho cadastrado.</Text>
+          )}
         </View>
       </View>
 
@@ -30,7 +38,7 @@ const ParentFeed = () => {
         {/* Boletim do Aluno */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-        //  onPress={() => navigation.navigate("Grades")}  // Exemplo de navegação
+       //   onPress={() => navigation.navigate("Grades")}
         >
           <View>
             <Text className="text-lg font-bold text-gray-800 mb-2">📊 Boletim</Text>
@@ -42,7 +50,7 @@ const ParentFeed = () => {
         {/* Agenda Escolar */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-        //  onPress={() => navigation.navigate("Calendar")}
+       //   onPress={() => navigation.navigate("Calendar")}
         >
           <View>
             <Text className="text-lg font-bold text-gray-800 mb-2">📅 Agenda Escolar</Text>
@@ -54,7 +62,7 @@ const ParentFeed = () => {
         {/* Comunicados da Escola */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-         // onPress={() => navigation.navigate("Announcements")}
+        //  onPress={() => navigation.navigate("Announcements")}
         >
           <View>
             <Text className="text-lg font-bold text-gray-800 mb-2">📢 Comunicados</Text>
@@ -66,7 +74,7 @@ const ParentFeed = () => {
         {/* Desempenho Acadêmico */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-         // onPress={() => navigation.navigate("Performance")}
+        //  onPress={() => navigation.navigate("Performance")}
         >
           <View>
             <Text className="text-lg font-bold text-gray-800 mb-2">📈 Desempenho Acadêmico</Text>

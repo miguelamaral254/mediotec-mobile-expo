@@ -2,26 +2,26 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import StudentFeed from '../components/student/StudentFeed';
 import ParentFeed from '../components/parent/ParentFeed';
+import { User } from '../interfaces/userInterface';
 
 interface FeedProps {
-  role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT'; // Ensure these match your User interface
+  userData: User | null;
+  role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT';
 }
 
-const Feed: React.FC<FeedProps> = ({ role }) => {
+const Feed: React.FC<FeedProps> = ({ userData, role }) => {
   const renderContent = () => {
     switch (role) {
       case 'STUDENT':
         return <StudentFeed />;
       case 'PROFESSOR':
-        return <ParentFeed/>
+        return <ParentFeed userData={userData} />;
       case 'ADMIN':
         return (
           <WelcomeMessage title="Professor Feed" subtitle="Bem-vindo, Professor!" />
         );
       case 'PARENT':
-        return (
-          <ParentFeed />
-        );
+        return <ParentFeed userData={userData} />;
       default:
         return null; 
     }

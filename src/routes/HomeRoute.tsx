@@ -16,7 +16,7 @@ const HomeRoute: React.FC<TabRoutesProps> = ({ userData }) => {
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen 
         name="Feed" 
-        children={() => <Feed role={userData?.role || 'STUDENT'} />} 
+        children={() => <Feed userData={userData} role={userData?.role || 'STUDENT'} />} 
         options={{
           tabBarIcon: ({ color, size }) => <Feather name="home" color={color} size={size} />,
           tabBarLabel: ''    
