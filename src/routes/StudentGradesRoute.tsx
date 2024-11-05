@@ -31,11 +31,9 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData }) => {
         children={({ route }) => <DisciplineDetail route={route} />} 
       />
       <Stack.Screen 
-        name="Schedule" 
-        children={({ route }) => (
-          <Schedule route={{ params: { userData } }} />
-        )}
-      />
+      name="Schedule" 
+      children={() => <Schedule userData={userData} />}
+  />
     </Stack.Navigator>
   );
 };

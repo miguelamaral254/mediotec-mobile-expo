@@ -9,7 +9,7 @@ import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/map
 const daysOfWeek = Object.values(WeekDay);
 const timeSlots = Object.values(TimeSlot);
 
-const SCHEDULE_BOX_SIZE = 100; // Aumentando a largura das células para coincidir com o cabeçalho
+const SCHEDULE_BOX_SIZE = 100; 
 const HEADER_BOX_SIZE = 100;
 
 const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
