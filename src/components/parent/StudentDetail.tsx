@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Student } from '../../interfaces/studentInterface';
-import { formatCPF, formatPhone, formatBirthDate } from '../../utils/userUtils'; 
+import { formatCPF, formatPhone, formatBirthDate } from '../../utils/userUtils';
 
 interface StudentDetailsProps {
   route: {
@@ -9,19 +9,19 @@ interface StudentDetailsProps {
       student: Student;
     };
   };
-  navigation: any; 
+  navigation: any;
 }
 
 const StudentDetails: React.FC<StudentDetailsProps> = ({ route, navigation }) => {
   const { student } = route.params;
 
   const handleViewGrades = () => {
-    // Altere 'Grades' para o nome correto da sua rota
-    navigation.navigate('StudentGradesOverview', { student }); 
+    // Navega para a tela de Notas
+    navigation.navigate('StudentGradesOverview', { student });
   };
 
   const handleViewSchedule = () => {
-    navigation.navigate('Schedule', { student }); // Supondo que a rota correta seja 'Schedule'
+    navigation.navigate('Schedule', { student }); // Navega para horários
   };
 
   return (

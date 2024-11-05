@@ -12,7 +12,7 @@ import StudentGradesOverview from '../components/parent/StudentGradesOverview';
 type RelatedStudentsParamList = {
   RelatedStudents: undefined;
   StudentDetails: { student: Student };
-  StudentGradesOverview: { student: Student }; // Adicione esta linha
+  StudentGradesOverview: { student: Student }; // Add student as a parameter
   Schedule: { student: Student };
 };
 
@@ -83,9 +83,9 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         options={{ title: 'Detalhes do Estudante' }}
       />
       <Stack.Screen
-        name="StudentGradesOverview" // Alterado para corresponder ao nome correto
+        name="StudentGradesOverview" 
         children={({ route }) => (
-          <StudentGradesOverview student={route.params?.student} />
+          <StudentGradesOverview student={route.params?.student} /> 
         )}
         options={{ title: 'Conceitos do Estudante' }}
       />
