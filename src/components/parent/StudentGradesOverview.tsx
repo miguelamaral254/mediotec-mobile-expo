@@ -6,7 +6,7 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { DisciplineInterface } from '../../interfaces/disciplineInterface';
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
+  RelatedDisciplineDetail: { studentCpf: string; disciplineId: number };
 };
 
 interface StudentGradesOverviewProps {
@@ -40,7 +40,7 @@ const StudentGradesOverview: React.FC<StudentGradesOverviewProps> = ({ student }
   }, [student]);
 
   const handleDisciplinePress = (discipline: DisciplineInterface) => {
-    navigation.navigate('DisciplineDetail', { discipline, studentCpf: student.cpf });
+    navigation.navigate('RelatedDisciplineDetail', { studentCpf: student.cpf, disciplineId: discipline.id! });
   };
 
   if (loading) {

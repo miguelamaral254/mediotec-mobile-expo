@@ -8,12 +8,14 @@ import { getStudentByCpf } from '../services/userService';
 import StudentDetails from '../components/parent/StudentDetail';
 import Schedule from '../screens/Schedule';
 import StudentGradesOverview from '../components/parent/StudentGradesOverview';
+import RelatedDisciplineDetail from '../components/parent/RelatedDisciplineDetail';
 
 type RelatedStudentsParamList = {
   RelatedStudents: undefined;
   StudentDetails: { student: Student };
-  StudentGradesOverview: { student: Student }; // Add student as a parameter
+  StudentGradesOverview: { student: Student };
   Schedule: { student: Student };
+  RelatedDisciplineDetail: { studentCpf: string; disciplineId: number };
 };
 
 const Stack = createStackNavigator<RelatedStudentsParamList>();
@@ -83,21 +85,33 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         options={{ title: 'Detalhes do Estudante' }}
       />
       <Stack.Screen
-        name="StudentGradesOverview" 
+        name="StudentGradesOverview"
         children={({ route }) => (
-          <StudentGradesOverview student={route.params?.student} /> 
+          <StudentGradesOverview student={route.params.student} />
         )}
-        options={{ title: 'Conceitos do Estudante' }}
+        options={{ title: 'Notas do Estudante' }}
       />
       <Stack.Screen
-        name="Schedule"
+        name="RelatedDisciplineDetail"
         children={({ route }) => (
-          <Schedule userData={route.params?.student} />
+          <RelatedDisciplineDetail 
+            studentCpf={route.params.studentCpf} 
+            disciplineId={route.params.disciplineId} 
+          />
         )}
-        options={{ title: 'Horários do Estudante' }}
+        options={{ title: 'Detalhes da Disciplina' }}
       />
+      
     </Stack.Navigator>
   );
 };
 
 export default RelatedStudentsRoute;
+/*
+<Stack.Screen
+name="Schedule"
+children={({ route }) => (
+  <Schedule student={route.params.student} />
+)}
+/>
+*/

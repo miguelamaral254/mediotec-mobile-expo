@@ -24,7 +24,6 @@ const RelatedStudents: React.FC<RelatedStudentsProps> = ({ relatedStudents, navi
 
   return (
     <View className="p-5">
-      <Text className="text-lg font-bold mb-3">Estudantes Relacionados</Text>
       {relatedStudents.length > 0 ? (
         <FlatList
           data={relatedStudents}

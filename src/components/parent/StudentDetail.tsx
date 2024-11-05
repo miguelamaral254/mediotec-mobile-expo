@@ -9,6 +9,7 @@ interface StudentDetailsProps {
       student: Student;
     };
   };
+  //n mexe nisso pq se n quebra !!!
   navigation: any;
 }
 
@@ -16,18 +17,18 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ route, navigation }) =>
   const { student } = route.params;
 
   const handleViewGrades = () => {
-    // Navega para a tela de Notas
     navigation.navigate('StudentGradesOverview', { student });
   };
 
   const handleViewSchedule = () => {
-    navigation.navigate('Schedule', { student }); // Navega para horários
+    navigation.navigate('Schedule', { student });
   };
 
   return (
     <View className="flex-1 p-4 bg-gray-100">
       <View className="p-6 bg-white rounded-lg shadow">
         <Text className="text-2xl font-bold mb-2">{student.name}</Text>
+        <Text className="text-gray-600 text-lg mb-1">{student.name}</Text>
         <Text className="text-gray-600 text-lg mb-1">CPF: {formatCPF(student.cpf)}</Text>
         <Text className="text-gray-600 text-lg mb-1">Endereço: {student.address}</Text>
         <Text className="text-gray-600 text-lg mb-1">Data de Nascimento: {formatBirthDate(student.birthDate)}</Text>
