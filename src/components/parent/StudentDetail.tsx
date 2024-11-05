@@ -16,11 +16,12 @@ const StudentDetails: React.FC<StudentDetailsProps> = ({ route, navigation }) =>
   const { student } = route.params;
 
   const handleViewGrades = () => {
-    navigation.navigate('grades', { student });
+    // Altere 'Grades' para o nome correto da sua rota
+    navigation.navigate('StudentGradesOverview', { student }); 
   };
 
   const handleViewSchedule = () => {
-    navigation.navigate('schedule', { student });
+    navigation.navigate('Schedule', { student }); // Supondo que a rota correta seja 'Schedule'
   };
 
   return (

@@ -6,13 +6,13 @@ import { User } from '../interfaces/userInterface';
 import { Student } from '../interfaces/studentInterface';
 import { getStudentByCpf } from '../services/userService';
 import StudentDetails from '../components/parent/StudentDetail';
-import StudentGradesRoute from './StudentGradesRoute';
 import Schedule from '../screens/Schedule';
+import StudentGradesOverview from '../components/parent/StudentGradesOverview';
 
 type RelatedStudentsParamList = {
   RelatedStudents: undefined;
   StudentDetails: { student: Student };
-  Grades: { student: Student };
+  StudentGradesOverview: { student: Student }; // Adicione esta linha
   Schedule: { student: Student };
 };
 
@@ -74,18 +74,18 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
       />
       <Stack.Screen
         name="StudentDetails"
-        children={({ route }) => (
+        children={({ route, navigation }) => (
           <StudentDetails 
             route={route} 
-            navigation={undefined} 
+            navigation={navigation} 
           />
         )}
         options={{ title: 'Detalhes do Estudante' }}
       />
       <Stack.Screen
-        name="Grades"
+        name="StudentGradesOverview" // Alterado para corresponder ao nome correto
         children={({ route }) => (
-          <StudentGradesRoute userData={userData} />
+          <StudentGradesOverview student={route.params?.student} />
         )}
         options={{ title: 'Conceitos do Estudante' }}
       />
