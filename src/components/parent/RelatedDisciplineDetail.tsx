@@ -53,7 +53,9 @@ const StudentGrades: React.FC<StudentGradesProps> = ({ studentCpf, disciplineId 
 
   return (
     <View className="mt-4 p-4 bg-gray-100 rounded-lg">
+      
       <View className="border border-gray-300 rounded-lg overflow-hidden">
+        
         <View className="flex flex-row justify-between border-b border-gray-300 py-2 px-3">
           <Text className="flex-1 font-bold">Tipo de Avaliação</Text>
           <Text className="flex-1 font-bold text-center">Conceito</Text>

@@ -1,4 +1,3 @@
-// StudentGradesRoute.tsx
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { User } from '../interfaces/userInterface';
@@ -21,19 +20,22 @@ interface StackRoutesProps {
 
 const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData }) => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen 
-        name="Disciplines" 
-        children={() => <StudentDisciplinesLookUp userData={userData} />} 
+    <Stack.Navigator screenOptions={{ headerShown: true, headerBackTitleVisible: false }}>
+      <Stack.Screen
+        name="Disciplines"
+        children={() => <StudentDisciplinesLookUp userData={userData} />}
+        options={{ title: 'Disciplinas' }}
       />
-      <Stack.Screen 
-        name="DisciplineDetail" 
-        children={({ route }) => <DisciplineDetail route={route} />} 
+      <Stack.Screen
+        name="DisciplineDetail"
+        children={({ route }) => <DisciplineDetail route={route} />}
+        options={{ title: 'Detalhes da Disciplina e Conceitos' }}
       />
-      <Stack.Screen 
-      name="Schedule" 
-      children={() => <Schedule userData={userData} />}
-  />
+      <Stack.Screen
+        name="Schedule"
+        children={() => <Schedule userData={userData} />}
+        options={{ title: 'Agenda' }}
+      />
     </Stack.Navigator>
   );
 };

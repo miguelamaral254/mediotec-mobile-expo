@@ -6,9 +6,10 @@ import { User } from '../interfaces/userInterface';
 import { Student } from '../interfaces/studentInterface';
 import { getStudentByCpf } from '../services/userService';
 import StudentDetails from '../components/parent/StudentDetail';
-import Schedule from '../screens/Schedule';
 import StudentGradesOverview from '../components/parent/StudentGradesOverview';
 import RelatedDisciplineDetail from '../components/parent/RelatedDisciplineDetail';
+import RelatedSchedule from '../components/parent/RelatedSchedule';
+
 
 type RelatedStudentsParamList = {
   RelatedStudents: undefined;
@@ -89,7 +90,7 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         children={({ route }) => (
           <StudentGradesOverview student={route.params.student} />
         )}
-        options={{ title: 'Notas do Estudante' }}
+        options={{ title: 'Disciplinas' }}
       />
       <Stack.Screen
         name="RelatedDisciplineDetail"
@@ -99,19 +100,16 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
             disciplineId={route.params.disciplineId} 
           />
         )}
-        options={{ title: 'Detalhes da Disciplina' }}
+        options={{ title: 'Conceitos' }}
       />
-      
+      <Stack.Screen
+        name="Schedule"
+        children={({ route }) => (
+          <RelatedSchedule cpf={route.params.student.cpf} />
+        )}
+      />
     </Stack.Navigator>
   );
 };
 
 export default RelatedStudentsRoute;
-/*
-<Stack.Screen
-name="Schedule"
-children={({ route }) => (
-  <Schedule student={route.params.student} />
-)}
-/>
-*/
