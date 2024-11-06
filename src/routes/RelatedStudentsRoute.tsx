@@ -107,6 +107,7 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         children={({ route }) => (
           <RelatedSchedule cpf={route.params.student.cpf} />
         )}
+        options={{ title: 'Grade de horários' }}
       />
     </Stack.Navigator>
   );

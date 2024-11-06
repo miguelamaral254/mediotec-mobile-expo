@@ -1,15 +1,13 @@
-// src/components/RelatedSchedule.tsx
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { getLessonsByCpf } from '../../services/lessonsService';
-import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface'; 
+import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface';
 import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/mappingUtils';
 
 const daysOfWeek = Object.values(WeekDay);
 const timeSlots = Object.values(TimeSlot);
 
-const SCHEDULE_BOX_SIZE = 100; 
+const SCHEDULE_BOX_SIZE = 100;
 const HEADER_BOX_SIZE = 100;
 
 interface RelatedScheduleProps {
@@ -41,10 +39,6 @@ const RelatedSchedule: React.FC<RelatedScheduleProps> = ({ cpf }) => {
 
   if (loading) {
     return <Text className="text-center text-lg">Loading...</Text>;
-  }
-
-  if (lessons.length === 0) {
-    return <Text className="text-center text-lg">No lessons available.</Text>;
   }
 
   const schedule = Array.from({ length: timeSlots.length }, () => Array(daysOfWeek.length).fill(null));
@@ -97,7 +91,7 @@ const RelatedSchedule: React.FC<RelatedScheduleProps> = ({ cpf }) => {
                     <Text className="text-center text-sm">Sala: {lesson.room || 'No room'}</Text>
                   </View>
                 ) : (
-                  <Text className="text-center"></Text>
+                  <Text className="text-center text-sm"></Text> 
                 )}
               </View>
             ))}
