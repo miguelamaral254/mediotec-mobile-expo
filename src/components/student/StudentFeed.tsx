@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { SchoolClass } from '../../interfaces/schoolClassInterface';
+import { translateEnum } from '../../utils/translateEnum';
 
-const StudentFeed = () => {
-  const navigation = useNavigation();
 
+interface StudentFeedProps {
+  schoolClass: SchoolClass | null;
+}
+
+const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass }) => {
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
       <Text className="text-2xl font-bold text-primary-color mb-4">
@@ -13,6 +17,16 @@ const StudentFeed = () => {
       <Text className="text-base text-secondary-color mb-4">
         Bem-vindo à área do estudante! Fique por dentro das novidades.
       </Text>
+      <View>
+      {schoolClass ? (
+            <View className="mt-6 bg-gray-100 p-5 rounded-lg">
+              <Text className="text-xl font-semibold text-primary-color text-center">
+                {`Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})`}
+              </Text>
+              <Text className="text-lg text-center">{`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}</Text>
+            </View>
+          ) : null}
+      </View>
 
       {/* Banner de Avisos */}
       <View className="bg-yellow-100 p-4 rounded-lg mb-4">

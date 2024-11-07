@@ -3,17 +3,20 @@ import { View, Text } from 'react-native';
 import StudentFeed from '../components/student/StudentFeed';
 import ParentFeed from '../components/parent/ParentFeed';
 import { User } from '../interfaces/userInterface';
+import { SchoolClass } from '../interfaces/schoolClassInterface';
 
 interface FeedProps {
   userData: User | null;
+  schoolClass: SchoolClass | null; 
+
   role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT';
 }
 
-const Feed: React.FC<FeedProps> = ({ userData, role }) => {
+const Feed: React.FC<FeedProps> = ({ userData, role ,schoolClass}) => {
   const renderContent = () => {
     switch (role) {
       case 'STUDENT':
-        return <StudentFeed />;
+        return <StudentFeed schoolClass={schoolClass} />;
       case 'PROFESSOR':
         return <ParentFeed userData={userData} />;
       case 'ADMIN':

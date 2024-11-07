@@ -5,9 +5,7 @@ import { getDisciplinesByStudentCpf } from '../../services/disciplineService';
 import { User } from '../../interfaces/userInterface';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { getSchoolClassByStudentCpf } from '../../services/userService';
 import { translateEnum } from '../../utils/translateEnum';
-
 
 type RootStackParamList = {
   DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
@@ -16,12 +14,12 @@ type RootStackParamList = {
 
 interface StudentDisciplinesLookUpProps {
   userData: User | null;
+  schoolClass: SchoolClass | null;  
 }
 
-const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ userData }) => {
+const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ userData, schoolClass }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [disciplines, setDisciplines] = useState<DisciplineInterface[]>([]);
-  const [schoolClass, setSchoolClass] = useState<SchoolClass | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,11 +29,8 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
         try {
           const disciplineResponse = await getDisciplinesByStudentCpf(userData.cpf);
           setDisciplines(disciplineResponse);
-
-          const schoolClassResponse = await getSchoolClassByStudentCpf(userData.cpf);
-          setSchoolClass(schoolClassResponse);
         } catch (err) {
-          setError('Erro ao carregar as informações');
+          setError('Erro ao carregar as disciplinas');
         } finally {
           setLoading(false);
         }
@@ -70,15 +65,15 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
           <Text className="text-sm p-4 text-gray-500 text-center">{`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}</Text>
         )}
 
-      {disciplines.map((item) => (
-        <TouchableOpacity
-          key={item.id}
-          onPress={() => handleDisciplinePress(item)}
-          className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300"
-        >
-          <Text className="text-2xl font-bold text-primary-color text-center">{item.name}</Text>
-        </TouchableOpacity>
-      ))}
+        {disciplines.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => handleDisciplinePress(item)}
+            className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300"
+          >
+            <Text className="text-2xl font-bold text-primary-color text-center">{item.name}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </ScrollView>
   );

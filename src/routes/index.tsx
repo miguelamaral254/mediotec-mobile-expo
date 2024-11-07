@@ -3,11 +3,11 @@ import DrawerRoutes from "./NavBar";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from '../screens/Login';
 import { View } from 'react-native';
-import { User } from '../interfaces/userInterface'; // Import the User interface
+import { User } from '../interfaces/userInterface'; 
 
 const Routes: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userData, setUserData] = useState<User | null>(null); // Use the imported User interface
+  const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
     const checkLogin = async () => {

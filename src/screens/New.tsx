@@ -2,7 +2,6 @@
 
 import { View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import api from '../services/api';
 import { Notification } from '../interfaces/notificationInterface';
 import { getNotificationsForUser, updateNotificationReadStatus } from '../services/notificationService';
 import { User } from '../interfaces/userInterface';

@@ -5,6 +5,7 @@ import StudentDisciplinesLookUp from '../components/student/StudentDisciplinesLo
 import DisciplineDetail from '../components/student/DisciplineDetail';
 import Schedule from '../screens/Schedule';
 import { DisciplineInterface } from '../interfaces/disciplineInterface';
+import { SchoolClass } from '../interfaces/schoolClassInterface';
 
 type RootStackParamList = {
   Disciplines: undefined;
@@ -15,15 +16,16 @@ type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 interface StackRoutesProps {
-  userData: User | null; 
+  userData: User | null;
+  schoolClass: SchoolClass | null; 
 }
 
-const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData }) => {
+const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData, schoolClass }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: true, headerBackTitleVisible: false }}>
       <Stack.Screen
         name="Disciplines"
-        children={() => <StudentDisciplinesLookUp userData={userData} />}
+        children={() => <StudentDisciplinesLookUp userData={userData} schoolClass={schoolClass} />}
         options={{ title: 'Disciplinas' }}
       />
       <Stack.Screen
