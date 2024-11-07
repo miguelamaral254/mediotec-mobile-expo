@@ -31,6 +31,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       Alert.alert('Dispositivo não compatível com biometria.');
     }
   }
+
   const handleLogin = async (cpf: string, password: string) => {
     setLoading(true);
     setError(null);
@@ -40,18 +41,17 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       const userData: User = await getUserData(cleanedCPF);
   
       if (!userData) {
-        Alert.alert('Usuário não encontrado.');
-        return; // Impede o redirecionamento
+        setError('Usuário não encontrado.');
+        return;
       }
   
       if (!userData.active) {
-        Alert.alert('Usuário inativo, entre em contato com a instituição.');
-        return; // Impede o redirecionamento
+        setError('Usuário inativo, entre em contato com a instituição.');
+        return;
       }
   
       const loginResponse = await login(cleanedCPF, password);
       
-      // Verifique se o login foi bem-sucedido antes de redirecionar
       if (loginResponse) {
         await AsyncStorage.setItem('cpf', cleanedCPF);
         await AsyncStorage.setItem('password', password);
@@ -64,22 +64,22 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           })
         );
       } else {
-        setError('Erro de autenticação. Tente novamente.'); // Caso o login não retorne um valor esperado
+        setError('Usuário não encontrado ou senha incorreta.');
       }
     } catch (err: any) {
-      console.error(err);
-      
-      // Verifica se a falha foi por falta de resposta da API
-      if (err?.response) {
+      if (err?.response?.status === 404) {
+        setError('Usuário não encontrado ou senha incorreta.');
+      } else if (err?.response?.status === 401) {
+        setError('Usuário não encontrado ou senha incorreta.');
+      } else if (err?.response) {
         setError('Erro ao conectar com o servidor. Tente novamente.');
       } else {
-        setError('CPF ou senha incorretos.');
+        setError('Erro desconhecido. Tente novamente.');
       }
     } finally {
       setLoading(false);
     }
   };
-  
 
   const handleSubmit = () => {
     if (!formData.cpf || !formData.password) {

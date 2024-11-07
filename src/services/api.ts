@@ -1,43 +1,61 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const api = axios.create({
-  //baseURL: "http://172.26.41.212:8080", 
-  baseURL: "http://192.168.1.16:8080", 
-  
- // baseURL: "http://192.168.1.105:8080", 
-  //baseURL: "http://192.168.1.24:8080", 
+  //baseURL: "http://172.26.41.212:8080",
+  baseURL: "http://192.168.1.16:8080",
+  //baseURL: "http://10.70.64.55:8080",
+  //baseURL: "http://192.168.1.24:8080",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
-api.interceptors.request.use(async config => {
-  const token = await AsyncStorage.getItem('token'); 
-  if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`; 
+export const DEBUG_MODE = false;
+
+api.interceptors.request.use(
+  async (config) => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    if (DEBUG_MODE) {
+      console.log("Configuração da requisição:", config);
+    }
+
+    return config;
+  },
+  (error) => {
+    if (DEBUG_MODE) {
+      console.error("Erro na configuração da requisição:", error);
+    }
+    return Promise.reject(error);
   }
-  return config;
-}, error => {
-  return Promise.reject(error);
-});
+);
 
 api.interceptors.response.use(
-  response => {
+  (response) => {
+    // Log de debug para a resposta
+    if (DEBUG_MODE) {
+      console.log("Resposta da API:", response);
+    }
     return response;
   },
-  error => {
-    if (error.response) {
-      console.error("Erro na resposta da API:", error.response.data);
-      console.error("Status do erro:", error.response.status);
-      console.error("Headers do erro:", error.response.headers);
-    } else if (error.request) {
-      console.error("Nenhuma resposta da API foi recebida:", error.request);
-    } else {
-      console.error("Erro ao configurar a requisição:", error.message);
+  (error) => {
+    if (DEBUG_MODE) {
+      if (error.response) {
+        console.error("Erro na resposta da API:", error.response.data);
+        console.error("Status do erro:", error.response.status);
+        console.error("Headers do erro:", error.response.headers);
+      } else if (error.request) {
+        console.error("Nenhuma resposta da API foi recebida:", error.request);
+      } else {
+        console.error("Erro ao configurar a requisição:", error.message);
+      }
+      console.error("Configuração completa do erro:", error.config);
     }
-    console.error("Configuração completa do erro:", error.config);
-    
+
     return Promise.reject(error);
   }
 );
