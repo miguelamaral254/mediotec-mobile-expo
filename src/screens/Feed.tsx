@@ -4,6 +4,7 @@ import StudentFeed from '../components/student/StudentFeed';
 import ParentFeed from '../components/parent/ParentFeed';
 import { User } from '../interfaces/userInterface';
 import { SchoolClass } from '../interfaces/schoolClassInterface';
+import StudentFeedRoutes from '../routes/StudentFeedRoutes';
 
 interface FeedProps {
   userData: User | null;
@@ -16,7 +17,7 @@ const Feed: React.FC<FeedProps> = ({ userData, role ,schoolClass}) => {
   const renderContent = () => {
     switch (role) {
       case 'STUDENT':
-        return <StudentFeed schoolClass={schoolClass} />;
+        return <StudentFeedRoutes schoolClass={schoolClass} />;
       case 'PROFESSOR':
         return <ParentFeed userData={userData} />;
       case 'ADMIN':

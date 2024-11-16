@@ -2,13 +2,15 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
 import { translateEnum } from '../../utils/translateEnum';
-
+import { NavigationProp } from '@react-navigation/native';
+import { StudentStackParamList } from '../routes/StudentFeedRoutes'; // Certifique-se de que o caminho está correto
 
 interface StudentFeedProps {
   schoolClass: SchoolClass | null;
+  navigation: NavigationProp<StudentStackParamList>; // Adicione o tipo para o navigation
 }
 
-const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass }) => {
+const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, navigation }) => {
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
       <Text className="text-2xl font-bold text-primary-color mb-4">
@@ -18,14 +20,14 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass }) => {
         Bem-vindo à área do estudante! Fique por dentro das novidades.
       </Text>
       <View>
-      {schoolClass ? (
-            <View className="mt-6 bg-gray-100 p-5 rounded-lg">
-              <Text className="text-xl font-semibold text-primary-color text-center">
-                {`Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})`}
-              </Text>
-              <Text className="text-lg text-center">{`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}</Text>
-            </View>
-          ) : null}
+        {schoolClass ? (
+          <View className="mt-6 bg-gray-100 p-5 rounded-lg">
+            <Text className="text-xl font-semibold text-primary-color text-center">
+              {`Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})`}
+            </Text>
+            <Text className="text-lg text-center">{`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}</Text>
+          </View>
+        ) : null}
       </View>
 
       {/* Banner de Avisos */}
@@ -44,7 +46,6 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass }) => {
         {/* Grade de Horários */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-          // onPress={() => navigation.navigate("Schedules")}
         >
           <View>
             <Text className="text-lg font-bold text-primary-color mb-2">🕒 Grade de Horários</Text>
@@ -55,7 +56,6 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass }) => {
         {/* Conceitos */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-          // onPress={() => navigation.navigate("Grades")}
         >
           <View>
             <Text className="text-lg font-bold text-primary-color mb-2">📚 Conceitos</Text>
@@ -102,10 +102,11 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass }) => {
         {/* Contato */}
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+          onPress={() => navigation.navigate('Contacts')} // Navega para a tela Contacts
         >
           <View>
             <Text className="text-lg font-bold text-primary-color mb-2">
-              📞 Contato <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
+              📞 Contato
             </Text>
             <Text className="text-sm text-secondary-color mb-4">Entre em contato com seus professores ou a administração.</Text>
           </View>
