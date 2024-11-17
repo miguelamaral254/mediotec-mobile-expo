@@ -1,18 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
 import { translateEnum } from '../../utils/translateEnum';
 import { NavigationProp } from '@react-navigation/native';
 import { StudentStackParamList } from '../routes/StudentFeedRoutes';
 import { Linking } from 'react-native';
-import NoticeBoard from '../common/NoticeBoard'; // Ajuste o caminho conforme a estrutura do seu projeto
+import NoticeBoard from '../common/NoticeBoard';
+import { Notification } from '../../interfaces/notificationInterface';
+import { getNotificationsForUser } from '../../services/notificationService';
+import { User } from '../../interfaces/userInterface';
 
 interface StudentFeedProps {
   schoolClass: SchoolClass | null;
+  userData: User | null; // Recebe o userData
   navigation: NavigationProp<StudentStackParamList>;
 }
 
-const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, navigation }) => {
+const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, userData, navigation }) => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      if (userData?.cpf) {
+        try {
+          const response = await getNotificationsForUser(userData.cpf); // Usa o CPF do usuário para buscar notificações
+          setNotifications(response || []); // Garante que o estado seja sempre um array
+        } catch (error) {
+          console.error('Erro ao buscar notificações:', error);
+        }
+      }
+    };
+
+    fetchNotifications();
+  }, [userData?.cpf]);
+
   const handleOpenCanvas = () => {
     const url = 'https://www.youtube.com/watch?v=4l15evegaKo&list=RDEMledDVnxwdhC8Hio8lzIxgQ&index=6';
     Linking.openURL(url).catch((err: Error) =>
@@ -39,7 +60,7 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, navigation }) =>
         ) : null}
       </View>
 
-      <NoticeBoard />
+      <NoticeBoard notifications={notifications} />
 
       <View className="flex flex-row flex-wrap justify-between">
         <TouchableOpacity

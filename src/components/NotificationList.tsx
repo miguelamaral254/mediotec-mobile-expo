@@ -1,5 +1,3 @@
-// NotificationList.tsx
-
 import { View, FlatList, TouchableOpacity, Text } from 'react-native';
 import React from 'react';
 import { Feather } from '@expo/vector-icons';

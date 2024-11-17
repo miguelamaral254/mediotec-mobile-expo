@@ -17,7 +17,7 @@ const Feed: React.FC<FeedProps> = ({ userData, role ,schoolClass}) => {
   const renderContent = () => {
     switch (role) {
       case 'STUDENT':
-        return <StudentFeedRoutes schoolClass={schoolClass} />;
+        return <StudentFeedRoutes userData={userData} schoolClass={schoolClass} />;
       case 'PROFESSOR':
         return <ParentFeed userData={userData} />;
       case 'ADMIN':
