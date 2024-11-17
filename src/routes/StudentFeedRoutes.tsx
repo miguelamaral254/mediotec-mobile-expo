@@ -16,7 +16,7 @@ export const Stack = createStackNavigator<StudentStackParamList>();
 interface StudentFeedRoutesProps {
   schoolClass: SchoolClass | null;
   userData: User | null; 
-  notifications: Notification[]; // Adicionado
+  notifications: Notification[]; 
 }
 
 const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClass, userData, notifications }) => {

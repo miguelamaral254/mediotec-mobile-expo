@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { Linking } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons'; // Importando ícones do FontAwesome
+import { FontAwesome } from '@expo/vector-icons'; 
 
 const Contacts: React.FC = () => {
   const openWhatsApp = (phoneNumber: string) => {

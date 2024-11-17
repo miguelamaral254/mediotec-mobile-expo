@@ -10,7 +10,7 @@ import { Notification } from '../interfaces/notificationInterface';
 interface FeedProps {
   userData: User | null;
   schoolClass: SchoolClass | null; 
-  notifications: Notification[]; // Adicionado
+  notifications: Notification[];
   role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT';
 }
 

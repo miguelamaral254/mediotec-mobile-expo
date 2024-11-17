@@ -15,16 +15,14 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, onRe
   );
 
   const handleNotificationPress = async (notification: Notification) => {
-    console.log("Notificação clicada:", notification.id);  // Confirmação do id capturado
+    console.log("Notificação clicada:", notification.id);  
 
     try {
-      // Passar o id da notificação para a função de atualização
       await updateNotificationReadStatus({
         id: notification.id,
         read: true,
       });
 
-      // Atualizar o estado local após sucesso na requisição
       onRead(notification);
     } catch (error) {
       console.error('Erro ao atualizar a notificação:', error);

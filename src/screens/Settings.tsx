@@ -1,7 +1,5 @@
-// components/users/Settings.tsx
-
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 
 const Settings = () => {
   const handleOptionPress = (option: string) => {
@@ -9,50 +7,40 @@ const Settings = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Configurações</Text>
-      <TouchableOpacity style={styles.option} onPress={() => handleOptionPress('Alterar Senha')}>
-        <Text style={styles.optionText}>Alterar Senha</Text>
+    <View className="flex-1 justify-center items-center bg-white">
+      <Text className="text-2xl font-bold mb-5">Configurações</Text>
+      <TouchableOpacity
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        onPress={() => handleOptionPress('Alterar Senha')}
+      >
+        <Text className="text-lg">Alterar Senha</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.option} onPress={() => handleOptionPress('Notificações')}>
-        <Text style={styles.optionText}>Notificações</Text>
+      <TouchableOpacity
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        onPress={() => handleOptionPress('Notificações')}
+      >
+        <Text className="text-lg">Notificações</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.option} onPress={() => handleOptionPress('Tema')}>
-        <Text style={styles.optionText}>Tema</Text>
+      <TouchableOpacity
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        onPress={() => handleOptionPress('Tema')}
+      >
+        <Text className="text-lg">Tema</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.option} onPress={() => handleOptionPress('Sobre')}>
-        <Text style={styles.optionText}>Sobre</Text>
+      <TouchableOpacity
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        onPress={() => handleOptionPress('Sobre')}
+      >
+        <Text className="text-lg">Sobre</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.option} onPress={() => handleOptionPress('Preferências')}>
-        <Text style={styles.optionText}>Preferências</Text>
+      <TouchableOpacity
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        onPress={() => handleOptionPress('Preferências')}
+      >
+        <Text className="text-lg">Preferências</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  option: {
-    padding: 15,
-    marginVertical: 10,
-    width: '80%',
-    borderRadius: 5,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
-  },
-  optionText: {
-    fontSize: 18,
-  },
-});
 
 export default Settings;
