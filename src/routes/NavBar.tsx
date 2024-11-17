@@ -21,18 +21,22 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
-  const [schoolClass, setSchoolClass] = useState<SchoolClass | null>(null);
+  const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
 
-  useEffect(() => {
-    if (userData?.role === 'STUDENT' && userData.cpf) {
-      const fetchSchoolClass = async () => {
+useEffect(() => {
+  if (userData?.role === 'STUDENT' && userData.cpf) {
+    const fetchSchoolClass = async () => {
+      try {
         const result = await getSchoolClassByStudentCpf(userData.cpf);
-        setSchoolClass(result);
-      };
-      fetchSchoolClass();
-    }
-  }, [userData]);
-
+        setSchoolClasses(result); // Armazenar todas as turmas
+      } catch (error) {
+        console.error("Erro ao buscar turmas:", error);
+        setSchoolClasses([]); // Em caso de erro, definir como array vazio
+      }
+    };
+    fetchSchoolClass();
+  }
+}, [userData]);
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -48,7 +52,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
     >
       <Drawer.Screen
         name="home"
-        children={() => <TabRoutes userData={userData} schoolClass={schoolClass} />}
+        children={() => <TabRoutes userData={userData} schoolClasses={schoolClasses} />}
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -60,7 +64,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
       />
       <Drawer.Screen
         name="profile"
-        children={() => <ProfileRoute userData={userData} schoolClass={schoolClass} />}
+        children={() => <ProfileRoute userData={userData} schoolClass={schoolClasses} />}
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -73,7 +77,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
       {userData?.role === 'STUDENT' && (
         <Drawer.Screen
           name="grades"
-          children={() => <StudentGradesRoute userData={userData} schoolClass={schoolClass} />}
+          children={() => <StudentGradesRoute userData={userData} schoolClass={schoolClasses} />}
           options={{
             drawerLabel: () => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>

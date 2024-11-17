@@ -17,7 +17,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 interface StackRoutesProps {
   userData: User | null;
-  schoolClass: SchoolClass | null; 
+  schoolClass: SchoolClass[] | null; 
 }
 
 const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData, schoolClass }) => {

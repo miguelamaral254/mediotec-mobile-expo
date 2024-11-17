@@ -13,10 +13,10 @@ const Tab = createBottomTabNavigator();
 
 interface TabRoutesProps {
   userData: User | null;
-  schoolClass: SchoolClass | null; 
+  schoolClasses: SchoolClass[] | null; 
 }
 
-const HomeRoute: React.FC<TabRoutesProps> = ({ userData, schoolClass }) => {
+const HomeRoute: React.FC<TabRoutesProps> = ({ userData, schoolClasses }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState(true); 
 
@@ -55,7 +55,7 @@ const HomeRoute: React.FC<TabRoutesProps> = ({ userData, schoolClass }) => {
           ) : (
             <Feed 
               userData={userData} 
-              schoolClass={schoolClass} 
+              schoolClasses={schoolClasses} 
               role={userData?.role || 'STUDENT'} 
               notifications={notifications} 
             />

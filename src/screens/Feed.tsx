@@ -9,16 +9,16 @@ import { Notification } from '../interfaces/notificationInterface';
 
 interface FeedProps {
   userData: User | null;
-  schoolClass: SchoolClass | null; 
+  schoolClasses: SchoolClass[] | null; 
   notifications: Notification[];
   role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT';
 }
 
-const Feed: React.FC<FeedProps> = ({ userData, role, schoolClass, notifications }) => {
+const Feed: React.FC<FeedProps> = ({ userData, role, schoolClasses, notifications }) => {
   const renderContent = () => {
     switch (role) {
       case 'STUDENT':
-        return <StudentFeedRoutes userData={userData} schoolClass={schoolClass} notifications={notifications} />;
+        return <StudentFeedRoutes userData={userData} schoolClasses={schoolClasses} notifications={notifications} />;
       case 'PROFESSOR':
         return <ParentFeed userData={userData} />;
       case 'ADMIN':

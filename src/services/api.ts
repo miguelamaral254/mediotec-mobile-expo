@@ -12,7 +12,7 @@ const api = axios.create({
   },
 });
 
-export const DEBUG_MODE = false;
+export const DEBUG_MODE = true;
 
 api.interceptors.request.use(
   async (config) => {

@@ -14,7 +14,7 @@ type RootStackParamList = {
 
 interface StudentDisciplinesLookUpProps {
   userData: User | null;
-  schoolClass: SchoolClass | null;  
+  schoolClass: SchoolClass[] | null;  
 }
 
 const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ userData, schoolClass }) => {
@@ -22,6 +22,16 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
   const [disciplines, setDisciplines] = useState<DisciplineInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const currentYear = new Date().getFullYear();
+
+  // Filtrar turmas por ano
+  const currentYearClasses = schoolClass
+    ? schoolClass.filter((sc) => new Date(sc.date).getFullYear() === currentYear)
+    : [];
+  const previousYearClasses = schoolClass
+    ? schoolClass.filter((sc) => new Date(sc.date).getFullYear() < currentYear)
+    : [];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,13 +68,23 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
       <View className="mb-4 p-8 bg-white rounded-lg shadow-md border border-gray-300">
-        <Text className="text-xl font-semibold text-primary-color text-center">
-          {schoolClass ? `Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})` : 'Nenhuma turma disponível'}
-        </Text>
-        {schoolClass && (
-          <Text className="text-sm p-4 text-gray-500 text-center">{`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}</Text>
+        {/* Turmas do ano atual */}
+        {currentYearClasses.length > 0 ? (
+          currentYearClasses.map((sc) => (
+            <View key={sc.id} className="mb-4">
+              <Text className="text-xl font-semibold text-primary-color text-center">
+                {`Turma: ${sc.code} - ${translateEnum(sc.letter, 'letter')} (${translateEnum(sc.shift, 'shift')})`}
+              </Text>
+              <Text className="text-sm p-4 text-gray-500 text-center">
+                {`${translateEnum(sc.technicalCourse, 'technicalCourse')} - ${translateEnum(sc.year, 'year')}`}
+              </Text>
+            </View>
+          ))
+        ) : (
+          <Text className="text-center text-gray-500">Nenhuma turma do ano atual disponível</Text>
         )}
 
+        {/* Disciplinas */}
         {disciplines.map((item) => (
           <TouchableOpacity
             key={item.id}
@@ -75,6 +95,23 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
           </TouchableOpacity>
         ))}
       </View>
+
+      {/* Linha divisória */}
+      {previousYearClasses.length > 0 && (
+        <Text className="text-center text-lg font-bold text-gray-700 mt-4 mb-4">Turmas Anteriores</Text>
+      )}
+
+      {/* Turmas de anos anteriores */}
+      {previousYearClasses.map((sc) => (
+        <View key={sc.id} className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300">
+          <Text className="text-xl font-semibold text-primary-color text-center">
+            {`Turma: ${sc.code} - ${translateEnum(sc.letter, 'letter')} (${translateEnum(sc.shift, 'shift')})`}
+          </Text>
+          <Text className="text-sm p-4 text-gray-500 text-center">
+            {`${translateEnum(sc.technicalCourse, 'technicalCourse')} - ${translateEnum(sc.year, 'year')}`}
+          </Text>
+        </View>
+      ))}
     </ScrollView>
   );
 };

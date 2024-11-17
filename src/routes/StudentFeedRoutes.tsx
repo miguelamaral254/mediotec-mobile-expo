@@ -14,19 +14,19 @@ export type StudentStackParamList = {
 export const Stack = createStackNavigator<StudentStackParamList>();
 
 interface StudentFeedRoutesProps {
-  schoolClass: SchoolClass | null;
+  schoolClasses: SchoolClass[] | null;
   userData: User | null; 
   notifications: Notification[]; 
 }
 
-const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClass, userData, notifications }) => {
+const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClasses, userData, notifications }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="StudentFeed"
         children={({ navigation }) => (
           <StudentFeed 
-            schoolClass={schoolClass} 
+            schoolClasses={schoolClasses} 
             userData={userData} 
             notifications={notifications} 
             navigation={navigation} 

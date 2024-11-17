@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 
 interface StackRoutesProps {
   userData: User | null; 
-  schoolClass: SchoolClass | null; 
+  schoolClass: SchoolClass[] | null; 
 }
 
 const ProfileRoute: React.FC<StackRoutesProps> = ({ userData, schoolClass }) => {

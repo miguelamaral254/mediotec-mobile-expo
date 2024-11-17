@@ -7,10 +7,17 @@ import { translateEnum } from '../utils/translateEnum';
 
 interface ProfileProps {
   userData: User | null;
-  schoolClass: SchoolClass | null;
+  schoolClass: SchoolClass[] | null; // Ajustado para aceitar múltiplas turmas
 }
 
 const Profile: React.FC<ProfileProps> = ({ userData, schoolClass }) => {
+  const currentYear = new Date().getFullYear();
+
+  // Filtrar turmas do ano atual
+  const currentYearClass = schoolClass
+    ? schoolClass.find((sc) => new Date(sc.date).getFullYear() === currentYear)
+    : null;
+
   return (
     <View className="flex-1 p-5 bg-white">
       <Text className="text-4xl font-extrabold text-center mb-5 text-indigo-700">
@@ -25,15 +32,17 @@ const Profile: React.FC<ProfileProps> = ({ userData, schoolClass }) => {
             <Text className="text-2xl font-semibold">{userData.name}</Text>
           </View>
 
-          {/* Verificando se a função de escola (schoolClass) está presente */}
-          {userData.role === "STUDENT" && schoolClass ? (
+          {/* Exibindo a turma do ano atual */}
+          {userData.role === "STUDENT" && currentYearClass ? (
             <View className="mt-6 bg-gray-100 p-5 rounded-lg">
               <Text className="text-xl font-semibold text-primary-color text-center">
-                {`Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})`}
+                {`Turma: ${currentYearClass.code} - ${translateEnum(currentYearClass.letter, 'letter')} (${translateEnum(currentYearClass.shift, 'shift')})`}
               </Text>
-              <Text className="text-lg text-center">{`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}</Text>
+              <Text className="text-lg text-center">{`${translateEnum(currentYearClass.technicalCourse, 'technicalCourse')} - ${translateEnum(currentYearClass.year, 'year')}`}</Text>
             </View>
-          ) : null}
+          ) : (
+            <Text className="text-center text-gray-500">Nenhuma turma do ano atual encontrada</Text>
+          )}
 
           <View className="mb-4">
             <Text className="text-lg font-semibold">Email:</Text>
