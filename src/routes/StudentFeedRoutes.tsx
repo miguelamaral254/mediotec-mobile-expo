@@ -4,10 +4,9 @@ import { SchoolClass } from '../interfaces/schoolClassInterface';
 import StudentFeed from '../components/student/StudentFeed';
 import Contacts from '../screens/Contacts';
 
-// Definição de tipos para as rotas da stack de navegação
 type StudentStackParamList = {
-  StudentFeed: undefined; // A tela StudentFeed não precisa de parâmetros
-  Contacts: undefined; // A tela Contacts também não precisa de parâmetros
+  StudentFeed: undefined; 
+  Contacts: undefined; 
 };
 
 export const Stack = createStackNavigator<StudentStackParamList>();
@@ -29,7 +28,11 @@ const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClass }) =>
       <Stack.Screen 
         name="Contacts" 
         component={Contacts}
-        options={{ title: 'Contato' }}
+        options={{
+          headerShown: true,
+          title: '',
+          headerBackTitleVisible: false,
+        }}
       />
     </Stack.Navigator>
   );
