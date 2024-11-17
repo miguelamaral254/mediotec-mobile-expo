@@ -5,19 +5,20 @@ import ParentFeed from '../components/parent/ParentFeed';
 import { User } from '../interfaces/userInterface';
 import { SchoolClass } from '../interfaces/schoolClassInterface';
 import StudentFeedRoutes from '../routes/StudentFeedRoutes';
+import { Notification } from '../interfaces/notificationInterface';
 
 interface FeedProps {
   userData: User | null;
   schoolClass: SchoolClass | null; 
-
+  notifications: Notification[]; // Adicionado
   role: 'STUDENT' | 'ADMIN' | 'PROFESSOR' | 'PARENT';
 }
 
-const Feed: React.FC<FeedProps> = ({ userData, role ,schoolClass}) => {
+const Feed: React.FC<FeedProps> = ({ userData, role, schoolClass, notifications }) => {
   const renderContent = () => {
     switch (role) {
       case 'STUDENT':
-        return <StudentFeedRoutes userData={userData} schoolClass={schoolClass} />;
+        return <StudentFeedRoutes userData={userData} schoolClass={schoolClass} notifications={notifications} />;
       case 'PROFESSOR':
         return <ParentFeed userData={userData} />;
       case 'ADMIN':
@@ -38,7 +39,6 @@ const Feed: React.FC<FeedProps> = ({ userData, role ,schoolClass}) => {
   );
 };
 
-// Define the prop types for WelcomeMessage
 interface WelcomeMessageProps {
   title: string;
   subtitle: string;

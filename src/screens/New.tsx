@@ -1,45 +1,27 @@
-// New.tsx
-
 import { View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Notification } from '../interfaces/notificationInterface';
-import { getNotificationsForUser, updateNotificationReadStatus } from '../services/notificationService';
-import { User } from '../interfaces/userInterface';
+import { updateNotificationReadStatus } from '../services/notificationService';
 import NotificationList from '../components/NotificationList';
 import { NotificationUpdateRequest } from '../interfaces/notificationUpdateRequestInterface';
 
 interface NewProps {
-  userData: User | null; 
+  notifications: Notification[]; // Recebe notificações como props
 }
 
-const New: React.FC<NewProps> = ({ userData }) => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      if (userData) {
-        try {
-          const response = await getNotificationsForUser(userData.cpf);
-          setNotifications(response);
-        } catch (error) {
-          console.error('Erro ao buscar notificações:', error);
-        }
-      }
-    };
-
-    fetchNotifications();
-  }, [userData]);
+const New: React.FC<NewProps> = ({ notifications: initialNotifications }) => {
+  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
 
   const handleReadNotification = async (notification: Notification) => {
     const updateRequest: NotificationUpdateRequest = {
       id: notification.id,
-      read: true 
+      read: true,
     };
 
     try {
       await updateNotificationReadStatus(updateRequest);
-      setNotifications(prevNotifications =>
-        prevNotifications.map(item =>
+      setNotifications((prevNotifications) =>
+        prevNotifications.map((item) =>
           item.id === notification.id ? { ...item, read: true } : item
         )
       );

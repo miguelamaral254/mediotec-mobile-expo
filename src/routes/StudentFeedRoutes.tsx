@@ -4,8 +4,9 @@ import { SchoolClass } from '../interfaces/schoolClassInterface';
 import StudentFeed from '../components/student/StudentFeed';
 import Contacts from '../screens/Contacts';
 import { User } from '../interfaces/userInterface';
+import { Notification } from '../interfaces/notificationInterface';
 
-type StudentStackParamList = {
+export type StudentStackParamList = {
   StudentFeed: undefined;
   Contacts: undefined;
 };
@@ -14,16 +15,22 @@ export const Stack = createStackNavigator<StudentStackParamList>();
 
 interface StudentFeedRoutesProps {
   schoolClass: SchoolClass | null;
-  userData: User | null; // Adicionado para receber o userData
+  userData: User | null; 
+  notifications: Notification[]; // Adicionado
 }
 
-const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClass, userData }) => {
+const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClass, userData, notifications }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen
         name="StudentFeed"
         children={({ navigation }) => (
-          <StudentFeed schoolClass={schoolClass} userData={userData} navigation={navigation} />
+          <StudentFeed 
+            schoolClass={schoolClass} 
+            userData={userData} 
+            notifications={notifications} 
+            navigation={navigation} 
+          />
         )}
         options={{ title: 'Painel do Estudante' }}
       />

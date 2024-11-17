@@ -3,7 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
 import { translateEnum } from '../../utils/translateEnum';
 import { NavigationProp } from '@react-navigation/native';
-import { StudentStackParamList } from '../routes/StudentFeedRoutes';
+import { StudentStackParamList } from '../../routes/StudentFeedRoutes';
 import { Linking } from 'react-native';
 import NoticeBoard from '../common/NoticeBoard';
 import { Notification } from '../../interfaces/notificationInterface';
@@ -12,7 +12,9 @@ import { User } from '../../interfaces/userInterface';
 
 interface StudentFeedProps {
   schoolClass: SchoolClass | null;
-  userData: User | null; // Recebe o userData
+  userData: User | null; 
+  notifications: Notification[]; // Adicionado
+
   navigation: NavigationProp<StudentStackParamList>;
 }
 
@@ -23,8 +25,8 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, userData, naviga
     const fetchNotifications = async () => {
       if (userData?.cpf) {
         try {
-          const response = await getNotificationsForUser(userData.cpf); // Usa o CPF do usuário para buscar notificações
-          setNotifications(response || []); // Garante que o estado seja sempre um array
+          const response = await getNotificationsForUser(userData.cpf);
+          setNotifications(response || []); 
         } catch (error) {
           console.error('Erro ao buscar notificações:', error);
         }
@@ -50,6 +52,7 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, userData, naviga
         Bem-vindo à área do estudante! Fique por dentro das novidades.
       </Text>
       <View>
+        <NoticeBoard notifications={notifications} />
         {schoolClass ? (
           <View className="mt-6 bg-gray-100 p-5 rounded-lg">
             <Text className="text-xl font-semibold text-primary-color text-center">
@@ -60,7 +63,6 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, userData, naviga
         ) : null}
       </View>
 
-      <NoticeBoard notifications={notifications} />
 
       <View className="flex flex-row flex-wrap justify-between">
         <TouchableOpacity
@@ -75,16 +77,7 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, userData, naviga
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-        >
-          <View>
-            <Text className="text-lg font-bold text-primary-color mb-2">
-              📅 Calendário Escolar <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
-            </Text>
-            <Text className="text-sm text-secondary-color mb-4">Veja o calendário escolar e não perca nenhuma data importante.</Text>
-          </View>
-        </TouchableOpacity>
+
 
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
@@ -98,6 +91,16 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClass, userData, naviga
           </View>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+        >
+          <View>
+            <Text className="text-lg font-bold text-primary-color mb-2">
+              📅 Calendário Escolar <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
+            </Text>
+            <Text className="text-sm text-secondary-color mb-4">Veja o calendário escolar e não perca nenhuma data importante.</Text>
+          </View>
+        </TouchableOpacity>
     </ScrollView>
   );
 };
