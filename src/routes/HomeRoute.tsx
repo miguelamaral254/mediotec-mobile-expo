@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Feed from "../screens/Feed";
 import { Feather } from "@expo/vector-icons";
 import { User } from '../interfaces/userInterface';
-import New from '../screens/New';
+import NotificationRoute from './NotificationRoute';
 import { SchoolClass } from '../interfaces/schoolClassInterface';
 import { Notification } from '../interfaces/notificationInterface';
 import { getNotificationsForUser } from '../services/notificationService';
@@ -51,7 +51,7 @@ const HomeRoute: React.FC<TabRoutesProps> = ({ userData, schoolClass }) => {
         name="Feed" 
         children={() => (
           isLoading ? (
-            <LoadingPlaceholder /> // Mostra o loader se estiver carregando
+            <LoadingPlaceholder /> 
           ) : (
             <Feed 
               userData={userData} 
@@ -67,14 +67,12 @@ const HomeRoute: React.FC<TabRoutesProps> = ({ userData, schoolClass }) => {
         }}
       />
       <Tab.Screen 
-        name="New" 
+        name="Notifications" 
         children={() => (
           isLoading ? (
             <LoadingPlaceholder /> 
           ) : (
-            <New 
-              notifications={notifications} 
-            />
+            <NotificationRoute userCpf={userData?.cpf || ''} /> 
           )
         )}
         options={{

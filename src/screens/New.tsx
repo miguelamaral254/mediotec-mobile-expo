@@ -6,7 +6,7 @@ import NotificationList from '../components/NotificationList';
 import { NotificationUpdateRequest } from '../interfaces/notificationUpdateRequestInterface';
 
 interface NewProps {
-  notifications: Notification[]; // Recebe notificações como props
+  notifications: Notification[]; 
 }
 
 const New: React.FC<NewProps> = ({ notifications: initialNotifications }) => {
