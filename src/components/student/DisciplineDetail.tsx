@@ -6,7 +6,7 @@ import StudentGrades from './StudentGrades';
 interface DisciplineDetailProps {
   route: {
     params: {
-      discipline: DisciplineInterface;
+      discipline: DisciplineInterface; 
       studentCpf: string;
     };
   };

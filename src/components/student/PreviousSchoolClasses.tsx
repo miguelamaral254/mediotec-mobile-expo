@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { DisciplineInterface } from '../../interfaces/disciplineInterface';
-import { getDisciplinesByStudentCpf } from '../../services/disciplineService';
+import { Lesson } from '../../interfaces/LessonInterface';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { translateEnum } from '../../utils/translateEnum';
+import { getLessonsByStudentAndClass } from '../../services/lessonsService';
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
+  DisciplineDetail: { discipline: Lesson['discipline']; studentCpf: string };
 };
 
 interface PreviousSchoolClassesProps {
@@ -17,27 +17,33 @@ interface PreviousSchoolClassesProps {
 
 const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({ previousYearClasses, studentCpf }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [disciplines, setDisciplines] = useState<DisciplineInterface[]>([]);
+  const [lessonsByClass, setLessonsByClass] = useState<Record<number, Lesson[]>>({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchLessons = async () => {
       try {
-        const disciplineResponse = await getDisciplinesByStudentCpf(studentCpf);
-        setDisciplines(disciplineResponse);
+        const lessonsData: Record<number, Lesson[]> = {};
+        await Promise.all(
+          previousYearClasses.map(async (schoolClass) => {
+            const lessons = await getLessonsByStudentAndClass(studentCpf, schoolClass.id);
+            lessonsData[schoolClass.id] = lessons;
+          })
+        );
+        setLessonsByClass(lessonsData);
       } catch (err) {
-        setError('Erro ao carregar as disciplinas');
+        setError('Erro ao carregar as lições');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, [studentCpf]);
+    fetchLessons();
+  }, [studentCpf, previousYearClasses]);
 
-  const handleDisciplinePress = (discipline: DisciplineInterface) => {
-    navigation.navigate('DisciplineDetail', { discipline, studentCpf });
+  const handleDisciplinePress = (lesson: Lesson) => {
+    navigation.navigate('DisciplineDetail', { discipline: lesson.discipline, studentCpf });
   };
 
   if (loading) {
@@ -61,15 +67,13 @@ const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({ previousY
           <Text className="text-sm p-4 text-gray-500 text-center">
             {`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}
           </Text>
-
-          {/* Listando disciplinas */}
-          {disciplines.map((discipline) => (
+          {lessonsByClass[schoolClass.id]?.map((lesson) => (
             <TouchableOpacity
-              key={discipline.id}
-              onPress={() => handleDisciplinePress(discipline)}
+              key={lesson.id}
+              onPress={() => handleDisciplinePress(lesson)}
               className="mt-4 p-4 bg-white rounded-lg shadow-md border border-gray-300"
             >
-              <Text className="text-lg font-bold text-primary-color text-center">{discipline.name}</Text>
+              <Text className="text-lg font-bold text-primary-color text-center">{lesson.name}</Text>
             </TouchableOpacity>
           ))}
         </View>
