@@ -59,3 +59,20 @@ export const getLessonsByCpf = async (cpf: string): Promise<Lesson[]> => {
 
   return response.data;
 };
+
+export const getLessonsByStudentAndClass = async (
+  cpf: string,
+  schoolClassId: number
+): Promise<Lesson[]> => {
+  if (DEBUG_MODE) {
+    console.log(`Buscando lições para o estudante com CPF: ${cpf} e turma ID: ${schoolClassId}`);
+  }
+
+  const response = await api.get<Lesson[]>(`/lessons/student/${cpf}/class/${schoolClassId}`);
+
+  if (DEBUG_MODE) {
+    console.log("Lições recebidas:", response.data);
+  }
+
+  return response.data;
+};

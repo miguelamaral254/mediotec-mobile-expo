@@ -9,7 +9,7 @@ import { translateEnum } from '../../utils/translateEnum';
 
 type RootStackParamList = {
   DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
-  SchoolClassDetail: { schoolClass: SchoolClass };
+  PreviousSchoolClasses: { previousYearClasses: SchoolClass[] };
 };
 
 interface StudentDisciplinesLookUpProps {
@@ -25,7 +25,6 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
 
   const currentYear = new Date().getFullYear();
 
-  // Filtrar turmas por ano
   const currentYearClasses = schoolClass
     ? schoolClass.filter((sc) => new Date(sc.date).getFullYear() === currentYear)
     : [];
@@ -96,22 +95,15 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
         ))}
       </View>
 
-      {/* Linha divisória */}
+      {/* Botão para turmas anteriores */}
       {previousYearClasses.length > 0 && (
-        <Text className="text-center text-lg font-bold text-gray-700 mt-4 mb-4">Turmas Anteriores</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('PreviousSchoolClasses', { previousYearClasses })}
+          className="bg-white rounded-lg p-4 mb-4 shadow-md border border-gray-300"
+        >
+          <Text className="text-xl font-semibold text-primary-color text-center">Ver Turmas Anteriores</Text>
+        </TouchableOpacity>
       )}
-
-      {/* Turmas de anos anteriores */}
-      {previousYearClasses.map((sc) => (
-        <View key={sc.id} className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300">
-          <Text className="text-xl font-semibold text-primary-color text-center">
-            {`Turma: ${sc.code} - ${translateEnum(sc.letter, 'letter')} (${translateEnum(sc.shift, 'shift')})`}
-          </Text>
-          <Text className="text-sm p-4 text-gray-500 text-center">
-            {`${translateEnum(sc.technicalCourse, 'technicalCourse')} - ${translateEnum(sc.year, 'year')}`}
-          </Text>
-        </View>
-      ))}
     </ScrollView>
   );
 };

@@ -37,10 +37,10 @@ const Contacts: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity 
           className="flex-row items-center mt-2"
-          onPress={() => openWhatsApp('5511987654321')}
+          onPress={() => openWhatsApp('5581987654321')}
         >
           <FontAwesome name="whatsapp" size={16} color="#25D366" />
-          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (11) 98765-4321</Text>
+          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (81) 98765-4321</Text>
         </TouchableOpacity>
       </View>
 
@@ -56,10 +56,10 @@ const Contacts: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity 
           className="flex-row items-center mt-2"
-          onPress={() => openWhatsApp('5511998877666')}
+          onPress={() => openWhatsApp('5581998877666')}
         >
           <FontAwesome name="whatsapp" size={16} color="#25D366" />
-          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (11) 99887-7666</Text>
+          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (81) 99887-7666</Text>
         </TouchableOpacity>
       </View>
 
@@ -75,10 +75,10 @@ const Contacts: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity 
           className="flex-row items-center mt-2"
-          onPress={() => openWhatsApp('5511912345678')}
+          onPress={() => openWhatsApp('5581912345678')}
         >
           <FontAwesome name="whatsapp" size={16} color="#25D366" />
-          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (11) 91234-5678</Text>
+          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (81) 91234-5678</Text>
         </TouchableOpacity>
       </View>
 
@@ -94,10 +94,10 @@ const Contacts: React.FC = () => {
         </TouchableOpacity>
         <TouchableOpacity 
           className="flex-row items-center mt-2"
-          onPress={() => openWhatsApp('5511932165432')}
+          onPress={() => openWhatsApp('5581932165432')}
         >
           <FontAwesome name="whatsapp" size={16} color="#25D366" />
-          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (11) 93216-5432</Text>
+          <Text className="text-sm text-blue-500 ml-2">WhatsApp: (81) 93216-5432</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
