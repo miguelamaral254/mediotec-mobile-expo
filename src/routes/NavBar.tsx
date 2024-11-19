@@ -22,21 +22,22 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
   const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
+  const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
 
-useEffect(() => {
-  if (userData?.role === 'STUDENT' && userData.cpf) {
-    const fetchSchoolClass = async () => {
-      try {
-        const result = await getSchoolClassByStudentCpf(userData.cpf);
-        setSchoolClasses(result); // Armazenar todas as turmas
-      } catch (error) {
-        console.error("Erro ao buscar turmas:", error);
-        setSchoolClasses([]); // Em caso de erro, definir como array vazio
-      }
-    };
-    fetchSchoolClass();
-  }
-}, [userData]);
+  useEffect(() => {
+    if (userData?.role === 'STUDENT' && userData.cpf) {
+      const fetchSchoolClass = async () => {
+        try {
+          const result = await getSchoolClassByStudentCpf(userData.cpf);
+          setSchoolClasses(result);
+        } catch {
+          setSchoolClasses([]);
+        }
+      };
+      fetchSchoolClass();
+    }
+  }, [userData]);
+
   return (
     <Drawer.Navigator
       screenOptions={{
@@ -89,19 +90,32 @@ useEffect(() => {
         />
       )}
       {userData && (userData.role === 'STUDENT' || userData.role === 'PROFESSOR') && (
-        <Drawer.Screen
-          name="schedule"
-          children={() => <Schedule userData={userData} />}
-          options={{
-            drawerLabel: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="calendar" color="#FFFFFF" size={20} />
-                <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meu Horário</Text>
-              </View>
-            ),
-          }}
+  <Drawer.Screen
+    name="schedule"
+    children={() => {
+      // Filtrar a turma do ano atual
+      const currentYearClass = schoolClasses.find(
+        (schoolClass) => new Date(schoolClass.date).getFullYear() === currentYear
+      );
+
+      // Passar o ID da turma encontrada, ou null se não houver
+      return (
+        <Schedule
+          userData={userData}
+          schoolClassId={currentYearClass ? currentYearClass.id : null}
         />
-      )}
+      );
+    }}
+    options={{
+      drawerLabel: () => (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Feather name="calendar" color="#FFFFFF" size={20} />
+          <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meu Horário</Text>
+        </View>
+      ),
+    }}
+  />
+)}
       {userData?.role === 'PARENT' && (
         <Drawer.Screen
           name="relatedStudents"

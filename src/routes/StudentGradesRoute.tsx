@@ -49,7 +49,7 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData, schoolClass 
 
       <Stack.Screen
         name="Schedule"
-        children={() => <Schedule userData={userData} />}
+        children={() => <Schedule userData={userData} schoolClassId={null} />}
         options={{ title: 'Agenda' }}
       />
     </Stack.Navigator>

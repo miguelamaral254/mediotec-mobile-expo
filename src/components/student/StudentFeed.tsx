@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
 import { translateEnum } from '../../utils/translateEnum';
-import { NavigationProp } from '@react-navigation/native';
+import { Link, NavigationProp } from '@react-navigation/native';
 import { StudentStackParamList } from '../../routes/StudentFeedRoutes';
 import { Linking } from 'react-native';
 import NoticeBoard from '../common/NoticeBoard';
@@ -44,12 +44,18 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
     fetchNotifications();
   }, [userData?.cpf]);
 
-  const handleOpenCanvas = () => {
+  const handleOpenAva = () => {
     const url = 'https://www.youtube.com/watch?v=4l15evegaKo&list=RDEMledDVnxwdhC8Hio8lzIxgQ&index=6';
     Linking.openURL(url).catch((err: Error) =>
       console.error('Erro ao abrir o link:', err)
     );
   };
+  const handleOpenFinanceiro = () => {
+    const url = 'https://www.youtube.com/watch?v=a4na2opArGY';
+    Linking.openURL(url).catch((err: Error)=>
+    console.error("Error ao abrir o link:", err)
+  );
+  }
 
   return (
     <ScrollView className="flex-1 bg-gray-100 p-4">
@@ -80,11 +86,23 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
       <View className="flex flex-row flex-wrap justify-between">
         <TouchableOpacity
           className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-          onPress={handleOpenCanvas}
+          onPress={handleOpenAva}
         >
           <View>
             <Text className="text-lg font-bold text-primary-color mb-2">
-              🖥️ Acesso ao Canvas
+              🖥️ Acesso ao AVA
+            </Text>
+            <Text className="text-sm text-secondary-color mb-4">Fique em dia com suas atividades e tarefas.</Text>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+          onPress={handleOpenFinanceiro}
+        >
+          <View>
+            <Text className="text-lg font-bold text-primary-color mb-2">
+              🖥️ Acesso ao Financeiro
             </Text>
             <Text className="text-sm text-secondary-color mb-4">Fique em dia com suas atividades e tarefas.</Text>
           </View>

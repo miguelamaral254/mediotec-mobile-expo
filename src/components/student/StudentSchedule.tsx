@@ -1,25 +1,28 @@
-// src/components/StudentSchedule.tsx
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { getLessonsByCpf } from '../../services/lessonsService';
-import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface'; 
+import { getLessonsByStudentAndClass } from '../../services/lessonsService';
+import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface';
 import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/mappingUtils';
 
 const daysOfWeek = Object.values(WeekDay);
 const timeSlots = Object.values(TimeSlot);
 
-const SCHEDULE_BOX_SIZE = 100; 
+const SCHEDULE_BOX_SIZE = 100;
 const HEADER_BOX_SIZE = 100;
 
-const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
+interface StudentScheduleProps {
+  cpf: string;
+  schoolClassId: number;
+}
+
+const StudentSchedule: React.FC<StudentScheduleProps> = ({ cpf, schoolClassId }) => {
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchLessons = async () => {
       try {
-        const response = await getLessonsByCpf(cpf);
+        const response = await getLessonsByStudentAndClass(cpf, schoolClassId);
         if (Array.isArray(response)) {
           setLessons(response);
         } else {
@@ -33,7 +36,7 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
     };
 
     fetchLessons();
-  }, [cpf]);
+  }, [cpf, schoolClassId]);
 
   if (loading) {
     return <Text className="text-center text-lg">Loading...</Text>;
@@ -48,7 +51,7 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
   lessons.forEach((lesson) => {
     const dayIndex = daysOfWeek.indexOf(lesson.weekDay);
     const startIndex = timeSlots.indexOf(lesson.startTime);
-    
+
     if (dayIndex !== -1 && startIndex !== -1) {
       schedule[startIndex][dayIndex] = lesson;
     } else {
@@ -67,8 +70,8 @@ const StudentSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
         <View className="flex flex-row bg-gray-200">
           <Text className="w-24 p-4 font-bold text-center"></Text>
           {daysOfWeek.map((day) => (
-            <Text 
-              key={day} 
+            <Text
+              key={day}
               className={`w-${HEADER_BOX_SIZE} p-4 font-bold text-center`}
               style={{ width: HEADER_BOX_SIZE }}
             >
