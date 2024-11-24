@@ -97,8 +97,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-        <Image source={logo} style={{ width: 300, height: 200, resizeMode: 'contain' }} />
-        <Text style={{ fontSize: 24, fontWeight: '600', marginBottom: 32 }}>Login</Text>
+        <Image source={logo} style={{ width: 250, height: 166, resizeMode: 'contain' }} />
 
         <View style={{ width: '100%', marginBottom: 16 }}>
           <Text style={{ fontWeight: '500', marginBottom: 8 }}>CPF</Text>
@@ -128,9 +127,9 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
         <TouchableOpacity
           onPress={handleSubmit}
-          style={{ backgroundColor: '#007bff', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
+          style={{ backgroundColor: '#4666AF', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
         >
-          <Text style={{ color: '#fff', fontSize: 16 }}>Entrar</Text>
+          <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>Entrar</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

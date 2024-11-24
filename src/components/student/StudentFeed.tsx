@@ -5,7 +5,6 @@ import { translateEnum } from '../../utils/translateEnum';
 import { NavigationProp } from '@react-navigation/native';
 import { StudentStackParamList } from '../../routes/StudentFeedRoutes';
 import { Linking } from 'react-native';
-import NoticeBoard from '../common/NoticeBoard';
 import { Notification } from '../../interfaces/notificationInterface';
 import { getNotificationsForUser } from '../../services/notificationService';
 import { User } from '../../interfaces/userInterface';
@@ -59,20 +58,13 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
   };
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-primary-color mb-4">
-        Painel do Estudante
-      </Text>
-      <Text className="text-base text-secondary-color mb-4">
-        Bem-vindo à área do estudante! Fique por dentro das novidades.
-      </Text>
+    <ScrollView className="flex-1 p-4">
       <View>
-        <NoticeBoard notifications={notifications} />
         {currentYearClasses.length > 0 ? (
           currentYearClasses.map((schoolClass) => (
             <View
               key={schoolClass.id}
-              className="mt-6 bg-gray-100 p-5 rounded-lg"
+              className="mt-6 p-5 rounded-lg mb-16"
             >
               <Text className="text-xl font-semibold text-primary-color text-center">
                 {`Turma: ${schoolClass.code} - ${translateEnum(
@@ -89,73 +81,58 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
             </View>
           ))
         ) : (
-          <Text className="text-center text-gray-500">
-            Nenhuma turma do ano atual encontrada
+          <Text>
           </Text>
         )}
       </View>
+      {/* <View className="flex-1 justify-center items-center flex-col">
+      <NoticeBoard notifications={notifications}/>
+      </View> */}
+      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
+        Painel do Estudante
+      </Text>
+      <View className="flex-1 justify-center items-center flex-col">
 
-      {/* Grade de duas colunas com tamanhos fixos */}
-      <View className="flex flex-row flex-wrap justify-between mt-6">
-        {/* Card 1 */}
-        <View className="w-[48%] h-40 mb-4">
-          <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex flex-col justify-between"
-            onPress={handleOpenAva}
-          >
-            <Text className="text-lg font-bold text-primary-color mb-2">
+        {/* AVA */}
+        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2" onPress={handleOpenAva}>
+            <Text className="text-3xl font-bold text-primary mb-2">
               🖥️ Acesso ao AVA
             </Text>
-            <Text className="text-sm text-secondary-color">
+            <Text>
               Fique em dia com suas atividades e tarefas.
             </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
 
-        {/* Card 2 */}
-        <View className="w-[48%] h-40 mb-4">
-          <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex flex-col justify-between"
-            onPress={handleOpenFinanceiro}
-          >
-            <Text className="text-lg font-bold text-primary-color mb-2">
+        {/* Financeiro */}
+        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2" onPress={handleOpenFinanceiro}>
+            <Text className="text-3xl font-bold text-primary mb-2">
               💰 Acesso ao Financeiro
             </Text>
-            <Text className="text-sm text-secondary-color">
+            <Text>
               Consulte seus pagamentos e mensalidades.
             </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
 
-        {/* Card 3 */}
-        <View className="w-[48%] h-40 mb-4">
-          <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex flex-col justify-between"
-            onPress={() => navigation.navigate('Contacts')}
-          >
-            <Text className="text-lg font-bold text-primary-color mb-2">
+        {/* Contato */}
+        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2" onPress={() => navigation.navigate('Contacts')}>
+            <Text className="text-3xl font-bold text-primary mb-2">
               📞 Contato
             </Text>
-            <Text className="text-sm text-secondary-color">
+            <Text>
               Entre em contato com seus professores ou a administração.
             </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
 
-        {/* Card 4 */}
-        <View className="w-[48%] h-40 mb-4">
-          <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex flex-col justify-between"
-          >
-            <Text className="text-lg font-bold text-primary-color mb-2">
+        {/* Calendário */}
+        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2">
+            <Text className="text-3xl font-bold text-primary mb-2">
               📅 Calendário Escolar{' '}
-              <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
+              <Text className="text-red-600 font-medium text-center text-justify">WORK IN PROGRESS</Text>
             </Text>
-            <Text className="text-sm text-secondary-color">
+            <Text>
               Veja o calendário escolar e não perca datas importantes.
             </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
