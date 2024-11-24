@@ -55,25 +55,25 @@ const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({ previousY
   }
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-primary-color text-center mb-4">
+    <ScrollView className="flex-1 p-4">
+      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
         Turmas Anteriores
       </Text>
       {previousYearClasses.map((schoolClass) => (
-        <View key={schoolClass.id} className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300">
-          <Text className="text-xl font-semibold text-primary-color text-center">
+        <View key={schoolClass.id} className="flex-1 justify-center items-center flex-col">
+          <Text className="text-3x1 font-bold text-primary mb-2">
             {`Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})`}
           </Text>
-          <Text className="text-sm p-4 text-gray-500 text-center">
+          <Text className="text-3x1 font-bold text-primary mb-2">
             {`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}
           </Text>
           {lessonsByClass[schoolClass.id]?.map((lesson) => (
             <TouchableOpacity
               key={lesson.id}
               onPress={() => handleDisciplinePress(lesson)}
-              className="mt-4 p-4 bg-white rounded-lg shadow-md border border-gray-300"
+              className="text-3x1 font-bold text-primary mb-2"
             >
-              <Text className="text-lg font-bold text-primary-color text-center">{lesson.name}</Text>
+              <Text className="text-3x1 font-bold text-primary mb-2">{lesson.name}</Text>
             </TouchableOpacity>
           ))}
         </View>

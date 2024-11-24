@@ -57,7 +57,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="home" color="#FFFFFF" size={20} />
+              <Feather name="home" color="#FFFFFF" size={24} />
               <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Início</Text>
             </View>
           ),
@@ -69,7 +69,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         options={{
           drawerLabel: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="user" color="#FFFFFF" size={20} />
+              <Feather name="user" color="#FFFFFF" size={24} />
               <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meu perfil</Text>
             </View>
           ),
@@ -82,7 +82,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           options={{
             drawerLabel: () => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="book" color="#FFFFFF" size={20} />
+                <Feather name="book" color="#FFFFFF" size={24} />
                 <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meus conceitos</Text>
               </View>
             ),
@@ -109,7 +109,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
     options={{
       drawerLabel: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Feather name="calendar" color="#FFFFFF" size={20} />
+          <Feather name="calendar" color="#FFFFFF" size={24} />
           <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Meu Horário</Text>
         </View>
       ),
@@ -123,7 +123,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           options={{
             drawerLabel: () => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="users" color="#FFFFFF" size={20} />
+                <Feather name="users" color="#FFFFFF" size={24} />
                 <Text style={{ color: '#FFFFFF', marginLeft: 5 }}>Estudantes Relacionados</Text>
               </View>
             ),

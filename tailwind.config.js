@@ -9,11 +9,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary-color': '#1D4ED8',   
+        'primary-color': '#000000',   
         'secondary-color': '#3B82F6', 
         'third-color': '#06B6D4',     
         'fourth-color': '#9333EA',    
-        'fifth-color': '#EC4899',     
+        'fifth-color': '#EC4899',
+        'background-color': '#94A3D2',
+        'navbar-color': '#4666AF'
       },
     },
   },

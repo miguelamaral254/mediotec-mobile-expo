@@ -8,36 +8,36 @@ const Settings = () => {
 
   return (
     <View className="flex-1 justify-center items-center bg-white">
-      <Text className="text-2xl font-bold mb-5">Configurações</Text>
+      <Text className="text-4xl font-bold mb-5">Configurações</Text>
       <TouchableOpacity
-        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center shadow-lg"
         onPress={() => handleOptionPress('Alterar Senha')}
       >
-        <Text className="text-lg">Alterar Senha</Text>
+        <Text className="text-2xl font-semibold">Alterar Senha</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center shadow-lg"
         onPress={() => handleOptionPress('Notificações')}
       >
-        <Text className="text-lg">Notificações</Text>
+        <Text className="text-2xl font-semibold">Notificações</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center shadow-lg"
         onPress={() => handleOptionPress('Tema')}
       >
-        <Text className="text-lg">Tema</Text>
+        <Text className="text-2xl font-semibold">Tema</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center shadow-lg"
         onPress={() => handleOptionPress('Sobre')}
       >
-        <Text className="text-lg">Sobre</Text>
+        <Text className="text-2xl font-semibold">Sobre</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center"
+        className="py-4 px-6 my-2 w-4/5 rounded-lg bg-gray-200 items-center shadow-lg"
         onPress={() => handleOptionPress('Preferências')}
       >
-        <Text className="text-lg">Preferências</Text>
+        <Text className="text-2xl font-semibold">Preferências</Text>
       </TouchableOpacity>
     </View>
   );
