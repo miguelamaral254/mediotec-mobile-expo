@@ -17,21 +17,17 @@ const NoticeBoard: React.FC<NoticeBoardProps> = ({ notifications }) => {
     .slice(-3);
 
   return (
-    <View className="bg-yellow-100 p-4 rounded-lg mb-4">
-      <Text className="text-lg font-bold text-orange-800">🚨 Avisos Importantes</Text>
+    <View className="bg-white p-4 rounded-lg items-center">
       {sortedNotifications.length > 0 ? (
         sortedNotifications.map((item) => (
           <View key={item.id} className="mt-2 pl-2">
-            <Text className="text-gray-800">
+            <Text className="text-gray-800 text-center">
               📅 {item.header} - {new Date(item.timestamp).toLocaleDateString()}
-            </Text>
-            <Text className="text-gray-600">
-              {truncateText(item.message, 100)} 
             </Text>
           </View>
         ))
       ) : (
-        <Text className="mt-2 text-gray-800">Nenhuma mensagem disponível no momento.</Text>
+        <Text className="text-gray-800 text-center">Nenhuma mensagem disponível no momento.</Text>
       )}
     </View>
   );

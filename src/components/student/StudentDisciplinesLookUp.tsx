@@ -72,14 +72,15 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
 
   return (
     <ScrollView className="flex-1 p-4">
+      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">Turmas e Disciplinas</Text>
       <View className="mb-4 p-8 bg-white rounded-lg shadow-md border border-gray-300">
         {currentYearClasses.length > 0 ? (
           currentYearClasses.map((sc) => (
             <View key={sc.id} className="mb-4">
-              <Text className="text-xl font-semibold text-primary-color text-center">
+              <Text className="text-3xl font-semibold text-primary-color text-center">
                 {`Turma: ${sc.code} - ${translateEnum(sc.letter, 'letter')} (${translateEnum(sc.shift, 'shift')})`}
               </Text>
-              <Text className="text-sm p-4 text-gray-500 text-center">
+              <Text className="text-2xl p-4 text-gray-500 text-center">
                 {`${translateEnum(sc.technicalCourse, 'technicalCourse')} - ${translateEnum(sc.year, 'year')}`}
               </Text>
               {currentLessons
@@ -88,9 +89,9 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
                   <TouchableOpacity
                     key={lesson.id}
                     onPress={() => handleDisciplinePress(lesson)}
-                    className="mb-4 p-4 bg-white rounded-lg shadow-md border border-gray-300"
+                    className="mb-4 p-4 bg-secondary-color rounded-lg shadow-md border border-gray-300"
                   >
-                    <Text className="text-lg font-bold text-primary-color text-center">{lesson.name}</Text>
+                    <Text className="text-2xl font-bold color-white text-center">{lesson.name}</Text>
                   </TouchableOpacity>
                 ))}
             </View>
@@ -104,7 +105,7 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
           onPress={() => navigation.navigate('PreviousSchoolClasses', { previousYearClasses })}
           className="bg-white rounded-lg p-4 mb-4 shadow-md border border-gray-300"
         >
-          <Text className="text-xl font-semibold text-primary-color text-center">Ver Turmas Anteriores</Text>
+          <Text className="text-2xl font-semibold text-primary-color text-center">Ver Turmas Anteriores</Text>
         </TouchableOpacity>
       )}
     </ScrollView>

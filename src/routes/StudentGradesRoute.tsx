@@ -28,7 +28,7 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({ userData, schoolClass 
       <Stack.Screen
         name="Disciplines"
         children={() => <StudentDisciplinesLookUp userData={userData} schoolClass={schoolClass} />}
-        options={{ title: 'Disciplinas' }}
+        options={{ title: '' }}
       />
       <Stack.Screen
         name="DisciplineDetail"

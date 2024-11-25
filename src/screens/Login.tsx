@@ -127,7 +127,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
         <TouchableOpacity
           onPress={handleSubmit}
-          style={{ backgroundColor: '#4666AF', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
+          style={{ backgroundColor: '#2196F3', padding: 15, borderRadius: 5, width: '100%', alignItems: 'center' }}
         >
           <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>Entrar</Text>
         </TouchableOpacity>

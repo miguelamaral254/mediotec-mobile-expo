@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { User } from '../../interfaces/userInterface';
+import NoticeBoard from '../common/NoticeBoard';
 
 interface ParentFeedProps {
   userData: User | null; 
@@ -9,93 +10,88 @@ interface ParentFeedProps {
 
 const ParentFeed: React.FC<ParentFeedProps> = ({ userData }) => {
   const navigation = useNavigation();
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   return (
-    <ScrollView className="flex-1 bg-gray-100 p-4">
-      <Text className="text-2xl font-bold text-gray-800 mb-4">Painel dos Pais</Text>
-      <Text className="text-base text-gray-600 mb-4">
-        Bem-vindo à área dos pais! Acompanhe o desempenho dos seus filhos.
-      </Text>
+    <View className="flex-1 bg-gray-100 p-4">
+      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">Painel dos Pais</Text>
+            {/* Lista de Filhos */}
 
-      {/* Lista de Filhos */}
-      <View className="bg-blue-200 p-4 rounded-lg mb-4">
-        <Text className="text-lg font-bold text-orange-800">👨‍👩‍👧‍👦 Seus Filhos</Text>
-        <View className="mt-2 pl-2">
+      <ScrollView showsVerticalScrollIndicator={false} className='flex-1'>
+      <View className=" p-4 justify-start  rounded-lg">
+        <View className="bg-blue-500 p-4 rounded-lg">
+          <Text className="text-2xl font-bold color-white">👨‍👩‍👧‍👦 Alunos</Text>
+        </View>
+        <View className="justify-center items-center bg-white rounded-lg p-4">
           {userData && userData.students && userData.students.length > 0 ? (
             userData.students.map((student, index) => (
-              <Text key={index} className="text-gray-800">
+              <Text key={index} className="text-gray-800 text-center">
                 👦 {student.name} - {student.registration} 
               </Text>
             ))
           ) : (
-            <Text className="text-gray-800">Nenhum filho cadastrado.</Text>
+            <Text className="text-gray-800 text-center">Nenhum filho cadastrado.</Text>
           )}
         </View>
       </View>
-
+      <View className=" p-4 justify-start  rounded-lg">
+        <View className="bg-blue-500 p-4 rounded-lg">
+          <Text className='text-2xl font-bold color-white'>🚨 Avisos importantes!</Text>
+        </View>
+        <View className='justify-center items-center bg-white rounded-lg p-4'>
+          <NoticeBoard notifications={notifications} />
+        </View>
+      </View>
       {/* Grid de funcionalidades */}
-      <View className="flex flex-row flex-wrap justify-between">
+      <View className="flex flex-row flex-wrap justify-between mt-6">
         {/* Boletim do Aluno */}
+        <View className="w-[48%] h-40 mb-4 justify-between">
         <TouchableOpacity
-          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
        //   onPress={() => navigation.navigate("Grades")}
         >
-          <View>
+          <View className="flex-1 justify-center items-center">
             <Text className="text-lg font-bold text-gray-800 mb-2">📊 Boletim</Text>
-            <Text className="text-sm text-gray-600 mb-4">Visualize as notas e conceitos do aluno.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver boletim</Text>
+          
         </TouchableOpacity>
-
+        </View>
         {/* Agenda Escolar */}
+        <View className="w-[48%] h-40 mb-4 justify-between">
         <TouchableOpacity
-          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
        //   onPress={() => navigation.navigate("Calendar")}
         >
-          <View>
+          <View className="flex-1 justify-center items-center">
             <Text className="text-lg font-bold text-gray-800 mb-2">📅 Agenda Escolar</Text>
-            <Text className="text-sm text-gray-600 mb-4">Confira eventos e datas importantes.</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver agenda</Text>
         </TouchableOpacity>
-
-        {/* Comunicados da Escola */}
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
-        //  onPress={() => navigation.navigate("Announcements")}
-        >
-          <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">📢 Comunicados</Text>
-            <Text className="text-sm text-gray-600 mb-4">Fique por dentro das novidades.</Text>
-          </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver comunicados</Text>
-        </TouchableOpacity>
-
+        </View>
         {/* Desempenho Acadêmico */}
+        <View className="w-[48%] h-40 mb-4 justify-between">
         <TouchableOpacity
-          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
         //  onPress={() => navigation.navigate("Performance")}
         >
-          <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">📈 Desempenho Acadêmico</Text>
-            <Text className="text-sm text-gray-600 mb-4">Veja o histórico de desempenho do aluno.</Text>
+          <View className="flex-1 justify-center items-center">
+            <Text className="text-lg font-bold text-gray-800 mb-2 text-center">📈 Desempenho Acadêmico</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver desempenho</Text>
         </TouchableOpacity>
-
+        </View>
         {/* Contato com Professores */}
+        <View className="w-[48%] h-40 mb-4 justify-between">
         <TouchableOpacity
-          className="bg-white rounded-lg p-4 mb-4 w-1/2 shadow-md flex flex-col justify-between"
+          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
         //  onPress={() => navigation.navigate("Contact")}
         >
-          <View>
-            <Text className="text-lg font-bold text-gray-800 mb-2">📞 Contato com Professores</Text>
-            <Text className="text-sm text-gray-600 mb-4">Entre em contato com os professores.</Text>
+          <View className="flex-1 justify-center items-center">
+            <Text className="text-lg font-bold text-gray-800 mb-2 text-center">📞 Contato com Professores</Text>
           </View>
-          <Text className="text-blue-600 font-semibold text-center">Ver contatos</Text>
         </TouchableOpacity>
+        </View>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
