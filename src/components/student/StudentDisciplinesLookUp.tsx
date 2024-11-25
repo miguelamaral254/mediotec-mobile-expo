@@ -72,7 +72,10 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({ use
 
   return (
     <ScrollView className="flex-1 p-4">
+<<<<<<< HEAD
       <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">Turmas e Disciplinas</Text>
+=======
+>>>>>>> 56e116de30ac59301925ef99c7a4745e97cb1af7
       <View className="mb-4 p-8 bg-white rounded-lg shadow-md border border-gray-300">
         {currentYearClasses.length > 0 ? (
           currentYearClasses.map((sc) => (
