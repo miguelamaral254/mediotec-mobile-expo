@@ -5,6 +5,7 @@ import { translateEnum } from '../../utils/translateEnum';
 import { NavigationProp } from '@react-navigation/native';
 import { StudentStackParamList } from '../../routes/StudentFeedRoutes';
 import { Linking } from 'react-native';
+import NoticeBoard from '../common/NoticeBoard';
 import { Notification } from '../../interfaces/notificationInterface';
 import { getNotificationsForUser } from '../../services/notificationService';
 import { User } from '../../interfaces/userInterface';
@@ -58,7 +59,6 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
   };
 
   return (
-<<<<<<< HEAD
     <View className="flex-1 p-4">
       <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
         Painel do Estudante
@@ -126,89 +126,12 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
           >
             <View className="flex-1 justify-center items-center">
             <Text className="text-2xl font-bold text-primary-color">
-=======
-    <ScrollView className="flex-1 p-4">
-      <View>
-        {currentYearClasses.length > 0 ? (
-          currentYearClasses.map((schoolClass) => (
-            <View
-              key={schoolClass.id}
-              className="mt-6 p-5 rounded-lg mb-16"
-            >
-              <Text className="text-xl font-semibold text-primary-color text-center">
-                {`Turma: ${schoolClass.code} - ${translateEnum(
-                  schoolClass.letter,
-                  'letter'
-                )} (${translateEnum(schoolClass.shift, 'shift')})`}
-              </Text>
-              <Text className="text-lg text-center">
-                {`${translateEnum(
-                  schoolClass.technicalCourse,
-                  'technicalCourse'
-                )} - ${translateEnum(schoolClass.year, 'year')}`}
-              </Text>
-            </View>
-          ))
-        ) : (
-          <Text>
-          </Text>
-        )}
-      </View>
-      {/* <View className="flex-1 justify-center items-center flex-col">
-      <NoticeBoard notifications={notifications}/>
-      </View> */}
-      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
-        Painel do Estudante
-      </Text>
-      <View className="flex-1 justify-center items-center flex-col">
-
-        {/* AVA */}
-        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2" onPress={handleOpenAva}>
-            <Text className="text-3xl font-bold text-primary mb-2">
-              🖥️ Acesso ao AVA
-            </Text>
-            <Text>
-              Fique em dia com suas atividades e tarefas.
-            </Text>
-        </TouchableOpacity>
-
-        {/* Financeiro */}
-        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2" onPress={handleOpenFinanceiro}>
-            <Text className="text-3xl font-bold text-primary mb-2">
-              💰 Acesso ao Financeiro
-            </Text>
-            <Text>
-              Consulte seus pagamentos e mensalidades.
-            </Text>
-        </TouchableOpacity>
-
-        {/* Contato */}
-        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2" onPress={() => navigation.navigate('Contacts')}>
-            <Text className="text-3xl font-bold text-primary mb-2">
-              📞 Contato
-            </Text>
-            <Text>
-              Entre em contato com seus professores ou a administração.
-            </Text>
-        </TouchableOpacity>
-
-        {/* Calendário */}
-        <TouchableOpacity className="w-[384px] h-[112px] bg-white justify-center items-center rounded-lg shadow-md mb-2">
-            <Text className="text-3xl font-bold text-primary mb-2">
->>>>>>> 56e116de30ac59301925ef99c7a4745e97cb1af7
               📅 Calendário Escolar{' '}
-              <Text className="text-red-600 font-medium text-center text-justify">WORK IN PROGRESS</Text>
+              <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
             </Text>
-<<<<<<< HEAD
             </View>
           </TouchableOpacity>
         </View>
-=======
-            <Text>
-              Veja o calendário escolar e não perca datas importantes.
-            </Text>
-        </TouchableOpacity>
->>>>>>> 56e116de30ac59301925ef99c7a4745e97cb1af7
       </View>
       </ScrollView>
     </View>
