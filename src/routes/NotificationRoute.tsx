@@ -66,7 +66,7 @@ const NotificationRoute: React.FC<NotificationRouteProps> = ({ userCpf }) => {
       <Stack.Screen
         name="NotificationDetails"
         component={NotificationDetails}
-        options={{ title: 'Notificações' }}
+        options={{ title: '' }}
       />
     </Stack.Navigator>
   );

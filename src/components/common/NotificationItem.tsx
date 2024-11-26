@@ -31,25 +31,31 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ notification, onRea
 
   return (
     <TouchableOpacity
-      className={`flex-row items-center justify-between px-4 py-3 border-b ${notification.read ? 'bg-gray-200 border-gray-300' : 'bg-white border-gray-400'}`}
+      className={`flex-row items-center justify-between p-4 border rounded-lg shadow-md ${
+        notification.read ? 'bg-gray-100 border-gray-300' : 'bg-white border-gray-400'
+      }`}
       onPress={handlePress}
     >
-      <View className="flex-row items-center">
+      <View className="flex-row items-center space-x-4">
         <Feather
-          name={notification.read ? "check-circle" : "mail"}
+          name={notification.read ? "check-circle" : "mail"} 
           size={24}
-          color={notification.read ? "#aaa" : "#000"}
+          color={notification.read ? "#6b7280" : "#1f2937"} 
         />
-        <View className="ml-2">
-          <Text className={`font-bold ${notification.read ? 'text-gray-500' : 'text-black'}`}>
+        <View className='ml-5 '>
+          <Text
+            className={`text-base font-semibold ${
+              notification.read ? 'text-gray-500' : 'text-blue-600'
+            }`}
+          >
             {notification.header}
           </Text>
-          <Text className={`${notification.read ? 'text-gray-500' : 'text-black'}`}>
+          <Text className={`text-sm ${notification.read ? 'text-gray-400' : 'text-gray-600'}`}>
             {notification.read ? 'Mensagem aberta' : 'Nova mensagem'}
           </Text>
         </View>
       </View>
-      <Text className="text-blue-600">
+      <Text className="text-xs text-gray-500">
         {hoursDifference > 24
           ? formattedDate
           : notificationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}

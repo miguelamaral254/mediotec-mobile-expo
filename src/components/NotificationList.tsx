@@ -1,7 +1,7 @@
 import { FlatList, TouchableOpacity, View, Text } from 'react-native';
 import React from 'react';
 import { Notification } from '../interfaces/notificationInterface';
-import { updateNotificationReadStatus } from '../services/notificationService'; 
+import { updateNotificationReadStatus } from '../services/notificationService';
 import NotificationItem from './common/NotificationItem';
 
 interface NotificationListProps {
@@ -15,7 +15,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, onRe
   );
 
   const handleNotificationPress = async (notification: Notification) => {
-    console.log("Notificação clicada:", notification.id);  
+    console.log('Notificação clicada:', notification.id);
 
     try {
       await updateNotificationReadStatus({
@@ -30,15 +30,21 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, onRe
   };
 
   return (
-    <FlatList
-      data={sortedNotifications}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => handleNotificationPress(item)}>
-          <NotificationItem notification={item} onRead={onRead} />
-        </TouchableOpacity>
-      )}
-    />
+    <View className="flex-1 bg-gray-100">
+      <Text className="text-4xl font-bold bg-blue-500 text-white p-6 text-center">
+         Notificações
+      </Text>
+
+      <FlatList
+        data={sortedNotifications}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handleNotificationPress(item)}>
+            <NotificationItem notification={item} onRead={onRead} />
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 };
 

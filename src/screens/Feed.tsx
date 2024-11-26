@@ -6,6 +6,7 @@ import { User } from '../interfaces/userInterface';
 import { SchoolClass } from '../interfaces/schoolClassInterface';
 import StudentFeedRoutes from '../routes/StudentFeedRoutes';
 import { Notification } from '../interfaces/notificationInterface';
+import ParentFeedRoutes from '../routes/ParentFeedRoutes';
 
 interface FeedProps {
   userData: User | null;
@@ -26,7 +27,7 @@ const Feed: React.FC<FeedProps> = ({ userData, role, schoolClasses, notification
           <WelcomeMessage title="Professor Feed" subtitle="Bem-vindo, Professor!" />
         );
       case 'PARENT':
-        return <ParentFeed userData={userData} />;
+        return <ParentFeedRoutes userData={userData} />;
       default:
         return null; 
     }

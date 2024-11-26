@@ -1,96 +1,95 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
 import { User } from '../../interfaces/userInterface';
+import { Notification } from '../../interfaces/notificationInterface';
+import { getNotificationsForUser } from '../../services/notificationService';
 import NoticeBoard from '../common/NoticeBoard';
+import { ParentStackParamList } from '../../routes/ParentFeedRoutes';
 
 interface ParentFeedProps {
-  userData: User | null; 
+  userData: User | null;
+  navigation: NavigationProp<ParentStackParamList>;
 }
 
-const ParentFeed: React.FC<ParentFeedProps> = ({ userData }) => {
-  const navigation = useNavigation();
+const truncateText = (text: string | undefined, maxLength: number) => {
+  if (!text || typeof text !== 'string') return '';
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+};
+
+const ParentFeed: React.FC<ParentFeedProps> = ({ userData, navigation }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  return (
-    <View className="flex-1 bg-gray-100 p-4">
-      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">Painel dos Pais</Text>
-            {/* Lista de Filhos */}
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      if (userData?.cpf) {
+        try {
+          const response = await getNotificationsForUser(userData.cpf);
+          setNotifications(response || []);
+        } catch (error) {
+          console.error('Erro ao buscar notificações:', error);
+        }
+      }
+    };
 
-      <ScrollView showsVerticalScrollIndicator={false} className='flex-1'>
-      <View className=" p-4 justify-start  rounded-lg">
-        <View className="bg-blue-500 p-4 rounded-lg">
-          <Text className="text-2xl font-bold color-white">👨‍👩‍👧‍👦 Alunos</Text>
+    fetchNotifications();
+  }, [userData?.cpf]);
+
+  const handleOpenLink = (url: string) => {
+    Linking.openURL(url).catch((err: Error) =>
+      console.error('Erro ao abrir o link:', err)
+    );
+  };
+
+  return (
+    <View className="flex-1 bg-gray-100">
+      <Text className="text-4xl font-bold bg-blue-500 text-white p-6 text-center">
+        Painel dos Pais
+      </Text>
+
+      <View className="bg-white rounded-lg shadow-md p-4 mb-6">
+        <NoticeBoard notifications={notifications} />
+      </View>
+
+      <View className="p-4">
+        <View className="bg-blue-500 p-4 rounded-lg mb-4">
+          <Text className="text-2xl font-bold text-white">👨‍👩‍👧‍👦 Alunos</Text>
         </View>
-        <View className="justify-center items-center bg-white rounded-lg p-4">
+        <View className="bg-white rounded-lg px-4 ">
           {userData && userData.students && userData.students.length > 0 ? (
             userData.students.map((student, index) => (
-              <Text key={index} className="text-gray-800 text-center">
-                👦 {student.name} - {student.registration} 
-              </Text>
+              <View
+                key={index}
+                className="border border-gray-300 rounded-lg p-3 bg-gray-50 shadow-sm"
+              >
+                <Text className="text-lg font-semibold text-gray-800">
+                  👦 {truncateText(student.name, 40)}
+                </Text>
+                <Text className="text-gray-600 text-sm mt-1">
+                  Matrícula: {truncateText(student.registration, 20)}
+                </Text>
+              </View>
             ))
           ) : (
             <Text className="text-gray-800 text-center">Nenhum filho cadastrado.</Text>
           )}
         </View>
       </View>
-      <View className=" p-4 justify-start  rounded-lg">
-        <View className="bg-blue-500 p-4 rounded-lg">
-          <Text className='text-2xl font-bold color-white'>🚨 Avisos importantes!</Text>
-        </View>
-        <View className='justify-center items-center bg-white rounded-lg p-4'>
-          <NoticeBoard notifications={notifications} />
-        </View>
+
+      <View className="flex flex-row flex-wrap px-4 justify-between">
+        <TouchableOpacity
+          className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
+          onPress={() => navigation.navigate('Contacts')}
+        >
+          <Text className="text-2xl font-bold text-blue-500 text-center">📞 Contatos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
+          onPress={() => handleOpenLink('https://www.youtube.com/watch?v=a4na2opArGY')}
+        >
+          <Text className="text-2xl font-bold text-blue-500 text-center">💰 Acesso ao Financeiro</Text>
+        </TouchableOpacity>
       </View>
-      {/* Grid de funcionalidades */}
-      <View className="flex flex-row flex-wrap justify-between mt-6">
-        {/* Boletim do Aluno */}
-        <View className="w-[48%] h-40 mb-4 justify-between">
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
-       //   onPress={() => navigation.navigate("Grades")}
-        >
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-lg font-bold text-gray-800 mb-2">📊 Boletim</Text>
-          </View>
-          
-        </TouchableOpacity>
-        </View>
-        {/* Agenda Escolar */}
-        <View className="w-[48%] h-40 mb-4 justify-between">
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
-       //   onPress={() => navigation.navigate("Calendar")}
-        >
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-lg font-bold text-gray-800 mb-2">📅 Agenda Escolar</Text>
-          </View>
-        </TouchableOpacity>
-        </View>
-        {/* Desempenho Acadêmico */}
-        <View className="w-[48%] h-40 mb-4 justify-between">
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
-        //  onPress={() => navigation.navigate("Performance")}
-        >
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-lg font-bold text-gray-800 mb-2 text-center">📈 Desempenho Acadêmico</Text>
-          </View>
-        </TouchableOpacity>
-        </View>
-        {/* Contato com Professores */}
-        <View className="w-[48%] h-40 mb-4 justify-between">
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
-        //  onPress={() => navigation.navigate("Contact")}
-        >
-          <View className="flex-1 justify-center items-center">
-            <Text className="text-lg font-bold text-gray-800 mb-2 text-center">📞 Contato com Professores</Text>
-          </View>
-        </TouchableOpacity>
-        </View>
-      </View>
-      </ScrollView>
     </View>
   );
 };
