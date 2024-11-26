@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import { SchoolClass } from '../../interfaces/schoolClassInterface';
-import { translateEnum } from '../../utils/translateEnum';
-import { NavigationProp } from '@react-navigation/native';
-import { StudentStackParamList } from '../../routes/StudentFeedRoutes';
-import { Linking } from 'react-native';
-import NoticeBoard from '../common/NoticeBoard';
 import { Notification } from '../../interfaces/notificationInterface';
 import { getNotificationsForUser } from '../../services/notificationService';
+import { NavigationProp } from '@react-navigation/native';
+import { StudentStackParamList } from '../../routes/StudentFeedRoutes';
 import { User } from '../../interfaces/userInterface';
+import NoticeBoard from '../common/NoticeBoard';
 
 interface StudentFeedProps {
   schoolClasses: SchoolClass[] | null;
@@ -43,97 +41,48 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
     fetchNotifications();
   }, [userData?.cpf]);
 
-  const handleOpenAva = () => {
-    const url =
-      'https://www.youtube.com/watch?v=4l15evegaKo&list=RDEMledDVnxwdhC8Hio8lzIxgQ&index=6';
-    Linking.openURL(url).catch((err: Error) =>
-      console.error('Erro ao abrir o link:', err)
-    );
-  };
-
-  const handleOpenFinanceiro = () => {
-    const url = 'https://www.youtube.com/watch?v=a4na2opArGY';
+  const handleOpenLink = (url: string) => {
     Linking.openURL(url).catch((err: Error) =>
       console.error('Erro ao abrir o link:', err)
     );
   };
 
   return (
-    <View className="flex-1 p-4">
-      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
+    <View className="flex-1 bg-gray-100">
+      <Text className="text-4xl font-bold bg-blue-500 text-white p-6 text-center">
         Painel do Estudante
       </Text>
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-      <View className="flex-1 p-4 justify-start  rounded-lg">
-        <View className="bg-blue-500 p-4 rounded-lg">
-          <Text className='text-2xl font-bold color-white'>🚨 Avisos importantes!</Text>
-        </View>
-        <View className='justify-center items-center bg-white rounded-lg'>
+        <View className="bg-white rounded-lg shadow-md p-4 mb-6">
           <NoticeBoard notifications={notifications} />
         </View>
-      </View>
-      {/* Grade de duas colunas com tamanhos fixos */}
-      <View className="flex flex-row flex-wrap justify-between mt-6">
-
-        {/* Card 1 */}
-        <View className="w-[48%] h-40 mb-4 justify-between">
-        <TouchableOpacity
-          className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
-          onPress={handleOpenAva}
-        >
-          <View className="flex-1 justify-center items-center">
-          <Text className="text-2xl font-bold text-primary-color text-center">
-            🖥️ Acesso ao AVA
-          </Text>
-          </View>
-        </TouchableOpacity>
-
-        </View>
-
-        {/* Card 2 */}
-        <View className="w-[48%] h-40 mb-4">
+        <View className="flex flex-row flex-wrap justify-between">
           <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
-            onPress={handleOpenFinanceiro}
+            className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
+            onPress={() => handleOpenLink('https://www.youtube.com/watch?v=4l15evegaKo')}
           >
-            <View className="flex-1 justify-center items-center">
-            <Text className="text-2xl font-bold text-primary-color">
-              💰 Acesso ao Financeiro
-            </Text>
-            </View>
+            <Text className="text-2xl font-bold text-blue-500 text-center">🖥️ Acesso ao AVA</Text>
           </TouchableOpacity>
-        </View>
-
-        {/* Card 3 */}
-        <View className="w-[48%] h-40 mb-4">
           <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
+            className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
+            onPress={() => handleOpenLink('https://www.youtube.com/watch?v=a4na2opArGY')}
+          >
+            <Text className="text-2xl font-bold text-blue-500 text-center">💰 Acesso ao Financeiro</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
             onPress={() => navigation.navigate('Contacts')}
           >
-            <View className="flex-1 justify-center items-center">
-            <Text className="text-2xl font-bold text-primary-color">
-              📞 Contato
-            </Text>
-            </View>
+            <Text className="text-2xl font-bold text-blue-500 text-center">📞 Contato</Text>
           </TouchableOpacity>
-        </View>
-
-        {/* Card 4 */}
-        <View className="w-[48%] h-40 mb-4">
           <TouchableOpacity
-            className="bg-white rounded-lg p-4 shadow-md h-full flex justify-between items-center"
+            className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
           >
-            <View className="flex-1 justify-center items-center">
-            <Text className="text-2xl font-bold text-primary-color">
+            <Text className="text-2xl font-bold text-blue-500 text-center">
               📅 Calendário Escolar{' '}
               <Text className="text-red-600 font-medium">WORK IN PROGRESS</Text>
             </Text>
-            </View>
           </TouchableOpacity>
         </View>
-      </View>
-      </ScrollView>
     </View>
   );
 };
