@@ -1,12 +1,12 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { DisciplineInterface } from '../../interfaces/disciplineInterface';
-import StudentGrades from './StudentGrades';
+import React from "react";
+import { View, Text } from "react-native";
+import { DisciplineInterface } from "../../interfaces/disciplineInterface";
+import StudentGrades from "./StudentGrades";
 
 interface DisciplineDetailProps {
   route: {
     params: {
-      discipline: DisciplineInterface; 
+      discipline: DisciplineInterface;
       studentCpf: string;
     };
   };
@@ -16,22 +16,17 @@ const DisciplineDetail: React.FC<DisciplineDetailProps> = ({ route }) => {
   const { discipline, studentCpf } = route.params;
 
   return (
-    <View className="flex-1 p-4">
-      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
-        Detalhes da Disciplina e Conceitos
+    <View className="flex-1 bg-gray-100">
+      <Text className="text-3xl font-bold bg-blue-500 p-4 text-white text-center">
+        {discipline.name}
       </Text>
-      <View className="p-6 bg-white rounded-lg shadow justify-center"> 
-        <Text className="text-4xl font-bold mb-2 text-primary-color">
-          {discipline.name}
+      <View className="p-4 bg-white rounded-lg shadow-md m-4">
+        <Text className="text-lg text-gray-600 mb-2"><Text className="font-bold">Descrição:</Text>{discipline.description}</Text>
+        <Text className="text-lg text-gray-600">
+          <Text className="font-bold">Carga Horária:</Text> {discipline.workload} horas
         </Text>
-        <Text className="text-2x1">
-          {discipline.description}
-        </Text>
-        <Text className="text-2x1">
-          Carga Horária: {discipline.workload} horas
-        </Text>
-        <StudentGrades studentCpf={studentCpf} disciplineId={discipline.id!} />
       </View>
+      <StudentGrades studentCpf={studentCpf} disciplineId={discipline.id!} />
     </View>
   );
 };
