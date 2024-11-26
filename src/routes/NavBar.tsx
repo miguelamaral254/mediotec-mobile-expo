@@ -83,7 +83,7 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
             drawerLabel: () => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Feather name="book" color="#FFFFFF" size={24} />
-                <Text className='text-2xl ml-2 text-white'>Meus conceitos</Text>
+                <Text className='text-2xl ml-2 text-white'>Meu Boletim</Text>
               </View>
             ),
           }}
@@ -93,12 +93,10 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
   <Drawer.Screen
     name="schedule"
     children={() => {
-      // Filtrar a turma do ano atual
       const currentYearClass = schoolClasses.find(
         (schoolClass) => new Date(schoolClass.date).getFullYear() === currentYear
       );
 
-      // Passar o ID da turma encontrada, ou null se não houver
       return (
         <Schedule
           userData={userData}

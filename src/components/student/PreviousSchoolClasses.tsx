@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Lesson } from '../../interfaces/LessonInterface';
-import { SchoolClass } from '../../interfaces/schoolClassInterface';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { translateEnum } from '../../utils/translateEnum';
-import { getLessonsByStudentAndClass } from '../../services/lessonsService';
+import React, { useEffect, useState } from "react";
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import { Lesson } from "../../interfaces/LessonInterface";
+import { SchoolClass } from "../../interfaces/schoolClassInterface";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { translateEnum } from "../../utils/translateEnum";
+import { getLessonsByStudentAndClass } from "../../services/lessonsService";
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: Lesson['discipline']; studentCpf: string };
+  DisciplineDetail: { discipline: Lesson["discipline"]; studentCpf: string };
 };
 
 interface PreviousSchoolClassesProps {
@@ -15,9 +21,14 @@ interface PreviousSchoolClassesProps {
   studentCpf: string;
 }
 
-const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({ previousYearClasses, studentCpf }) => {
+const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({
+  previousYearClasses,
+  studentCpf,
+}) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const [lessonsByClass, setLessonsByClass] = useState<Record<number, Lesson[]>>({});
+  const [lessonsByClass, setLessonsByClass] = useState<
+    Record<number, Lesson[]>
+  >({});
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,13 +38,16 @@ const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({ previousY
         const lessonsData: Record<number, Lesson[]> = {};
         await Promise.all(
           previousYearClasses.map(async (schoolClass) => {
-            const lessons = await getLessonsByStudentAndClass(studentCpf, schoolClass.id);
+            const lessons = await getLessonsByStudentAndClass(
+              studentCpf,
+              schoolClass.id
+            );
             lessonsData[schoolClass.id] = lessons;
           })
         );
         setLessonsByClass(lessonsData);
       } catch (err) {
-        setError('Erro ao carregar as lições');
+        setError("Erro ao carregar as lições");
       } finally {
         setLoading(false);
       }
@@ -43,37 +57,67 @@ const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({ previousY
   }, [studentCpf, previousYearClasses]);
 
   const handleDisciplinePress = (lesson: Lesson) => {
-    navigation.navigate('DisciplineDetail', { discipline: lesson.discipline, studentCpf });
+    navigation.navigate("DisciplineDetail", {
+      discipline: lesson.discipline,
+      studentCpf,
+    });
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#06B6D4" />;
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <ActivityIndicator size="large" color="#06B6D4" />
+      </View>
+    );
   }
 
   if (error) {
-    return <Text className="text-fifth-color text-center">{error}</Text>;
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <Text className="text-red-500 text-center font-semibold">{error}</Text>
+      </View>
+    );
   }
 
   return (
-    <ScrollView className="flex-1 p-4">
-      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
+    <ScrollView className="flex-1 bg-gray-100">
+      {/* Header */}
+      <Text className="text-4xl font-bold bg-blue-500 p-10 text-white mb-6 text-center">
         Turmas Anteriores
       </Text>
+
+      {/* Turmas Anteriores */}
       {previousYearClasses.map((schoolClass) => (
-        <View key={schoolClass.id} className="flex-1 justify-center items-center flex-col">
-          <Text className="text-3x1 font-bold text-primary mb-2">
-            {`Turma: ${schoolClass.code} - ${translateEnum(schoolClass.letter, 'letter')} (${translateEnum(schoolClass.shift, 'shift')})`}
+        <View
+          key={schoolClass.id}
+          className="bg-white flex flex-col p-6 rounded-lg shadow-md mb-6"
+        >
+          <Text className="text-2xl font-bold text-blue-600 text-center mb-2">
+            {`Turma: ${schoolClass.code} - ${translateEnum(
+              schoolClass.letter,
+              "letter"
+            )}`}
           </Text>
-          <Text className="text-3x1 font-bold text-primary mb-2">
-            {`${translateEnum(schoolClass.technicalCourse, 'technicalCourse')} - ${translateEnum(schoolClass.year, 'year')}`}
+          <Text className="text-lg text-gray-600 text-center">
+            {`${translateEnum(
+              schoolClass.technicalCourse,
+              "technicalCourse"
+            )}`}
+          </Text>
+          <Text>
+            <Text className="text-lg text-gray-600 text-center">
+              {`${translateEnum(schoolClass.year, "year")}`}
+            </Text>
           </Text>
           {lessonsByClass[schoolClass.id]?.map((lesson) => (
             <TouchableOpacity
               key={lesson.id}
               onPress={() => handleDisciplinePress(lesson)}
-              className="text-3x1 font-bold text-primary mb-2"
+              className="mt-4 flex-row items-center justify-center p-4 bg-blue-500 rounded-lg shadow-md"
             >
-              <Text className="text-3x1 font-bold text-primary mb-2">{lesson.name}</Text>
+              <Text className="text-white text-center text-xl font-semibold">
+                🖥️ {lesson.name}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
