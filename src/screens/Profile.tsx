@@ -1,111 +1,100 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { View, Text } from 'react-native';
 import { User, UserRole } from '../interfaces/userInterface';
 import { translateUserRole, formatPhone, formatCPF, formatBirthDate } from '../utils/userUtils';
 import { SchoolClass } from '../interfaces/schoolClassInterface';
 import { translateEnum } from '../utils/translateEnum';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Feather } from "@expo/vector-icons";
 
 interface ProfileProps {
   userData: User | null;
-  schoolClass: SchoolClass[] | null; // Ajustado para aceitar múltiplas turmas
+  schoolClass: SchoolClass[] | null;
 }
 
 const Profile: React.FC<ProfileProps> = ({ userData, schoolClass }) => {
   const currentYear = new Date().getFullYear();
-
-  // Filtrar turmas do ano atual
   const currentYearClass = schoolClass
     ? schoolClass.find((sc) => new Date(sc.date).getFullYear() === currentYear)
     : null;
 
   return (
-    <View className="flex-1 p-5 bg-white">
-      <Text className="text-4xl font-bold text-primary-color mb-4 mt-32">
+    <View className="flex-1 bg-gray-100 px-6">
+      <Text className="text-4xl font-bold bg-blue-500 text-white p-6 text-center ">
         Perfil do {userData?.role ? translateUserRole(userData.role) : 'Usuário'}
       </Text>
       {userData ? (
-        <ScrollView className="bg-gray-100 p-5 rounded-lg shadow-lg" showsVerticalScrollIndicator={false}>
-          <View className="mb-1 items-center">
-            <View className="w-36 h-36 rounded-full bg-white items-center justify-center shadow-lg mb-4">
-            <Text className='text-bold text-4xl'>A</Text>
-            </View>
-            <Text className="text-3xl font-bold">{userData.name}</Text>
-          </View>
-
-          {/* Exibindo a turma do ano atual */}
-          {userData.role === "STUDENT" && currentYearClass ? (
-            <View className="mb-8 bg-gray-100 p-5 rounded-lg">
-              <Text className="text-xl font-semibold text-primary-color text-center">
-                {`Turma: ${currentYearClass.code} - ${translateEnum(currentYearClass.letter, 'letter')} (${translateEnum(currentYearClass.shift, 'shift')})`}
+        <View className="bg-white rounded-lg shadow-md p-6">
+          <View className="flex items-center mb-6">
+            <View className="w-36 h-36 rounded-full bg-blue-100 items-center justify-center mb-4">
+              <Text className="text-5xl font-bold text-blue-500">
+                {userData.name.charAt(0).toUpperCase()}
               </Text>
-              <Text className="text-lg text-center">{`${translateEnum(currentYearClass.technicalCourse, 'technicalCourse')} - ${translateEnum(currentYearClass.year, 'year')}`}</Text>
+            </View>
+            <Text className="text-3xl font-bold text-gray-800">{userData.name}</Text>
+          </View>
+          {userData.role === 'STUDENT' && currentYearClass ? (
+            <View className="mb-6">
+              <Text className="text-xl font-semibold text-blue-500 text-center">
+                Turma: {currentYearClass.code} - {translateEnum(currentYearClass.letter, 'letter')} ({translateEnum(currentYearClass.shift, 'shift')})
+              </Text>
+              <Text className="text-lg text-gray-700 text-center">
+                {translateEnum(currentYearClass.technicalCourse, 'technicalCourse')} - {translateEnum(currentYearClass.year, 'year')}
+              </Text>
             </View>
           ) : (
-            <Text className="mb-8 text-center text-gray-500">Nenhuma turma do ano atual encontrada</Text>
+            <Text className="text-lg text-gray-500 text-center mb-6">Nenhuma turma do ano atual encontrada</Text>
           )}
-          <View className='bg-gray-300 rounded-lg p-5'>
-          <View className="mb-4">
-            <Text className="text-2xl font-semibold">Email:</Text>
-            <Text className="text-xl">{userData.email}</Text>
+          <View>
+            <View className="mb-4">
+              <Text className="text-2xl font-semibold text-gray-800">Email:</Text>
+              <Text className="text-lg text-gray-700">{userData.email}</Text>
+            </View>
+            {userData.cpf && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">CPF:</Text>
+                <Text className="text-lg text-gray-700">{formatCPF(userData.cpf)}</Text>
+              </View>
+            )}
+            {userData.phone && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">Telefone:</Text>
+                <Text className="text-lg text-gray-700">{formatPhone(userData.phone)}</Text>
+              </View>
+            )}
+            {userData.birthDate && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">Data de Nascimento:</Text>
+                <Text className="text-lg text-gray-700">{formatBirthDate(userData.birthDate)}</Text>
+              </View>
+            )}
+            {userData.address && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">Endereço:</Text>
+                <Text className="text-lg text-gray-700">{userData.address}</Text>
+              </View>
+            )}
+            {userData.registration && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">Registro:</Text>
+                <Text className="text-lg text-gray-700">{userData.registration}</Text>
+              </View>
+            )}
+            {userData.role === UserRole.PROFESSOR && userData.expertiseArea && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">Área de Especialização:</Text>
+                <Text className="text-lg text-gray-700">{userData.expertiseArea}</Text>
+              </View>
+            )}
+            {userData.academicTitle && (
+              <View className="mb-4">
+                <Text className="text-2xl font-semibold text-gray-800">Título Acadêmico:</Text>
+                <Text className="text-lg text-gray-700">{userData.academicTitle}</Text>
+              </View>
+            )}
           </View>
-
-          {userData.cpf && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">CPF:</Text>
-              <Text className="text-xl">{formatCPF(userData.cpf)}</Text>
-            </View>
-          )}
-
-          {userData.phone && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">Telefone:</Text>
-              <Text className="text-xl">{formatPhone(userData.phone)}</Text>
-            </View>
-          )}
-
-          {userData.birthDate && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">Data de Nascimento:</Text>
-              <Text className="text-xl">{formatBirthDate(userData.birthDate)}</Text>
-            </View>
-          )}
-
-          {userData.address && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">Endereço:</Text>
-              <Text className="text-xl">{userData.address}</Text>
-            </View>
-          )}
-
-          {userData.registration && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">Registro:</Text>
-              <Text className="text-lg">{userData.registration}</Text>
-            </View>
-          )}
-          
-          {/* Área de especialização para professores */}
-          {userData.role === UserRole.PROFESSOR && userData.expertiseArea && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">Área de Especialização:</Text>
-              <Text className="text-lg">{userData.expertiseArea}</Text>
-            </View>
-          )}
-          
-          {userData.academicTitle && (
-            <View className="mb-4">
-              <Text className="text-2xl font-semibold">Título Acadêmico:</Text>
-              <Text className="text-lg">{userData.academicTitle}</Text>
-            </View>
-          )}
         </View>
-        </ScrollView>
       ) : (
-        <Text className="text-center text-xl text-gray-500">Nenhum dado de usuário disponível.</Text>
+        <Text className="text-center text-xl text-gray-500 p-6">Nenhum dado de usuário disponível.</Text>
       )}
-      
     </View>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import { Feather } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItemList, DrawerContentComponentProps } from '@react-navigation/drawer';
 import { User } from '../interfaces/userInterface';
 
@@ -11,34 +11,40 @@ interface CustomDrawerContentProps extends DrawerContentComponentProps {
 
 const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ onLogout, userData, ...props }) => {
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1, backgroundColor: '#1E1E1E' }}>
-      <View className="p-4 bg-navbarcolor border-b border-white items-center">
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={{ flex: 1, backgroundColor: '#1E1E1E' }}
+    >
+      <View className="p-6 bg-blue-500 items-center">
         <Image
           source={require('../assets/avatar.png')}
-          className="w-16 h-16 rounded-full mb-2"
+          className="w-20 h-20 rounded-full mb-4 border-2 border-white"
         />
         {userData ? (
-          <Text className=" text-white text-3xl font-bold break-words text-center">Bem vindo, {userData.name}</Text>
+          <Text className="text-white text-2xl font-bold text-center">
+            Bem-vindo, {userData.name}
+          </Text>
         ) : (
-          <Text className="text-white text-3xl">Carregando...</Text>
+          <Text className="text-white text-xl">Carregando...</Text>
         )}
       </View>
-      <View className="flex-1">
+      <View className="flex-1 bg-gray-900">
         <DrawerItemList {...props} />
       </View>
-      <View className="border-t border-white p-4">
-        {/* Configurações */}
-        <TouchableOpacity 
-          onPress={() => props.navigation.navigate('settings')} 
-          className="flex-row items-center py-4"
+      <View className="border-t border-gray-700 p-4 bg-gray-900">
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('settings')}
+          className="flex-row items-center mb-4"
         >
-          <Feather name="settings" className="text-white" size={24} color='#FFFFFF' />
-          <Text className="text-2xl ml-2 text-white">Configurações</Text>
+          <Feather name="settings" size={24} color="#FFFFFF" />
+          <Text className="text-lg ml-3 text-white">Configurações</Text>
         </TouchableOpacity>
-        {/* Logout */}
-        <TouchableOpacity onPress={onLogout} className="flex-row items-center py-4">
+        <TouchableOpacity
+          onPress={onLogout}
+          className="flex-row items-center"
+        >
           <Feather name="log-out" size={24} color="#FFFFFF" />
-          <Text className="text-2xl ml-2 text-white">Logout</Text>
+          <Text className="text-lg ml-3 text-white">Logout</Text>
         </TouchableOpacity>
       </View>
     </DrawerContentScrollView>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createDrawerNavigator, DrawerContentComponentProps } from '@react-navigation/drawer';
 import { Text, View } from 'react-native';
-import { Feather } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
 import CustomDrawerContent from '../components/CustomDrawerContent';
 import TabRoutes from './HomeRoute';
 import ProfileRoute from './ProfileRoute';
@@ -40,13 +40,14 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
 
   return (
     <Drawer.Navigator
-      screenOptions={{
-        headerTitle: '',
+      screenOptions={({ route }) => ({
+        headerTitle: "",
         drawerActiveTintColor: '#FFFFFF',
-        drawerInactiveTintColor: '#FFFFFF',
-        drawerActiveBackgroundColor: 'bg-primary-color',
-        drawerLabelStyle: { color: '#FFFFFF' },
-      }}
+        drawerInactiveTintColor: '#A9A9A9',
+        drawerActiveBackgroundColor: '#3B82F6',
+        drawerLabelStyle: { color: '#FFFFFF', fontSize: 16 },
+        drawerStyle: { backgroundColor: '#1E1E1E' },
+      })}
       drawerContent={(props: DrawerContentComponentProps) => (
         <CustomDrawerContent {...props} onLogout={onLogout} userData={userData} />
       )}
@@ -55,10 +56,16 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         name="home"
         children={() => <TabRoutes userData={userData} schoolClasses={schoolClasses} />}
         options={{
-          drawerLabel: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="home" color="#FFFFFF" size={24} />
-              <Text className='text-2xl ml-2 text-white'>Início</Text>
+          drawerLabel: ({ focused }) => (
+            <View className="flex flex-row items-center">
+              <Feather name="home" size={24} color={focused ? '#FFFFFF' : '#A9A9A9'} />
+              <Text
+                className={`text-lg ml-3 ${
+                  focused ? 'text-white font-bold' : 'text-gray-400'
+                }`}
+              >
+                Início
+              </Text>
             </View>
           ),
         }}
@@ -67,10 +74,16 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         name="profile"
         children={() => <ProfileRoute userData={userData} schoolClass={schoolClasses} />}
         options={{
-          drawerLabel: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Feather name="user" color="#FFFFFF" size={24} />
-              <Text className='text-2xl ml-2 text-white'>Meu perfil</Text>
+          drawerLabel: ({ focused }) => (
+            <View className="flex flex-row items-center">
+              <Feather name="user" size={24} color={focused ? '#FFFFFF' : '#A9A9A9'} />
+              <Text
+                className={`text-lg ml-3 ${
+                  focused ? 'text-white font-bold' : 'text-gray-400'
+                }`}
+              >
+                Meu Perfil
+              </Text>
             </View>
           ),
         }}
@@ -80,49 +93,67 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
           name="grades"
           children={() => <StudentGradesRoute userData={userData} schoolClass={schoolClasses} />}
           options={{
-            drawerLabel: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="book" color="#FFFFFF" size={24} />
-                <Text className='text-2xl ml-2 text-white'>Meu Boletim</Text>
+            drawerLabel: ({ focused }) => (
+              <View className="flex flex-row items-center">
+                <Feather name="book" size={24} color={focused ? '#FFFFFF' : '#A9A9A9'} />
+                <Text
+                  className={`text-lg ml-3 ${
+                    focused ? 'text-white font-bold' : 'text-gray-400'
+                  }`}
+                >
+                  Meu Boletim
+                </Text>
               </View>
             ),
           }}
         />
       )}
       {userData && (userData.role === 'STUDENT' || userData.role === 'PROFESSOR') && (
-  <Drawer.Screen
-    name="schedule"
-    children={() => {
-      const currentYearClass = schoolClasses.find(
-        (schoolClass) => new Date(schoolClass.date).getFullYear() === currentYear
-      );
+        <Drawer.Screen
+          name="schedule"
+          children={() => {
+            const currentYearClass = schoolClasses.find(
+              (schoolClass) => new Date(schoolClass.date).getFullYear() === currentYear
+            );
 
-      return (
-        <Schedule
-          userData={userData}
-          schoolClassId={currentYearClass ? currentYearClass.id : null}
+            return (
+              <Schedule
+                userData={userData}
+                schoolClassId={currentYearClass ? currentYearClass.id : null}
+              />
+            );
+          }}
+          options={{
+            drawerLabel: ({ focused }) => (
+              <View className="flex flex-row items-center">
+                <Feather name="calendar" size={24} color={focused ? '#FFFFFF' : '#A9A9A9'} />
+                <Text
+                  className={`text-lg ml-3 ${
+                    focused ? 'text-white font-bold' : 'text-gray-400'
+                  }`}
+                >
+                  Meu Horário
+                </Text>
+              </View>
+            ),
+          }}
         />
-      );
-    }}
-    options={{
-      drawerLabel: () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Feather name="calendar" color="#FFFFFF" size={24} />
-          <Text className='text-2xl ml-2 text-white'>Meu Horário</Text>
-        </View>
-      ),
-    }}
-  />
-)}
+      )}
       {userData?.role === 'PARENT' && (
         <Drawer.Screen
           name="relatedStudents"
           children={() => <RelatedStudentsRoute userData={userData} />}
           options={{
-            drawerLabel: () => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Feather name="users" color="#FFFFFF" size={24} />
-                <Text className='text-2xl ml-2 text-white'>Estudantes Relacionados</Text>
+            drawerLabel: ({ focused }) => (
+              <View className="flex flex-row items-center">
+                <Feather name="users" size={24} color={focused ? '#FFFFFF' : '#A9A9A9'} />
+                <Text
+                  className={`text-lg ml-3 ${
+                    focused ? 'text-white font-bold' : 'text-gray-400'
+                  }`}
+                >
+                  Estudantes Relacionados
+                </Text>
               </View>
             ),
           }}
