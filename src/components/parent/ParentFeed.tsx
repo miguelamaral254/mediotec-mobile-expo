@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, Linking } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { User } from '../../interfaces/userInterface';
 import { Notification } from '../../interfaces/notificationInterface';
