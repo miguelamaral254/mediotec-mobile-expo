@@ -7,9 +7,8 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { getLessonsByStudentAndClass } from '../../services/lessonsService';
 import { getSchoolClassByStudentCpf } from '../../services/userService';
 import { translateEnum } from '../../utils/translateEnum';
-
 type RootStackParamList = {
-  DisciplineDetail: { discipline: string; studentCpf: string }; 
+  RelatedDisciplineDetail: { studentCpf: string; disciplineId: number };
   PreviousSchoolClasses: { previousYearClasses: SchoolClass[]; studentCpf: string };
 };
 interface StudentGradesOverviewProps {
@@ -61,12 +60,15 @@ const StudentGradesOverview: React.FC<StudentGradesOverviewProps> = ({ student }
   }, [student, currentYearClasses, previousYearClasses]);
 
   const handleDisciplinePress = (lesson: Lesson) => {
-    navigation.navigate('DisciplineDetail', {
-      discipline: lesson.discipline.name, 
-      studentCpf: student.cpf,
-    });
+    if (lesson.discipline.id !== undefined) {
+      navigation.navigate('RelatedDisciplineDetail', {
+        studentCpf: student.cpf,
+        disciplineId: lesson.discipline.id,
+      });
+    } else {
+      console.error("O disciplineId está indefinido.");
+    }
   };
-
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center">

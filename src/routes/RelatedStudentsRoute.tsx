@@ -12,7 +12,7 @@ import RelatedSchedule from "../components/parent/RelatedSchedule";
 import RelatedPreviousSchoolClasses from "../components/parent/RelatedPreviousSchoolClasses";
 import { SchoolClass } from "../interfaces/schoolClassInterface";
 
-type RelatedStudentsParamList = {
+type RelatedStudentsParamList = { 
   RelatedStudents: undefined;
   StudentDetails: { student: Student };
   StudentGradesOverview: { student: Student };
@@ -23,7 +23,7 @@ type RelatedStudentsParamList = {
 
 const Stack = createStackNavigator<RelatedStudentsParamList>();
 
-interface RelatedStudentsRouteProps {
+interface RelatedStudentsRouteProps { 
   userData: User | null;
 }
 
@@ -87,16 +87,16 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
     )}
     options={{ title: "Disciplinas" }}
   />
-  <Stack.Screen
-    name="RelatedDisciplineDetail"
-    children={({ route }) => (
-      <RelatedDisciplineDetail
-        studentCpf={route.params.studentCpf}
-        disciplineId={route.params.disciplineId}
-      />
-    )}
-    options={{ title: "Conceitos" }}
-  />
+ <Stack.Screen
+  name="RelatedDisciplineDetail"
+  children={({ route }) => (
+    <RelatedDisciplineDetail
+      studentCpf={route.params.studentCpf}
+      disciplineId={route.params.disciplineId}
+    />
+  )}
+  options={{ title: "Conceitos da Disciplina" }}
+/>
   <Stack.Screen
     name="Schedule"
     children={({ route }) => (
