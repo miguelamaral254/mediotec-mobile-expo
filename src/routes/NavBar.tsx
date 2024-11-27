@@ -27,7 +27,8 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
         try {
           const result = await getSchoolClassByStudentCpf(userData.cpf);
           setSchoolClasses(result);
-        } catch {
+        } catch (error) {
+          console.error('Erro ao buscar turmas:', error);
           setSchoolClasses([]);
         }
       };
@@ -37,8 +38,9 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
 
   return (
     <Drawer.Navigator
+      initialRouteName="home"
       screenOptions={{
-        headerTitle: "",
+        headerTitle: '',
       }}
       drawerContent={(props) => (
         <CustomDrawerContent {...props} onLogout={onLogout} userData={userData} />
@@ -46,21 +48,25 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
     >
       <Drawer.Screen
         name="home"
+        options={{ title: 'Início' }}
         children={() => <TabRoutes userData={userData} schoolClasses={schoolClasses} />}
       />
       <Drawer.Screen
         name="profile"
+        options={{ title: 'Meu Perfil' }}
         children={() => <ProfileRoute userData={userData} schoolClass={schoolClasses} />}
       />
       {userData?.role === 'STUDENT' && (
         <Drawer.Screen
           name="grades"
+          options={{ title: 'Meu Boletim' }}
           children={() => <StudentGradesRoute userData={userData} schoolClass={schoolClasses} />}
         />
       )}
       {userData?.role === 'STUDENT' && (
         <Drawer.Screen
           name="schedule"
+          options={{ title: 'Meu Horário' }}
           children={() => (
             <Schedule
               userData={userData}
@@ -74,10 +80,15 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
       {userData?.role === 'PARENT' && (
         <Drawer.Screen
           name="relatedStudents"
+          options={{ title: 'Estudantes Relacionados' }}
           children={() => <RelatedStudentsRoute userData={userData} />}
         />
       )}
-      <Drawer.Screen name="settings" component={Settings} />
+      <Drawer.Screen
+        name="settings"
+        component={Settings}
+        options={{ title: 'Configurações', drawerItemStyle: { display: 'none' } }}
+      />
     </Drawer.Navigator>
   );
 };

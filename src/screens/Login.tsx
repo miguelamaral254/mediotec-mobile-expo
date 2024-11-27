@@ -31,48 +31,38 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       Alert.alert('Dispositivo não compatível com biometria.');
     }
   }
-
   const handleLogin = async (cpf: string, password: string) => {
-    setLoading(true);
-    setError(null);
-  
     try {
+      setLoading(true);
+      setError(null);
+  
       const cleanedCPF = cpf.replace(/\D/g, '');
-      const userData: User = await getUserData(cleanedCPF);
-  
-      if (!userData) {
-        setError('Usuário não encontrado.');
-        return;
-      }
-  
-      if (!userData.active) {
-        setError('Usuário inativo, entre em contato com a instituição.');
-        return;
-      }
-  
       const loginResponse = await login(cleanedCPF, password);
-      
+  
       if (loginResponse) {
+        const userData: User = await getUserData(cleanedCPF);
+  
+        if (!userData) {
+          setError('Usuário não encontrado.');
+          return;
+        }
+  
+        if (!userData.active) {
+          setError('Usuário inativo. Entre em contato com a instituição.');
+          return;
+        }
+  
         await AsyncStorage.setItem('cpf', cleanedCPF);
         await AsyncStorage.setItem('password', password);
         onLoginSuccess(userData);
-  
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 0,
-            routes: [{ name: 'home' }],
-          })
-        );
       } else {
-        setError('Usuário não encontrado ou senha incorreta.');
+        setError('Usuário ou senha incorretos.');
       }
     } catch (err: any) {
-      if (err?.response?.status === 404) {
-        setError('Usuário não encontrado ou senha incorreta.');
-      } else if (err?.response?.status === 401) {
-        setError('Usuário não encontrado ou senha incorreta.');
+      if (err?.response?.status === 404 || err?.response?.status === 401) {
+        setError('Usuário ou senha incorretos.');
       } else if (err?.response) {
-        setError('Erro ao conectar com o servidor. Tente novamente.');
+        setError('Erro ao conectar ao servidor. Tente novamente.');
       } else {
         setError('Erro desconhecido. Tente novamente.');
       }
@@ -80,16 +70,14 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       setLoading(false);
     }
   };
-
+  
   const handleSubmit = () => {
     if (!formData.cpf || !formData.password) {
       Alert.alert('Por favor, preencha todos os campos.');
       return;
     }
-
     handleLogin(formData.cpf, formData.password);
   };
-
   const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
