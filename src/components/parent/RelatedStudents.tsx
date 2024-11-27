@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { Student } from '../../interfaces/studentInterface';
 
 interface RelatedStudentsProps {
@@ -19,27 +20,45 @@ const RelatedStudents: React.FC<RelatedStudentsProps> = ({ relatedStudents, navi
   };
 
   if (loading) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <ActivityIndicator size="large" color="#4666AF" />
+        <Text className="mt-4 text-blue-600 text-lg">Carregando...</Text>
+      </View>
+    );
   }
 
   return (
-    <View className="p-5">
-      {relatedStudents.length > 0 ? (
-        <FlatList
-          data={relatedStudents}
-          keyExtractor={(item) => item.cpf}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleStudentPress(item)} className="mb-2">
-              <View className="p-4 bg-gray-200 rounded">
-                <Text className="text-lg font-semibold">{item.name}</Text>
-                <Text className="text-gray-600">CPF: {item.cpf}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
-      ) : (
-        <Text className="text-gray-500">Nenhum estudante relacionado encontrado.</Text>
-      )}
+    <View className="flex-1 bg-gray-100">
+      <View className="bg-blue-500 p-6 rounded-b-lg shadow-md">
+        <Text className="text-3xl font-bold text-white text-center">Estudantes Relacionados</Text>
+      </View>
+      <View className="p-4">
+        {relatedStudents.length > 0 ? (
+          <FlatList
+            data={relatedStudents}
+            keyExtractor={(item) => item.cpf}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => handleStudentPress(item)}
+                className="bg-white p-6 mb-4 rounded-lg shadow-md flex-row items-center"
+              >
+                <FontAwesome name="user" size={24} color="#4666AF" className="mr-4" />
+                <View>
+                  <Text className="text-xl font-bold text-blue-600">{item.name}</Text>
+                  <Text className="text-sm text-gray-500">CPF: {item.cpf}</Text>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        ) : (
+          <View className="flex-1 justify-center items-center">
+            <Text className="text-gray-500 text-lg text-center">
+              Nenhum estudante relacionado encontrado.
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
