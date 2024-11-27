@@ -25,18 +25,10 @@ export function calculateFinalAverageAndSituation(
   finalAverage: number | null;
   situation: string | null;
 } {
-  const av1 = grades.find(
-    (grade) => grade.evaluationType === "AV1"
-  )?.evaluation;
-  const av2 = grades.find(
-    (grade) => grade.evaluationType === "AV2"
-  )?.evaluation;
-  const av3 = grades.find(
-    (grade) => grade.evaluationType === "AV3"
-  )?.evaluation;
-  const av4 = grades.find(
-    (grade) => grade.evaluationType === "AV4"
-  )?.evaluation;
+  const av1 = grades.find((grade) => grade.evaluationType === "AV1")?.evaluation;
+  const av2 = grades.find((grade) => grade.evaluationType === "AV2")?.evaluation;
+  const av3 = grades.find((grade) => grade.evaluationType === "AV3")?.evaluation;
+  const av4 = grades.find((grade) => grade.evaluationType === "AV4")?.evaluation;
   const recovery = grades.find(
     (grade) => grade.evaluationType === "RECOVERY"
   )?.evaluation;
@@ -71,4 +63,62 @@ export function calculateFinalAverageAndSituation(
   }
 
   return { average, finalAverage, situation };
+}
+
+export function formatGrades(
+  grades: ResponseGradeInterface[]
+): {
+  formattedGrades: { label: string; value: string | number; score: string | number }[];
+  situation: string | null;
+} {
+  const { average, finalAverage, situation } = calculateFinalAverageAndSituation(
+    grades || []
+  );
+
+  const av1 = grades.find((grade) => grade.evaluationType === "AV1")?.evaluation || "--";
+  const av2 = grades.find((grade) => grade.evaluationType === "AV2")?.evaluation || "--";
+  const av3 = grades.find((grade) => grade.evaluationType === "AV3")?.evaluation || "--";
+  const av4 = grades.find((grade) => grade.evaluationType === "AV4")?.evaluation || "--";
+  const recovery =
+    grades.find((grade) => grade.evaluationType === "RECOVERY")?.evaluation || "--";
+
+  const formattedGrades = [
+    {
+      label: "AV1",
+      value: av1 !== "--" ? fromScore(Number(av1)) : "--",
+      score: av1,
+    },
+    {
+      label: "AV2",
+      value: av2 !== "--" ? fromScore(Number(av2)) : "--",
+      score: av2,
+    },
+    {
+      label: "AV3",
+      value: av3 !== "--" ? fromScore(Number(av3)) : "--",
+      score: av3,
+    },
+    {
+      label: "AV4",
+      value: av4 !== "--" ? fromScore(Number(av4)) : "--",
+      score: av4,
+    },
+    {
+      label: "Média",
+      value: average !== null ? fromScore(Number(average)) : "--",
+      score: average !== null ? average.toFixed(2) : "--",
+    },
+    {
+      label: "Recuperação",
+      value: recovery !== "--" ? fromScore(Number(recovery)) : "--",
+      score: recovery,
+    },
+    {
+      label: "Média Final",
+      value: finalAverage !== null ? fromScore(Number(finalAverage)) : "--",
+      score: finalAverage !== null ? finalAverage.toFixed(2) : "--",
+    },
+  ];
+
+  return { formattedGrades, situation };
 }

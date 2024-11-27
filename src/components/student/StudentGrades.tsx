@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import { ResponseGradeInterface } from "../../interfaces/responseGradeInterface";
 import { getAssessmentsByStudentCpf } from "../../services/gradesService";
-import {
-  calculateFinalAverageAndSituation,
-  fromScore,
-} from "../../utils/gradesConceptUtils";
+import { formatGrades } from "../../utils/gradesConceptUtils";
 
 interface StudentGradesProps {
   studentCpf: string;
@@ -54,42 +51,8 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
     );
   }
 
-  const { average, finalAverage, situation } =
-    calculateFinalAverageAndSituation(grades || []);
+  const { formattedGrades, situation } = formatGrades(grades);
 
-    const av1 =
-    grades.find((grade) => grade.evaluationType === "AV1")?.evaluation || "--";
-  const av2 =
-    grades.find((grade) => grade.evaluationType === "AV2")?.evaluation || "--";
-  const av3 =
-    grades.find((grade) => grade.evaluationType === "AV3")?.evaluation || "--";
-  const av4 =
-    grades.find((grade) => grade.evaluationType === "AV4")?.evaluation || "--";
-  const recovery =
-    grades.find((grade) => grade.evaluationType === "RECOVERY")?.evaluation ||
-    "--";
-  
-  const formattedGrades = [
-    { label: "AV1", value: av1 !== "--" ? fromScore(Number(av1)) : "--", score: av1 },
-    { label: "AV2", value: av2 !== "--" ? fromScore(Number(av2)) : "--", score: av2 },
-    { label: "AV3", value: av3 !== "--" ? fromScore(Number(av3)) : "--", score: av3 },
-    { label: "AV4", value: av4 !== "--" ? fromScore(Number(av4)) : "--", score: av4 },
-    {
-      label: "Média",
-      value: average !== null ? fromScore(Number(average)) : "--",
-      score: average,
-    },
-    {
-      label: "Recuperação",
-      value: recovery !== "--" ? fromScore(Number(recovery)) : "--",
-      score: recovery,
-    },
-    {
-      label: "Média Final",
-      value: finalAverage !== null ? fromScore(Number(finalAverage)) : "--",
-      score: finalAverage,
-    },
-  ];
   return (
     <View className="flex-1 bg-gray-100 p-4">
       <Text className="text-4xl font-bold text-blue-500 text-center mb-6">
@@ -104,45 +67,7 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
             Conceito
           </Text>
         </View>
-        {[
-          {
-            label: "AV1",
-            value: av1 !== "--" ? fromScore(Number(av1)) : "--",
-            score: av1,
-          },
-          {
-            label: "AV2",
-            value: av2 !== "--" ? fromScore(Number(av2)) : "--",
-            score: av2,
-          },
-          {
-            label: "AV3",
-            value: av3 !== "--" ? fromScore(Number(av3)) : "--",
-            score: av3,
-          },
-          {
-            label: "AV4",
-            value: av4 !== "--" ? fromScore(Number(av4)) : "--",
-            score: av4,
-          },
-          {
-            label: "Média",
-            value: average !== null ? fromScore(Number(average)) : "--",
-            score: average,
-          },
-          {
-            label: "Recuperação",
-            value: recovery !== "--" ? fromScore(Number(recovery)) : "--",
-            score: recovery,
-          },
-          {
-            label: "Média Final",
-            value: finalAverage !== null
-              ? fromScore(Number(finalAverage))
-              : "--",
-            score: finalAverage,
-          },
-        ].map(({ label, value, score }) => (
+        {formattedGrades.map(({ label, value, score }) => (
           <View
             key={label}
             className="flex flex-row items-center border-b border-gray-300"
