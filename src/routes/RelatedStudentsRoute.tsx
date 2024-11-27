@@ -18,9 +18,9 @@ type RelatedStudentsParamList = {
   StudentDetails: { student: Student };
   StudentGradesOverview: { student: Student };
   Schedule: { student: Student };
-  RelatedDisciplineDetail: { studentCpf: string; disciplineId: number };
+  RelatedDisciplineDetail: { studentCpf: string; disciplineId: number; professor: { name: string; cpf: string } };
   PreviousSchoolClasses: { previousYearClasses: SchoolClass[]; studentCpf: string };
-  DisciplineDetail: { discipline: any; studentCpf: string }; 
+  DisciplineDetail: { discipline: any; studentCpf: string; professor: { name: string; cpf: string } }; 
 };
 
 const Stack = createStackNavigator<RelatedStudentsParamList>();
@@ -95,6 +95,7 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
           <RelatedDisciplineDetail
             studentCpf={route.params.studentCpf}
             disciplineId={route.params.disciplineId}
+            professor={route.params.professor} // Passa o professor
           />
         )}
         options={{ title: "" }}
@@ -119,7 +120,11 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
       <Stack.Screen
         name="DisciplineDetail"
         children={({ route }) => (
-          <StudentGrades studentCpf={route.params.studentCpf} disciplineId={route.params.discipline.id} />
+          <StudentGrades
+            studentCpf={route.params.studentCpf}
+            disciplineId={route.params.discipline.id}
+            professor={route.params.professor} 
+          />
         )}
         options={{ title: "" }}
       />

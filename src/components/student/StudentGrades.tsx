@@ -3,12 +3,16 @@ import { View, Text, ActivityIndicator } from "react-native";
 import { ResponseGradeInterface } from "../../interfaces/responseGradeInterface";
 import { getAssessmentsByStudentCpf } from "../../services/gradesService";
 import { formatGrades } from "../../utils/gradesConceptUtils";
+interface Professor {
+  name: string;
+  cpf: string;
+}
 
 interface StudentGradesProps {
   studentCpf: string;
   disciplineId: number;
+  professor?: Professor; 
 }
-
 const StudentGrades: React.FC<StudentGradesProps> = ({
   studentCpf,
   disciplineId,

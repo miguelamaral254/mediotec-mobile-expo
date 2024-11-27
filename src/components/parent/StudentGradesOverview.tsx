@@ -7,10 +7,19 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { getLessonsByStudentAndClass } from '../../services/lessonsService';
 import { getSchoolClassByStudentCpf } from '../../services/userService';
 import { translateEnum } from '../../utils/translateEnum';
+
 type RootStackParamList = {
-  RelatedDisciplineDetail: { studentCpf: string; disciplineId: number };
-  PreviousSchoolClasses: { previousYearClasses: SchoolClass[]; studentCpf: string };
+  RelatedDisciplineDetail: { 
+    studentCpf: string; 
+    disciplineId: number; 
+    professor: { name: string; cpf: string };
+  };
+  PreviousSchoolClasses: { 
+    previousYearClasses: SchoolClass[]; 
+    studentCpf: string; 
+  };
 };
+
 interface StudentGradesOverviewProps {
   student: Student;
 }
@@ -64,11 +73,16 @@ const StudentGradesOverview: React.FC<StudentGradesOverviewProps> = ({ student }
       navigation.navigate('RelatedDisciplineDetail', {
         studentCpf: student.cpf,
         disciplineId: lesson.discipline.id,
+        professor: {
+          name: lesson.professor.name,
+          cpf: lesson.professor.cpf,
+        },
       });
     } else {
       console.error("O disciplineId está indefinido.");
     }
   };
+
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -111,9 +125,14 @@ const StudentGradesOverview: React.FC<StudentGradesOverviewProps> = ({ student }
                     onPress={() => handleDisciplinePress(lesson)}
                     className="mt-4 flex-row items-center justify-center p-4 bg-blue-500 rounded-lg shadow-md"
                   >
-                    <Text className="text-white text-center text-xl font-semibold">
-                      🖥️ {lesson.discipline.name}
-                    </Text>
+                    <View>
+                      <Text className="text-white text-center text-xl font-semibold">
+                        🖥️ {lesson.discipline.name}
+                      </Text>
+                      <Text className="text-white text-center text-lg">
+                        Professor: {lesson.professor.name}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 ))}
             </View>
@@ -123,18 +142,18 @@ const StudentGradesOverview: React.FC<StudentGradesOverviewProps> = ({ student }
         )}
       </View>
       {previousYearClasses.length > 0 && (
-       <TouchableOpacity
-       onPress={() =>
-        navigation.navigate("PreviousSchoolClasses", {
-          previousYearClasses,
-          studentCpf: student.cpf,
-         })
-       }
-       className="bg-blue-100 mx-4 rounded-lg border border-blue-500 flex-row items-center justify-center p-4 mb-4 shadow-lg"
-     >
-       <Text className="text-2xl font-bold text-blue-800 mr-2">📚</Text>
-       <Text className="text-xl font-semibold text-blue-500">Ver Turmas Anteriores</Text>
-     </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("PreviousSchoolClasses", {
+              previousYearClasses,
+              studentCpf: student.cpf,
+            })
+          }
+          className="bg-blue-100 mx-4 rounded-lg border border-blue-500 flex-row items-center justify-center p-4 mb-4 shadow-lg"
+        >
+          <Text className="text-2xl font-bold text-blue-800 mr-2">📚</Text>
+          <Text className="text-xl font-semibold text-blue-500">Ver Turmas Anteriores</Text>
+        </TouchableOpacity>
       )}
     </ScrollView>
   );

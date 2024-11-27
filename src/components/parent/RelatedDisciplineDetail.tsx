@@ -4,14 +4,21 @@ import { ResponseGradeInterface } from "../../interfaces/responseGradeInterface"
 import { getAssessmentsByStudentCpf } from "../../services/gradesService";
 import { formatGrades } from "../../utils/gradesConceptUtils";
 
+interface Professor {
+  name: string;
+  cpf: string;
+}
+
 interface StudentGradesProps {
   studentCpf: string;
   disciplineId: number;
+  professor: Professor;
 }
 
 const StudentGrades: React.FC<StudentGradesProps> = ({
   studentCpf,
   disciplineId,
+  professor,
 }) => {
   const [grades, setGrades] = useState<ResponseGradeInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,8 +32,9 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
           disciplineId
         );
         setGrades(response || []);
-      } catch {
-        setError("Erro ao carregar as notas");
+      } catch (err) {
+        console.error("Erro ao carregar as notas:", err);
+        setError("Erro ao carregar as notas. Tente novamente.");
       } finally {
         setLoading(false);
       }
@@ -54,39 +62,55 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
   const { formattedGrades, situation } = formatGrades(grades);
 
   return (
-    <View className="flex-1 bg-gray-100 p-4">
-      <Text className="text-4xl font-bold text-blue-500 text-center mb-6">
+    <View className="flex-1 bg-gray-100 rounded-b-2xl p-4">
+      {/* Título */}
+      <Text className="text-4xl font-bold text-white pt-2 rounded-t-3xl bg-blue-500 mx-24 text-center">
         Conceitos
       </Text>
-      <View className="bg-white rounded-lg shadow-md border border-gray-300">
-        <View className="flex flex-row bg-blue-400 border-b border-gray-300">
-          <Text className="flex-1 text-xl font-bold text-center py-3 text-gray-700">
-            Tipo de Avaliação
+
+      {/* Conceitos e Situação */}
+      <View className="bg-white rounded-lg shadow-md rounded-b-2xl">
+        {/* Cabeçalho */}
+        <View className="flex flex-row bg-blue-500 border-b  rounded-t-2xl  border-b-gray-300">
+        <Text className="flex-1 text-xl font-bold text-center py-3 text-white">
+        Tipo de Avaliação
           </Text>
-          <Text className="flex-1 text-xl font-bold text-center py-3 text-gray-700">
+          <Text className="flex-1 text-xl font-bold text-center py-3 text-white">
             Conceito
           </Text>
         </View>
-        {formattedGrades.map(({ label, value }) => (
-          <View
-            key={label}
-            className="flex flex-row items-center border-b border-gray-300"
-          >
-            <Text className="flex-1 text-lg font-medium text-center py-3 text-gray-800">
-              {label}
-            </Text>
-            <Text
-              className={`flex-1 text-lg font-bold text-center py-3 ${
-                value !== "--" && value === "A" || value === "B"
-                  ? "text-green-500"
-                  : "text-red-500"
-              }`}
+
+        {/* Conteúdo */}
+        {formattedGrades.length > 0 ? (
+          formattedGrades.map(({ label, value }) => (
+            <View
+              key={label}
+              className="flex flex-row items-center border-b border-gray-300"
             >
-              {value}
+              <Text className="flex-1 text-lg font-medium text-center py-3 text-gray-800">
+                {label}
+              </Text>
+              <Text
+                className={`flex-1 text-lg font-bold text-center py-3 ${
+                  value === "A" || value === "B"
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {value}
+              </Text>
+            </View>
+          ))
+        ) : (
+          <View className="flex flex-row items-center bg-blue-200 rounded-b-2xl">
+            <Text className="flex-1 text-lg text-center py-3 text-gray-500">
+              Nenhuma avaliação encontrada.
             </Text>
           </View>
-        ))}
-        <View className="flex flex-row items-center bg-blue-200">
+        )}
+
+        {/* Situação */}
+        <View className="flex flex-row items-center bg-blue-200 rounded-b-2xl">
           <Text className="flex-1 text-lg font-medium text-center py-3 text-gray-800">
             Situação
           </Text>
@@ -103,4 +127,4 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
   );
 };
 
-export default StudentGrades;
+export default StudentGrades; 

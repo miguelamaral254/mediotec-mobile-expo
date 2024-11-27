@@ -13,7 +13,11 @@ import { translateEnum } from "../../utils/translateEnum";
 import { getLessonsByStudentAndClass } from "../../services/lessonsService";
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: Lesson["discipline"]; studentCpf: string };
+  DisciplineDetail: {
+    discipline: Lesson["discipline"];
+    studentCpf: string;
+    professor: { name: string; cpf: string };
+  };
 };
 
 interface RelatedPreviousSchoolClassesProps {
@@ -60,6 +64,10 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
     navigation.navigate("DisciplineDetail", {
       discipline: lesson.discipline,
       studentCpf,
+      professor: {
+        name: lesson.professor.name,
+        cpf: lesson.professor.cpf,
+      },
     });
   };
 
@@ -82,7 +90,7 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
   return (
     <ScrollView className="flex-1 bg-gray-100">
       <Text className="text-4xl font-bold bg-blue-500 p-10 text-white mb-6 text-center">
-        Turmas Anteriores     
+        Turmas Anteriores
       </Text>
       {previousYearClasses.map((schoolClass) => (
         <View
@@ -110,9 +118,14 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
               onPress={() => handleDisciplinePress(lesson)}
               className="mt-4 flex-row items-center justify-center p-4 bg-blue-500 rounded-lg shadow-md"
             >
-              <Text className="text-white text-center text-xl font-semibold">
-                🖥️ {lesson.name}
-              </Text>
+              <View>
+                <Text className="text-white text-center text-xl font-semibold">
+                  🖥️ {lesson.discipline.name}
+                </Text>
+                <Text className="text-white text-center text-lg">
+                  Professor: {lesson.professor.name}
+                </Text>
+              </View>
             </TouchableOpacity>
           ))}
         </View>
