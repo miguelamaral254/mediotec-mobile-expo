@@ -46,7 +46,7 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
           })
         );
         setLessonsByClass(lessonsData);
-      } catch (err) {
+      } catch {
         setError("Erro ao carregar as lições");
       } finally {
         setLoading(false);
@@ -82,7 +82,7 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
   return (
     <ScrollView className="flex-1 bg-gray-100">
       <Text className="text-4xl font-bold bg-blue-500 p-10 text-white mb-6 text-center">
-        Turmas Anteriores Relacionadas
+        Turmas Anteriores     
       </Text>
       {previousYearClasses.map((schoolClass) => (
         <View

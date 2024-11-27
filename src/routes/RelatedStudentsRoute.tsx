@@ -11,6 +11,7 @@ import RelatedDisciplineDetail from "../components/parent/RelatedDisciplineDetai
 import RelatedSchedule from "../components/parent/RelatedSchedule";
 import RelatedPreviousSchoolClasses from "../components/parent/RelatedPreviousSchoolClasses";
 import { SchoolClass } from "../interfaces/schoolClassInterface";
+import StudentGrades from "../components/student/StudentGrades";
 
 type RelatedStudentsParamList = { 
   RelatedStudents: undefined;
@@ -18,7 +19,8 @@ type RelatedStudentsParamList = {
   StudentGradesOverview: { student: Student };
   Schedule: { student: Student };
   RelatedDisciplineDetail: { studentCpf: string; disciplineId: number };
-  PreviousSchoolClasses: { previousYearClasses: SchoolClass[]; studentCpf: string }; // Alterado aqui
+  PreviousSchoolClasses: { previousYearClasses: SchoolClass[]; studentCpf: string };
+  DisciplineDetail: { discipline: any; studentCpf: string }; 
 };
 
 const Stack = createStackNavigator<RelatedStudentsParamList>();
@@ -66,55 +68,62 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
 
   return (
     <Stack.Navigator>
-  <Stack.Screen
-    name="RelatedStudents"
-    children={({ navigation }) => (
-      <RelatedStudents relatedStudents={relatedStudents} navigation={navigation} />
-    )}
-    options={{ title: "Estudantes Relacionados" }}
-  />
-  <Stack.Screen
-    name="StudentDetails"
-    children={({ route, navigation }) => (
-      <StudentDetails route={route} navigation={navigation} />
-    )}
-    options={{ title: "Detalhes do Estudante" }}
-  />
-  <Stack.Screen
-    name="StudentGradesOverview"
-    children={({ route }) => (
-      <StudentGradesOverview student={route.params.student} />
-    )}
-    options={{ title: "Disciplinas" }}
-  />
- <Stack.Screen
-  name="RelatedDisciplineDetail"
-  children={({ route }) => (
-    <RelatedDisciplineDetail
-      studentCpf={route.params.studentCpf}
-      disciplineId={route.params.disciplineId}
-    />
-  )}
-  options={{ title: "Conceitos da Disciplina" }}
-/>
-  <Stack.Screen
-    name="Schedule"
-    children={({ route }) => (
-      <RelatedSchedule cpf={route.params.student.cpf} />
-    )}
-    options={{ title: "Grade de horários" }}
-  />
-  <Stack.Screen
-    name="PreviousSchoolClasses" // Ajustado para corresponder ao nome utilizado na navegação
-    children={({ route }) => (
-      <RelatedPreviousSchoolClasses
-        previousYearClasses={route.params.previousYearClasses}
-        studentCpf={route.params.studentCpf}
+      <Stack.Screen
+        name="RelatedStudents"
+        children={({ navigation }) => (
+          <RelatedStudents relatedStudents={relatedStudents} navigation={navigation} />
+        )}
+        options={{ title: "Estudantes Relacionados" }}
       />
-    )}
-    options={{ title: "Turmas Anteriores" }}
-  />
-</Stack.Navigator>
+      <Stack.Screen
+        name="StudentDetails"
+        children={({ route, navigation }) => (
+          <StudentDetails route={route} navigation={navigation} />
+        )}
+        options={{ title: "Detalhes do Estudante" }}
+      />
+      <Stack.Screen
+        name="StudentGradesOverview"
+        children={({ route }) => (
+          <StudentGradesOverview student={route.params.student} />
+        )}
+        options={{ title: "Disciplinas" }}
+      />
+      <Stack.Screen
+        name="RelatedDisciplineDetail"
+        children={({ route }) => (
+          <RelatedDisciplineDetail
+            studentCpf={route.params.studentCpf}
+            disciplineId={route.params.disciplineId}
+          />
+        )}
+        options={{ title: "Conceitos da Disciplina" }}
+      />
+      <Stack.Screen
+        name="PreviousSchoolClasses"
+        children={({ route }) => (
+          <RelatedPreviousSchoolClasses
+            previousYearClasses={route.params.previousYearClasses}
+            studentCpf={route.params.studentCpf}
+          />
+        )}
+        options={{ title: "Turmas Anteriores" }}
+      />
+      <Stack.Screen
+        name="Schedule"
+        children={({ route }) => (
+          <RelatedSchedule cpf={route.params.student.cpf} />
+        )}
+        options={{ title: "Grade de horários" }}
+      />
+      <Stack.Screen
+        name="DisciplineDetail"
+        children={({ route }) => (
+          <StudentGrades studentCpf={route.params.studentCpf} disciplineId={route.params.discipline.id} />
+        )}
+        options={{ title: "Notas da Disciplina" }}
+      />
+    </Stack.Navigator>
   );
 };
 
