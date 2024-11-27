@@ -33,7 +33,6 @@ const CustomDrawerContent: React.FC<CustomDrawerContentProps> = ({ onLogout, use
       {...props}
       contentContainerStyle={{ flex: 1, backgroundColor: '#1E1E1E' }}
     >
-      {/* Header */}
       <View className={styles.header}>
         <Image
           source={require('../assets/avatar.png')}

@@ -55,7 +55,7 @@ const StudentFeed: React.FC<StudentFeedProps> = ({ schoolClasses, userData, navi
         <View className="bg-white rounded-lg shadow-md p-4 mb-6">
           <NoticeBoard notifications={notifications} />
         </View>
-        <View className="flex flex-row flex-wrap justify-between">
+        <View className="flex flex-row flex-wrap px-4 justify-between">
           <TouchableOpacity
             className="w-[48%] h-40 bg-white rounded-lg shadow-md p-4 mb-4 flex items-center justify-center"
             onPress={() => handleOpenLink('https://www.youtube.com/watch?v=4l15evegaKo')}

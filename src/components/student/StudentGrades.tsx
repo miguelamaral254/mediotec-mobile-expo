@@ -54,16 +54,16 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
   const { formattedGrades, situation } = formatGrades(grades);
 
   return (
-    <View className="flex-1 bg-gray-100 p-4">
-      <Text className="text-4xl font-bold text-blue-500 text-center mb-6">
+    <View className="flex-1 bg-gray-100 mt-10 rounded-b-2xl p-4">
+      <Text className="text-4xl font-bold text-white pt-2 rounded-t-3xl bg-blue-500 mx-24 text-center">
         Conceitos
       </Text>
-      <View className="bg-white rounded-lg shadow-md border border-gray-300">
-        <View className="flex flex-row bg-blue-400 border-b border-gray-300">
-          <Text className="flex-1 text-xl font-bold text-center py-3 text-gray-700">
+      <View className="bg-white rounded-lg shadow-md rounded-b-2xl">
+        <View className="flex flex-row bg-blue-500 border-b  rounded-t-2xl  border-b-gray-300">
+          <Text className="flex-1 text-xl font-bold text-center py-3 text-white">
             Tipo de Avaliação
           </Text>
-          <Text className="flex-1 text-xl font-bold text-center py-3 text-gray-700">
+          <Text className="flex-1 text-xl font-bold text-center py-3 text-white">
             Conceito
           </Text>
         </View>
@@ -86,7 +86,7 @@ const StudentGrades: React.FC<StudentGradesProps> = ({
             </Text>
           </View>
         ))}
-        <View className="flex flex-row items-center bg-blue-200">
+        <View className="flex flex-row items-center bg-blue-200 rounded-b-2xl">
           <Text className="flex-1 text-lg font-medium text-center py-3 text-gray-800">
             Situação
           </Text>

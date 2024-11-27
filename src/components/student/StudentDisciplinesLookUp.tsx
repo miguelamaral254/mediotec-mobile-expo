@@ -100,8 +100,8 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
   }
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
-      <Text className="text-4xl font-bold bg-blue-500 p-10 text-white mb-6 text-center">
+    <View className="flex-1 bg-gray-100">
+      <Text className="text-4xl font-bold bg-blue-500 px-10 text-white text-center">
         Boletim escolar
       </Text>
       <View className="bg-white flex flex-col p-6 rounded-lg shadow-md mb-6">
@@ -156,7 +156,7 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
           </Text>
         </TouchableOpacity>
       )}
-    </ScrollView>
+    </View>
   );
 };
 

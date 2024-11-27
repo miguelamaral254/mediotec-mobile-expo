@@ -27,7 +27,7 @@ const Routes: React.FC = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1 bg-black">
       {isAuthenticated ? (
         <DrawerRoutes onLogout={handleLogout} userData={userData} />
       ) : (
