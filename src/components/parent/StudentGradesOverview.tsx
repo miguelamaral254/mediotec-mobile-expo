@@ -10,9 +10,8 @@ import { translateEnum } from '../../utils/translateEnum';
 
 type RootStackParamList = {
   DisciplineDetail: { discipline: string; studentCpf: string }; 
-  PreviousSchoolClasses: { previousYearClasses: SchoolClass[] };
+  PreviousSchoolClasses: { previousYearClasses: SchoolClass[]; studentCpf: string };
 };
-
 interface StudentGradesOverviewProps {
   student: Student;
 }
@@ -122,17 +121,18 @@ const StudentGradesOverview: React.FC<StudentGradesOverviewProps> = ({ student }
         )}
       </View>
       {previousYearClasses.length > 0 && (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('PreviousSchoolClasses', {
-              previousYearClasses,
-            })
-          }
-          className="bg-blue-100 mx-4 rounded-lg border border-blue-500 flex-row items-center justify-center p-4 mb-4 shadow-lg"
-        >
-          <Text className="text-2xl font-bold text-blue-800 mr-2">📚</Text>
-          <Text className="text-xl font-semibold text-blue-500">Ver Turmas Anteriores</Text>
-        </TouchableOpacity>
+       <TouchableOpacity
+       onPress={() =>
+        navigation.navigate("PreviousSchoolClasses", {
+          previousYearClasses,
+          studentCpf: student.cpf,
+         })
+       }
+       className="bg-blue-100 mx-4 rounded-lg border border-blue-500 flex-row items-center justify-center p-4 mb-4 shadow-lg"
+     >
+       <Text className="text-2xl font-bold text-blue-800 mr-2">📚</Text>
+       <Text className="text-xl font-semibold text-blue-500">Ver Turmas Anteriores</Text>
+     </TouchableOpacity>
       )}
     </ScrollView>
   );
