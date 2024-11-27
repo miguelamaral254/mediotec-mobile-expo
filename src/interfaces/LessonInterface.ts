@@ -47,7 +47,7 @@ export interface Lesson {
   schoolClass: SchoolClass;
   discipline: DisciplineInterface;
   studentResponseDTO: Student;
-  professorResponseDTO: Professor;
+  professor: Professor;
   weekDay: WeekDay;
   startTime: TimeSlot;
   endTime: TimeSlot;

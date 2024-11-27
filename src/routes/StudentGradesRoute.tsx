@@ -10,7 +10,11 @@ import { SchoolClass } from "../interfaces/schoolClassInterface";
 
 type RootStackParamList = {
   Disciplines: undefined;
-  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
+  DisciplineDetail: {
+    discipline: DisciplineInterface;
+    studentCpf: string;
+    professor: { name: string; cpf: string };
+  };
   Schedule: { userData: User | null };
   PreviousSchoolClasses: { previousYearClasses: SchoolClass[] };
 };
@@ -43,7 +47,12 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({
       <Stack.Screen
         name="DisciplineDetail"
         children={({ route }) => <DisciplineDetail route={route} />}
-        options={{ title: "" ,headerStyle: { backgroundColor: "#3B82F6" }}}
+        options={{
+          title: "",
+          headerShown: true,
+          headerStyle: { backgroundColor: "#3B82F6" },
+          headerTintColor: "#FFFFFF", 
+        }}      
       />
       <Stack.Screen
         name="PreviousSchoolClasses"
@@ -53,8 +62,13 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({
             studentCpf={userData?.cpf || ""}
           />
         )}
-        options={{ title: "", headerShown: false }}
-      />
+        options={{
+          title: "",
+          headerShown: true,
+          headerStyle: { backgroundColor: "#3B82F6" },
+          headerTintColor: "#FFFFFF", 
+        }}      
+        />
       <Stack.Screen
         name="Schedule"
         children={() => <Schedule userData={userData} schoolClassId={null} />}

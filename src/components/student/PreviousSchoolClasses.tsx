@@ -13,7 +13,11 @@ import { translateEnum } from "../../utils/translateEnum";
 import { getLessonsByStudentAndClass } from "../../services/lessonsService";
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: Lesson["discipline"]; studentCpf: string };
+  DisciplineDetail: { 
+    discipline: Lesson["discipline"]; 
+    studentCpf: string; 
+    professor: { name: string; cpf: string }; 
+  };
 };
 
 interface PreviousSchoolClassesProps {
@@ -56,13 +60,20 @@ const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({
     fetchLessons();
   }, [studentCpf, previousYearClasses]);
 
-  const handleDisciplinePress = (lesson: Lesson) => {
+ const handleDisciplinePress = (lesson: Lesson) => {
+  if (lesson.professor) {
     navigation.navigate("DisciplineDetail", {
       discipline: lesson.discipline,
       studentCpf,
+      professor: {
+        name: lesson.professor.name,
+        cpf: lesson.professor.cpf,
+      },
     });
-  };
-
+  } else {
+    console.warn(`Professor não encontrado para a lição: ${lesson.id}`);
+  }
+};
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-gray-100">

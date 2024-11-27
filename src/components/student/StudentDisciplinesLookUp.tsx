@@ -15,9 +15,10 @@ import { getLessonsByStudentAndClass } from "../../services/lessonsService";
 import { DisciplineInterface } from "../../interfaces/disciplineInterface";
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string };
-  PreviousSchoolClasses: { previousYearClasses: SchoolClass[] };
+  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string; professor: { name: string; cpf: string }; // Inclua o professor
 };
+  PreviousSchoolClasses: { previousYearClasses: SchoolClass[] };
+};    
 
 interface StudentDisciplinesLookUpProps {
   userData: User | null;
@@ -60,6 +61,8 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
               getLessonsByStudentAndClass(userData.cpf, sc.id)
             )
           );
+          //console.log("Lições do ano atual:", currentLessonsData);
+
           setCurrentLessons(currentLessonsData.flat());
           setPreviousLessons(previousLessonsData.flat());
         } catch (err) {
@@ -77,12 +80,19 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
   }, [userData, schoolClass]);
 
   const handleDisciplinePress = (lesson: Lesson) => {
-    navigation.navigate("DisciplineDetail", {
-      discipline: lesson.discipline,
-      studentCpf: userData!.cpf,
-    });
+    if (lesson.professor) {
+      navigation.navigate("DisciplineDetail", {
+        discipline: lesson.discipline,
+        studentCpf: userData!.cpf,
+        professor: {
+          name: lesson.professor.name,
+          cpf: lesson.professor.cpf,
+        },
+      });
+    } else {
+      console.warn(`Professor não encontrado para a lição: ${lesson.id}`);
+    }
   };
-
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center">

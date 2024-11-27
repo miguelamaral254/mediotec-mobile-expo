@@ -9,12 +9,13 @@ interface DisciplineDetailProps {
     params: {
       discipline: DisciplineInterface;
       studentCpf: string;
+      professor: { name: string; cpf: string }; 
     };
   };
 }
 
 const DisciplineDetail: React.FC<DisciplineDetailProps> = ({ route }) => {
-  const { discipline, studentCpf } = route.params;
+  const { discipline, studentCpf, professor } = route.params; 
 
   return (
     <View className="flex-1 bg-gray-100">
@@ -22,14 +23,19 @@ const DisciplineDetail: React.FC<DisciplineDetailProps> = ({ route }) => {
         {discipline.name}
       </Text>
       <View className="p-4 bg-white rounded-lg shadow-md">
+      <Text className="text-lg text-gray-600 mb-2">
+          <Text className="font-bold">Professor: </Text>
+          {professor.name} 
+        </Text>
         <Text className="text-lg text-gray-600 mb-2">
           <Text className="font-bold">Descrição: </Text>
-          <Text>{discipline.description}</Text>
+          {discipline.description}
         </Text>
         <Text className="text-lg text-gray-600">
           <Text className="font-bold">Carga Horária: </Text>
-          <Text>{discipline.workload} horas</Text>
+          {discipline.workload} horas
         </Text>
+        
       </View>
       <StudentGrades studentCpf={studentCpf} disciplineId={discipline.id!} />
       <TouchableOpacity
