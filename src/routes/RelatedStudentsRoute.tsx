@@ -73,21 +73,21 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         children={({ navigation }) => (
           <RelatedStudents relatedStudents={relatedStudents} navigation={navigation} />
         )}
-        options={{ title: "Estudantes Relacionados" }}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="StudentDetails"
         children={({ route, navigation }) => (
           <StudentDetails route={route} navigation={navigation} />
         )}
-        options={{ title: "Detalhes do Estudante" }}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="StudentGradesOverview"
         children={({ route }) => (
           <StudentGradesOverview student={route.params.student} />
         )}
-        options={{ title: "Disciplinas" }}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="RelatedDisciplineDetail"
@@ -97,7 +97,7 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
             disciplineId={route.params.disciplineId}
           />
         )}
-        options={{ title: "Conceitos da Disciplina" }}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="PreviousSchoolClasses"
@@ -107,21 +107,21 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
             studentCpf={route.params.studentCpf}
           />
         )}
-        options={{ title: "Turmas Anteriores" }}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="Schedule"
         children={({ route }) => (
           <RelatedSchedule cpf={route.params.student.cpf} />
         )}
-        options={{ title: "Grade de horários" }}
+        options={{ title: "" }}
       />
       <Stack.Screen
         name="DisciplineDetail"
         children={({ route }) => (
           <StudentGrades studentCpf={route.params.studentCpf} disciplineId={route.params.discipline.id} />
         )}
-        options={{ title: "Notas da Disciplina" }}
+        options={{ title: "" }}
       />
     </Stack.Navigator>
   );
