@@ -73,21 +73,23 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
         children={({ navigation }) => (
           <RelatedStudents relatedStudents={relatedStudents} navigation={navigation} />
         )}
-        options={{ title: "" }}
+        options={{ title: "" , headerShown:false }}
       />
       <Stack.Screen
         name="StudentDetails"
         children={({ route, navigation }) => (
           <StudentDetails route={route} navigation={navigation} />
         )}
-        options={{ title: "" }}
+        options={{ title: "", headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF",  }}
       />
       <Stack.Screen
         name="StudentGradesOverview"
         children={({ route }) => (
           <StudentGradesOverview student={route.params.student} />
         )}
-        options={{ title: "" }}
+        options={{ title: "" , headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF", }}
       />
       <Stack.Screen
         name="RelatedDisciplineDetail"
@@ -98,7 +100,8 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
             professor={route.params.professor} 
           />
         )}
-        options={{ title: "" }}
+        options={{ title: "" , headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF", }}
       />
       <Stack.Screen
         name="PreviousSchoolClasses"
@@ -108,14 +111,16 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
             studentCpf={route.params.studentCpf}
           />
         )}
-        options={{ title: "" }}
+        options={{ title: "" , headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF", }}
       />
       <Stack.Screen
         name="Schedule"
         children={({ route }) => (
           <RelatedSchedule cpf={route.params.student.cpf} />
         )}
-        options={{ title: "" }}
+        options={{ title: "Horários" , headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF", }}
       />
       <Stack.Screen
         name="DisciplineDetail"
@@ -126,7 +131,8 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
             professor={route.params.professor} 
           />
         )}
-        options={{ title: "" }}
+        options={{ title: "" , headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF", }}
       />
     </Stack.Navigator>
   );
