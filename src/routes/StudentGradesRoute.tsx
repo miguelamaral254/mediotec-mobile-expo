@@ -31,16 +31,11 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({
   schoolClass,
 }) => {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: true, headerBackTitleVisible: false }}
-    >
+    <Stack.Navigator screenOptions={{ headerShown: true, headerBackTitleVisible: false }}>
       <Stack.Screen
         name="Disciplines"
         children={() => (
-          <StudentDisciplinesLookUp
-            userData={userData}
-            schoolClass={schoolClass}
-          />
+          <StudentDisciplinesLookUp userData={userData} schoolClass={schoolClass} />
         )}
         options={{ title: "", headerShown: false }}
       />
@@ -51,8 +46,8 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({
           title: "",
           headerShown: true,
           headerStyle: { backgroundColor: "#3B82F6" },
-          headerTintColor: "#FFFFFF", 
-        }}      
+          headerTintColor: "#FFFFFF",
+        }}
       />
       <Stack.Screen
         name="PreviousSchoolClasses"
@@ -66,9 +61,9 @@ const StudentGradesRoute: React.FC<StackRoutesProps> = ({
           title: "",
           headerShown: true,
           headerStyle: { backgroundColor: "#3B82F6" },
-          headerTintColor: "#FFFFFF", 
-        }}      
-        />
+          headerTintColor: "#FFFFFF",
+        }}
+      />
       <Stack.Screen
         name="Schedule"
         children={() => <Schedule userData={userData} schoolClassId={null} />}

@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { Lesson } from "../../interfaces/LessonInterface";
 import { User } from "../../interfaces/userInterface";
 import { SchoolClass } from "../../interfaces/schoolClassInterface";
@@ -13,6 +7,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { translateEnum } from "../../utils/translateEnum";
 import { getLessonsByStudentAndClass } from "../../services/lessonsService";
 import { DisciplineInterface } from "../../interfaces/disciplineInterface";
+import LottieView from "lottie-react-native";
 
 type RootStackParamList = {
   DisciplineDetail: {
@@ -70,11 +65,15 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
         } catch (err) {
           setError("Erro ao carregar as lições");
         } finally {
-          setLoading(false);
+          setTimeout(() => {
+            setLoading(false);
+          }, 2000); //remover apos apresentação
         }
       } else {
         setError("CPF ou turmas não disponíveis");
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000); //remover apos apresentação
       }
     };
 
@@ -91,15 +90,18 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
           cpf: lesson.professor.cpf,
         },
       });
-    } else {
-      console.warn(`Professor não encontrado para a lição: ${lesson.id}`);
     }
   };
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#06B6D4" />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <LottieView
+          source={require("../../../assets/animations/files-transfer.json")}
+          autoPlay
+          loop
+          style={{ width: 200, height: 200 }}
+        />
       </View>
     );
   }

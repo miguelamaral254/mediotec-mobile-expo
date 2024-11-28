@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Alert, ActivityIndicator, View } from 'react-native';
+import { SafeAreaView, Alert, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
+import LottieView from 'lottie-react-native';
 import DrawerRoutes from "./src/routes/NavBar"; 
 import Login from "./src/screens/Login";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -68,8 +69,13 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#0000ff" />
+      <View style={styles.loadingContainer}>
+        <LottieView
+          source={require('./assets/animations/paper-plane.json')}
+          autoPlay
+          loop
+          style={styles.animation}
+        />
       </View>
     );
   }
@@ -86,3 +92,16 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  animation: {
+    width: 200,
+    height: 200,
+  },
+});

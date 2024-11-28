@@ -1,86 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, Alert, ActivityIndicator, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback,
+  StyleSheet,
+} from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
-import * as LocalAuthentication from 'expo-local-authentication';
-import AsyncStorage from '@react-native-async-storage/async-storage'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LottieView from 'lottie-react-native'; // Importa Lottie
 import logo from '../assets/logo_mediotec.png';
 import { User } from '../interfaces/userInterface';
 import { getUserData, login } from '../services/authService';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootDrawerParamList } from '../types/navigationTypes';
-import { CommonActions } from '@react-navigation/native';
 
 interface LoginProps {
-  onLoginSuccess: (userData: User) => void; 
+  onLoginSuccess: (userData: User) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [formData, setFormData] = useState({ cpf: '', password: '' });
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false); 
-  const navigation = useNavigation<StackNavigationProp<RootDrawerParamList>>();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    verifyAvailableAuthentication();
-  }, []);
-
-  async function verifyAvailableAuthentication() {
-    const compatible = await LocalAuthentication.hasHardwareAsync();
-    if (!compatible) {
-      Alert.alert('Dispositivo não compatível com biometria.');
-    }
-  }
   const handleLogin = async (cpf: string, password: string) => {
     try {
-      setLoading(true);
       setError(null);
-  
       const cleanedCPF = cpf.replace(/\D/g, '');
       const loginResponse = await login(cleanedCPF, password);
-  
+
       if (loginResponse) {
         const userData: User = await getUserData(cleanedCPF);
-  
+
         if (!userData) {
           setError('Usuário não encontrado.');
+          setLoading(false);
           return;
         }
-  
+
         if (!userData.active) {
           setError('Usuário inativo. Entre em contato com a instituição.');
+          setLoading(false);
           return;
         }
-  
+
         await AsyncStorage.setItem('cpf', cleanedCPF);
         await AsyncStorage.setItem('password', password);
         onLoginSuccess(userData);
       } else {
         setError('Usuário ou senha incorretos.');
+        setLoading(false);
       }
     } catch (err: any) {
-      if (err?.response?.status === 404 || err?.response?.status === 401) {
-        setError('Usuário ou senha incorretos.');
-      } else if (err?.response) {
-        setError('Erro ao conectar ao servidor. Tente novamente.');
-      } else {
-        setError('Erro desconhecido. Tente novamente.');
-      }
-    } finally {
+      setError(
+        err?.response?.status === 404 || err?.response?.status === 401
+          ? 'Usuário ou senha incorretos.'
+          : 'Erro ao conectar ao servidor. Tente novamente.'
+      );
       setLoading(false);
     }
   };
-  
+
   const handleSubmit = () => {
     if (!formData.cpf || !formData.password) {
       Alert.alert('Por favor, preencha todos os campos.');
       return;
     }
+    setLoading(true); // Ativa o estado de carregamento
     handleLogin(formData.cpf, formData.password);
   };
+
   const handleInputChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <LottieView
+          source={require('../../assets/animations/paper-plane.json')}
+          autoPlay
+          loop
+          style={styles.animation}
+        />
+      </View>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -105,13 +114,12 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
             secureTextEntry
             value={formData.password}
             onChangeText={(value) => handleInputChange('password', value)}
-            style={{ borderColor: '#ccc', borderWidth: 1, padding: 10, borderRadius: 5, width: '100%' }}
+            style={{ borderColor: '#ccc', borderWidth: 1, padding: 10, borderRadius: 5 }}
             placeholder="Digite sua senha"
           />
         </View>
 
         {error && <Text style={{ color: 'red', marginBottom: 16 }}>{error}</Text>}
-        {loading && <ActivityIndicator size="large" color="#0000ff" />}
 
         <TouchableOpacity
           onPress={handleSubmit}
@@ -123,5 +131,18 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  animation: {
+    width: 200,
+    height: 200,
+  },
+});
 
 export default Login;
