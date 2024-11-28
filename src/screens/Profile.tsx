@@ -17,12 +17,12 @@ const Profile: React.FC<ProfileProps> = ({ userData, schoolClass }) => {
     : null;
 
   return (
-    <View className="flex-1 bg-gray-100 ">
+    <View className="flex-1 bg-gray-200 ">
       <Text className="text-4xl font-bold bg-blue-500 text-white p-6 text-center ">
         Perfil do {userData?.role ? translateUserRole(userData.role) : 'Usuário'}
       </Text>
       {userData ? (
-        <View className="bg-white rounded-lg shadow-md px-5 p-6">
+        <View className="bg-white rounded-lg shadow-md  p-6">
           <View className="flex items-center mb-6">
             <View className="w-36 h-36 rounded-full bg-blue-100 items-center justify-center mb-4">
               <Text className="text-5xl font-bold text-blue-500">
@@ -32,8 +32,8 @@ const Profile: React.FC<ProfileProps> = ({ userData, schoolClass }) => {
             <Text className="text-3xl font-bold text-gray-800">{userData.name}</Text>
           </View>
           {userData.role === 'STUDENT' && currentYearClass ? (
-            <View className="mb-6">
-              <Text className="text-xl font-semibold text-blue-500 text-center">
+            <View className="mb-6 bg-blue-200 px-10 py-5 rounded-3xl" >
+              <Text className="text-xl font-semibold text-blue-500 text-center ">
                 Turma: {currentYearClass.code} - {translateEnum(currentYearClass.letter, 'letter')} ({translateEnum(currentYearClass.shift, 'shift')})
               </Text>
               <Text className="text-lg text-gray-700 text-center">
