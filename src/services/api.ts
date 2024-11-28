@@ -1,18 +1,13 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from '@env';
 
 const api = axios.create({
-  //baseURL: "http:///172.26.34.254:8080",
-//baseURL: "http://192.168.1.9:8080",
-  
- // baseURL: "http://10.70.70.78:8080",
-  baseURL: "http://10.30.13.212:8080",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-
 });
-
 export const DEBUG_MODE = false;
 
 api.interceptors.request.use(
