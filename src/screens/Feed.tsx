@@ -20,12 +20,6 @@ const Feed: React.FC<FeedProps> = ({ userData, role, schoolClasses, notification
     switch (role) {
       case 'STUDENT':
         return <StudentFeedRoutes userData={userData} schoolClasses={schoolClasses} notifications={notifications} />;
-      case 'PROFESSOR':
-        return <ParentFeed userData={userData} />;
-      case 'ADMIN':
-        return (
-          <WelcomeMessage title="Professor Feed" subtitle="Bem-vindo, Professor!" />
-        );
       case 'PARENT':
         return <ParentFeedRoutes userData={userData} />;
       default:

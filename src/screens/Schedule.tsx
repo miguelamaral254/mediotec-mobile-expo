@@ -10,13 +10,17 @@ interface ScheduleProps {
 
 const Schedule: React.FC<ScheduleProps> = ({ userData, schoolClassId }) => {
   if (!userData) {
-    return <Text>Usuário não encontrado.</Text>;
+    return (
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <Text className="text-lg text-gray-500">Usuário não encontrado.</Text>
+      </View>
+    );
   }
 
   if (!schoolClassId) {
     return (
-      <View style={{ flex: 1, padding: 20 }}>
-        <Text style={{ fontSize: 18, color: 'gray' }}>
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <Text className="text-lg text-gray-500">
           Nenhuma turma encontrada para o ano atual.
         </Text>
       </View>
@@ -24,8 +28,10 @@ const Schedule: React.FC<ScheduleProps> = ({ userData, schoolClassId }) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Text style={{ fontSize: 24, margin: 20 }}>Meu Horário</Text>
+    <View className="flex-1 bg-gray-100">
+      <Text className="text-4xl font-bold bg-blue-500 text-white px-5 py-5">
+        Meu Horário
+      </Text>
       <StudentSchedule cpf={userData.cpf} schoolClassId={schoolClassId} />
     </View>
   );

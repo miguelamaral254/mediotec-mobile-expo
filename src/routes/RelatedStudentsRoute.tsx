@@ -95,7 +95,7 @@ const RelatedStudentsRoute: React.FC<RelatedStudentsRouteProps> = ({ userData })
           <RelatedDisciplineDetail
             studentCpf={route.params.studentCpf}
             disciplineId={route.params.disciplineId}
-            professor={route.params.professor} // Passa o professor
+            professor={route.params.professor} 
           />
         )}
         options={{ title: "" }}

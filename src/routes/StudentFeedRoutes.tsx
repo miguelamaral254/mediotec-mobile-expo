@@ -41,6 +41,8 @@ const StudentFeedRoutes: React.FC<StudentFeedRoutesProps> = ({ schoolClasses, us
           headerShown: true,
           title: '',
           headerBackTitleVisible: false,
+          headerStyle: { backgroundColor: "#3B82F6" },
+          headerTintColor: "#FFFFFF", 
         }}
       />
     </Stack.Navigator>
