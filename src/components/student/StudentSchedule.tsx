@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { getLessonsByStudentAndClass } from '../../services/lessonsService';
 import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface';
 import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/mappingUtils';
+import LottieView from 'lottie-react-native';
 
 const daysOfWeek = Object.values(WeekDay);
 const timeSlots = Object.values(TimeSlot);
@@ -29,7 +30,9 @@ const StudentSchedule: React.FC<StudentScheduleProps> = ({ cpf, schoolClassId })
       } catch (error) {
         console.error('Error fetching lessons:', error);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000); // Adiciona um atraso de 2 segundos para exibir a animação
       }
     };
 
@@ -38,12 +41,16 @@ const StudentSchedule: React.FC<StudentScheduleProps> = ({ cpf, schoolClassId })
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-100">
-        <ActivityIndicator size="large" color="#3B82F6" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F4F6' }}>
+        <LottieView
+          source={require('../../../assets/animations/calendar.json')} 
+          autoPlay
+          loop
+          style={{ width: 600, height:800 }}
+        />
       </View>
     );
   }
-
 
   const schedule = Array.from({ length: timeSlots.length }, () => Array(daysOfWeek.length).fill(null));
 
