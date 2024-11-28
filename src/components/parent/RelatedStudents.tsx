@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Student } from '../../interfaces/studentInterface';
+import { formatCPF } from '../../utils/userUtils';
 
 interface RelatedStudentsProps {
   relatedStudents: Student[];
@@ -46,7 +47,7 @@ const RelatedStudents: React.FC<RelatedStudentsProps> = ({ relatedStudents, navi
                 <FontAwesome name="user" size={24} color="#4666AF" className="mr-4" />
                 <View>
                   <Text className="text-xl font-bold text-blue-600">{item.name}</Text>
-                  <Text className="text-sm text-gray-500">CPF: {item.cpf}</Text>
+                  <Text className="text-sm text-gray-500">CPF: {formatCPF(item.cpf)}</Text>
                 </View>
               </TouchableOpacity>
             )}
