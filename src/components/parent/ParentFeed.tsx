@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Linking } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
+import LottieView from 'lottie-react-native';
 import { User } from '../../interfaces/userInterface';
 import { Notification } from '../../interfaces/notificationInterface';
 import { getNotificationsForUser } from '../../services/notificationService';
@@ -19,6 +20,7 @@ const truncateText = (text: string | undefined, maxLength: number) => {
 
 const ParentFeed: React.FC<ParentFeedProps> = ({ userData, navigation }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -28,7 +30,15 @@ const ParentFeed: React.FC<ParentFeedProps> = ({ userData, navigation }) => {
           setNotifications(response || []);
         } catch (error) {
           console.error('Erro ao buscar notificações:', error);
+        } finally {
+          setTimeout(() => {
+            setLoading(false);
+          }, 2000); // Adiciona um atraso de 2 segundos para exibir a animação
         }
+      } else {
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000); // Adiciona um atraso de 2 segundos para exibir a animação
       }
     };
 
@@ -40,6 +50,19 @@ const ParentFeed: React.FC<ParentFeedProps> = ({ userData, navigation }) => {
       console.error('Erro ao abrir o link:', err)
     );
   };
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F4F6' }}>
+        <LottieView
+          source={require('../../../assets/animations/paper-plane.json')} 
+          autoPlay
+          loop
+          style={{ width: 200, height: 200 }}
+        />
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-gray-100">

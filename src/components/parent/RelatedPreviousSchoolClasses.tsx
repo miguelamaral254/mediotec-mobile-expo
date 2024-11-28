@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
+import LottieView from "lottie-react-native";
 import { Lesson } from "../../interfaces/LessonInterface";
 import { SchoolClass } from "../../interfaces/schoolClassInterface";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
@@ -53,7 +48,9 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
       } catch {
         setError("Erro ao carregar as lições");
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000); // Adiciona um atraso de 2 segundos para exibir a animação
       }
     };
 
@@ -73,8 +70,13 @@ const RelatedPreviousSchoolClasses: React.FC<RelatedPreviousSchoolClassesProps> 
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-100">
-        <ActivityIndicator size="large" color="#06B6D4" />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#F3F4F6" }}>
+        <LottieView
+          source={require('../../../assets/animations/files-transfer.json')} // Caminho para a animação
+          autoPlay
+          loop
+          style={{ width: 200, height: 200 }}
+        />
       </View>
     );
   }

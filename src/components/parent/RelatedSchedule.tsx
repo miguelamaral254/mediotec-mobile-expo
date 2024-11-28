@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+import LottieView from 'lottie-react-native';
 import { getLessonsByCpf } from '../../services/lessonsService';
 import { Lesson, WeekDay, TimeSlot } from '../../interfaces/LessonInterface';
 import { mapWeekDayToPortuguese, mapTimeSlotToPortuguese } from '../../utils/mappingUtils';
@@ -28,7 +29,9 @@ const RelatedSchedule: React.FC<RelatedScheduleProps> = ({ cpf }) => {
       } catch (error) {
         console.error('Error fetching lessons:', error);
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000); // Adiciona um atraso de 2 segundos para exibir a animação
       }
     };
 
@@ -37,8 +40,13 @@ const RelatedSchedule: React.FC<RelatedScheduleProps> = ({ cpf }) => {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-100">
-        <ActivityIndicator size="large" color="#3B82F6" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F4F6' }}>
+        <LottieView
+          source={require('../../../assets/animations/calendar.json')} 
+          autoPlay
+          loop
+          style={{ width: 400, height: 400 }}
+        />
       </View>
     );
   }
@@ -99,7 +107,6 @@ const RelatedSchedule: React.FC<RelatedScheduleProps> = ({ cpf }) => {
                     <Text className="text-center text-sm font-bold text-blue-700">
                       {lesson.discipline?.name || 'Sem Disciplina'}
                     </Text>
-                  
                     <Text className="text-center text-xs text-blue-600">
                       Sala: {lesson.room || 'Não definido'}
                     </Text>

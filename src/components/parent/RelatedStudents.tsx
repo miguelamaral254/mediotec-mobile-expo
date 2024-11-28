@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 import { Student } from '../../interfaces/studentInterface';
 import { formatCPF } from '../../utils/userUtils';
 
@@ -13,7 +14,9 @@ const RelatedStudents: React.FC<RelatedStudentsProps> = ({ relatedStudents, navi
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adiciona um atraso de 2 segundos para exibir a animação
   }, [relatedStudents]);
 
   const handleStudentPress = (student: Student) => {
@@ -22,9 +25,14 @@ const RelatedStudents: React.FC<RelatedStudentsProps> = ({ relatedStudents, navi
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-100">
-        <ActivityIndicator size="large" color="#4666AF" />
-        <Text className="mt-4 text-blue-600 text-lg">Carregando...</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F3F4F6' }}>
+        <LottieView
+          source={require('../../../assets/animations/folder.json')} 
+          autoPlay
+          loop
+          style={{ width: 500, height: 600 }}
+        />
+        <Text style={{ marginTop: 16, color: '#4666AF', fontSize: 18 }}>Carregando...</Text>
       </View>
     );
   }
@@ -44,7 +52,7 @@ const RelatedStudents: React.FC<RelatedStudentsProps> = ({ relatedStudents, navi
                 onPress={() => handleStudentPress(item)}
                 className="bg-white p-6 mb-4 rounded-lg shadow-md flex-row items-center"
               >
-                <FontAwesome name="user" size={24} color="#4666AF" className="mr-4" />
+                <FontAwesome name="user" size={24} color="#4666AF" style={{ marginRight: 16 }} />
                 <View>
                   <Text className="text-xl font-bold text-blue-600">{item.name}</Text>
                   <Text className="text-sm text-gray-500">CPF: {formatCPF(item.cpf)}</Text>
