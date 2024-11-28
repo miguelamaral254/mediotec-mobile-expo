@@ -125,11 +125,16 @@ const PreviousSchoolClasses: React.FC<PreviousSchoolClassesProps> = ({
               key={lesson.id}
               onPress={() => handleDisciplinePress(lesson)}
               className="mt-4 flex-row items-center justify-center p-4 bg-blue-500 rounded-lg shadow-md"
-            >
-              <Text className="text-white text-center text-xl font-semibold">
-                🖥️ {lesson.name}
-              </Text>
-            </TouchableOpacity>
+              >
+                <View>
+                  <Text className="text-white text-center text-xl font-semibold">
+                    🖥️ {lesson.discipline.name}
+                  </Text>
+                  <Text className="text-white text-center text-lg">
+                    Professor: {lesson.professor.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
           ))}
         </View>
       ))}

@@ -30,7 +30,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ notifications, onRe
   };
 
   return (
-    <View className="flex-1 bg-gray-100">
+    <View className="flex-1 mt-[-20] bg-gray-100">
       <Text className="text-4xl font-bold bg-blue-500 text-white p-6 text-center">
          Notificações
       </Text>

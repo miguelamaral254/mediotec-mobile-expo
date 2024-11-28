@@ -19,10 +19,10 @@ const DisciplineDetail: React.FC<DisciplineDetailProps> = ({ route }) => {
 
   return (
     <View className="flex-1 bg-gray-100">
-      <Text className="text-3xl font-bold bg-blue-500 p-4 text-white text-center">
+      <Text className="text-3xl font-bold bg-blue-500 p-4 px-10 text-white text-center">
         {discipline.name}
       </Text>
-      <View className="p-4 bg-white rounded-lg shadow-md">
+      <View className="p-4 rounded-t-2xl  mt-[-10] bg-white rounded-lg shadow-md">
       <Text className="text-lg text-gray-600 mb-2">
           <Text className="font-bold">Professor: </Text>
           {professor.name} 

@@ -15,10 +15,13 @@ import { getLessonsByStudentAndClass } from "../../services/lessonsService";
 import { DisciplineInterface } from "../../interfaces/disciplineInterface";
 
 type RootStackParamList = {
-  DisciplineDetail: { discipline: DisciplineInterface; studentCpf: string; professor: { name: string; cpf: string }; // Inclua o professor
-};
+  DisciplineDetail: {
+    discipline: DisciplineInterface;
+    studentCpf: string;
+    professor: { name: string; cpf: string };
+  };
   PreviousSchoolClasses: { previousYearClasses: SchoolClass[] };
-};    
+};
 
 interface StudentDisciplinesLookUpProps {
   userData: User | null;
@@ -61,7 +64,6 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
               getLessonsByStudentAndClass(userData.cpf, sc.id)
             )
           );
-          //console.log("Lições do ano atual:", currentLessonsData);
 
           setCurrentLessons(currentLessonsData.flat());
           setPreviousLessons(previousLessonsData.flat());
@@ -93,6 +95,7 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
       console.warn(`Professor não encontrado para a lição: ${lesson.id}`);
     }
   };
+
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -122,13 +125,10 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
                 {`Turma: ${sc.code} - ${translateEnum(sc.letter, "letter")}`}
               </Text>
               <Text className="text-lg text-gray-600 text-center mt-2">
-                {`${translateEnum(sc.technicalCourse, "technicalCourse")}`}
+                {translateEnum(sc.technicalCourse, "technicalCourse")}
               </Text>
-
-              <Text>
-                <Text className="text-lg text-gray-600 text-center">
-                  {`${translateEnum(sc.year, "year")}`}
-                </Text>
+              <Text className="text-lg text-gray-600 text-center">
+                {translateEnum(sc.year, "year")}
               </Text>
               {currentLessons
                 .filter((lesson) => lesson.schoolClass.id === sc.id)
@@ -138,9 +138,14 @@ const StudentDisciplinesLookUp: React.FC<StudentDisciplinesLookUpProps> = ({
                     onPress={() => handleDisciplinePress(lesson)}
                     className="mt-4 flex-row items-center justify-center p-4 bg-blue-500 rounded-lg shadow-md"
                   >
-                    <Text className="text-white text-center text-xl font-semibold">
-                      🖥️ {lesson.discipline.name}
-                    </Text>
+                    <View>
+                      <Text className="text-white text-center text-xl font-semibold">
+                        🖥️ {lesson.discipline.name}
+                      </Text>
+                      <Text className="text-white text-center text-lg">
+                        Professor: {lesson.professor.name}
+                      </Text>
+                    </View>
                   </TouchableOpacity>
                 ))}
             </View>

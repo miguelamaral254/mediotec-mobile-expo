@@ -42,6 +42,8 @@ const NavBar: React.FC<NavBarProps> = ({ onLogout, userData }) => {
       screenOptions={{
         headerTitle: "",
         headerStyle: { backgroundColor: "#3B82F6" },
+        headerTintColor: "#FFFFFF", 
+
       }}
       drawerContent={(props) => (
         <CustomDrawerContent

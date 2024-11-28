@@ -18,7 +18,7 @@ const RelatedSchedule: React.FC<RelatedScheduleProps> = ({ userData }) => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen 
         name="Schedule" 
-        children={() => <Schedule userData={userData} />} 
+        children={() => <Schedule userData={userData} schoolClassId={null} />} 
       />
     </Stack.Navigator>
   );

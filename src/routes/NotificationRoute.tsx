@@ -52,7 +52,7 @@ const NotificationRoute: React.FC<NotificationRouteProps> = ({ userCpf }) => {
     <Stack.Navigator>
       <Stack.Screen
         name="NotificationList"
-        options={{ title: 'Notificações' }}
+        options={{ title: '', headerShown:false }}
       >
         {() => (
           isLoading ? (
@@ -66,7 +66,11 @@ const NotificationRoute: React.FC<NotificationRouteProps> = ({ userCpf }) => {
       <Stack.Screen
         name="NotificationDetails"
         component={NotificationDetails}
-        options={{ title: '' }}
+        options={{ 
+          title: '',
+          headerStyle: { backgroundColor: "#3B82F6" },
+          headerTintColor: "#FFFFFF", 
+        }}
       />
     </Stack.Navigator>
   );
