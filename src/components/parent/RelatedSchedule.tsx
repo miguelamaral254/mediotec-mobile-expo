@@ -18,16 +18,17 @@ const RelatedSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
     const fetchLessons = async () => {
       try {
         const response = await getLessonsByCpf(cpf);
+        console.log("Dados recebidos:", response);
         if (Array.isArray(response)) {
           setLessons(response);
         }
       } catch (error) {
-        console.error('Error fetching lessons:', error);
+        console.error("Erro ao buscar aulas:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchLessons();
   }, [cpf]);
 
@@ -46,7 +47,7 @@ const RelatedSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
 
   const getSelectedLesson = () => {
     if (!selectedDay || !selectedTime) return null;
-
+  
     return lessons.find(
       (lesson) =>
         lesson.weekDay === selectedDay && lesson.startTime === selectedTime
@@ -57,7 +58,6 @@ const RelatedSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
 
   return (
     <View className="flex-1 bg-gray-100 p-4">
-      {/* Barra de Dias da Semana */}
       <View className="flex-row justify-between bg-white p-4 rounded-3xl mb-4">
         {daysOfWeek.map((day) => (
           <TouchableOpacity
@@ -78,9 +78,7 @@ const RelatedSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
         ))}
       </View>
 
-      {/* Coluna de Horários e Informações */}
       <View className="flex-row flex-1">
-        {/* Coluna de Horários */}
         <View className="w-24 mr-4 items-center bg-white p-4 rounded-3xl">
           <Text className="font-bold text-blue-700 mb-4">Horário</Text>
           {timeSlots.map((time) => (
@@ -114,7 +112,7 @@ const RelatedSchedule: React.FC<{ cpf: string }> = ({ cpf }) => {
                   Professor:
                 </Text>
                 <Text className="text-base text-gray-700">
-                  {selectedLesson.professor?.name || "Não definido"}
+                  {selectedLesson.professorResponseDTO?.name || "Não definido"}
                 </Text>
               </View>
               <View className="mb-4">

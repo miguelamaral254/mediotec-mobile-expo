@@ -42,6 +42,7 @@ export interface Professor {
 }
 
 export interface Lesson {
+  [x: string]: any;
   id: number;
   name: string;
   schoolClass: SchoolClass;
