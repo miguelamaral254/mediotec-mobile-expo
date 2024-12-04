@@ -15,6 +15,8 @@ Mediotec+ Mobile é a aplicação exclusiva para alunos e responsáveis da escol
 O projeto é parte do ecossistema Mediotec+, que possui diversos repositórios para diferentes funções e públicos. Este repositório contém o **Frontend Mobile** do sistema.
 
 - [Repositório Backend](https://github.com/miguelamaral254/mt-auth-service): Responsável pelo Backend do projeto Mediotec+.
+- [Repositório Frontend Web](https://github.com/miguelamaral254/mediotec-frontend): Responsável pelo Frontend web do projeto Mediotec+.
+
 
 ## 🛠️ Construído com
 
